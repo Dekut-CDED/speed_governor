@@ -22,6 +22,7 @@ namespace Application.User
             public string UserName { get; set; }
             public string Email { get; set; }
             public string Password { get; set; }
+            public string Imei { get; set; }
             
         }
 
@@ -60,7 +61,8 @@ namespace Application.User
                 {
                     DisplayName = request.DisplayName,
                     Email = request.Email,
-                    UserName = request.UserName
+                    UserName = request.UserName,
+                    Imei = request.Imei
                 };
 
                 var result = await _userManager.CreateAsync(user, request.Password);
