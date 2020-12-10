@@ -12,6 +12,7 @@ namespace Api.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [ApiExplorerSettings(IgnoreApi=true)]
     public class ValuesController : ControllerBase
     {
         private readonly DataContext _context;

@@ -60,7 +60,7 @@ namespace Application.User
                     };
 
                 }
-                throw new RestException(HttpStatusCode.Unauthorized);
+                throw new RestException(HttpStatusCode.Unauthorized, new {User = "Not authorized"});
 
 
             }

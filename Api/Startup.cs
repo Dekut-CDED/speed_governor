@@ -1,4 +1,4 @@
-using System.Reflection.PortableExecutable;
+using System.Linq;
 using System.Text;
 using Api.Middleware;
 using Application.Activities;
@@ -19,6 +19,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using NSwag;
 using Persistence;
 
 namespace Api
@@ -80,11 +81,32 @@ namespace Api
           };
       });
 
+        services.AddSwaggerDocument(document =>
+            {
+                document.Title = "Speed Governor";
+                document.DocumentName = "v1";
+                document.Description = " Speed governor data stream api";
+
+                document.AddSecurity("Bearer", Enumerable.Empty<string>(), new NSwag.OpenApiSecurityScheme
+                {
+                    Type = OpenApiSecuritySchemeType.ApiKey,
+                    Name = "Authorization",
+                    Description = "copy 'Bearer ' + Valid jwt token into field",
+                    In = OpenApiSecurityApiKeyLocation.Header
+
+                });
+            });
+
         }
+      
+      
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
+
+      app.UseOpenApi();
+      app.UseSwaggerUi3();
       //added custom middleware.
       app.UseMiddleware<ErrorHandlinMiddleware>();
       if (env.IsDevelopment())

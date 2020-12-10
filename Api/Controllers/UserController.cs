@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Api.Controllers
 {
     [AllowAnonymous]
+    [Produces("application/json")]
     public class UserController : BaseController
     {
         [HttpPost("login")]

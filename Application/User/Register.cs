@@ -1,6 +1,8 @@
 using System;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Application.Errors;
 using Application.Interfaces;
 using Application.validators;
 using Domain;
@@ -49,9 +51,9 @@ namespace Application.User
             //Mediator unit is an empty unit/object
             public async Task<User> Handle(Command request, CancellationToken cancellationToken)
             {
-                if(await _context.Users.AnyAsync(x => x.Email ==request.Email)) throw new System.Exception("Badrequest");
+                if(await _context.Users.AnyAsync(x => x.Email ==request.Email)) throw new RestException(HttpStatusCode.BadRequest, new { error = "Email Exists try another one" });
                 // handler logic
-                if(await _context.Users.AnyAsync(x => x.UserName ==request.UserName)) throw new System.Exception("Username already exist");
+                if(await _context.Users.AnyAsync(x => x.UserName ==request.UserName)) throw new RestException(HttpStatusCode.BadRequest, new { error = "Username already exist" });
 
 
                 var user = new AppUser
@@ -70,7 +72,7 @@ namespace Application.User
                     Username = user.UserName,
                     Image = null
             };
-                throw new Exception("Prolem saving Changes");
+                throw new RestException(HttpStatusCode.BadRequest, new {error = "Failed please Try again"});
             }
         }
         
