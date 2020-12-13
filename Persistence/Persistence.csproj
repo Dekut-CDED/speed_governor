@@ -13,7 +13,8 @@
   </ItemGroup>
 
   <PropertyGroup>
-     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>   <TargetFramework>netcoreapp3.0</TargetFramework>
+     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+	  <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
 </Project>
