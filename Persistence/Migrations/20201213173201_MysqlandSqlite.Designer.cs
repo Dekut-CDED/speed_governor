@@ -9,9 +9,8 @@ using Persistence;
 namespace Persistence.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration(@"20201210123218_imeifield
-")]
-    partial class imeifield
+    [Migration("20201213173201_MysqlandSqlite")]
+    partial class MysqlandSqlite
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
