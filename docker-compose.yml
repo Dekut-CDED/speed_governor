@@ -5,7 +5,10 @@ services:
     image: ${DOCKER_REGISTRY-}api
     build:
       context: .
-      dockerfile: Api/Dockerfile
+      dockerfile: Api/Docker
+    ports:
+      - 5030:5030
+      - 5031:5031
 
   db: 
     image: mysql
