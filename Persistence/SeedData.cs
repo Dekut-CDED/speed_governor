@@ -38,23 +38,6 @@ namespace Persistence
                 }
             }
 
-            if (!context.Activities.Any())
-            {
-                var activities = new List<Activity>{
-                  new Activity {
-                     Title = "Future activity 1" ,
-                     Date = DateTime.Now.AddMonths(5),
-                     Description = "Activity Number 1"
-                  },
-                  new Activity {
-                     Title = "Future activity 1" ,
-                     Date = DateTime.Now.AddMonths(5),
-                     Description = "Activity Number 1",
-                  }
-            };
-             context.Activities.AddRange(activities);
-               await context.SaveChangesAsync();
-            }
         }
         
     }

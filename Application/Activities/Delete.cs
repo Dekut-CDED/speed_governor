@@ -28,13 +28,13 @@ namespace Application.Activities
                     public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
                     {
                 // handler logic
-                var activity = await _context.Activities.FindAsync(request.id);
+                // var activity = await _context.Activities.FindAsync(request.id);
                 
-                if(activity ==null) throw new RestException(HttpStatusCode.NotFound, 
-                new { Activity ="Not found"}
-                );
+                // if(activity ==null) throw new RestException(HttpStatusCode.NotFound, 
+                // new { Activity ="Not found"}
+                // );
 
-                _context.Remove(activity);
+                // _context.Remove(activity);
 
                 var success = await _context.SaveChangesAsync() > 0;
         

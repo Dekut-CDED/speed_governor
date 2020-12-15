@@ -35,7 +35,7 @@ namespace Application.User
 
                 return new User
                 {
-                    DispalyName = user.DisplayName,
+                    Email = user.Email,
                     Username = user.UserName,
                     Token = _jwtGenerator.createToken(user),
                 };
