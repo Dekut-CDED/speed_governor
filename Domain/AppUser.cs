@@ -7,6 +7,8 @@ namespace Domain
     {
        public string DisplayName { get; set; }
        public string Imei { get; set; }
-       public virtual ICollection<UserActivity> UserActivities { get; set; }
+
+        public virtual ICollection<SpeedGovernor> SpeedGovernors{ get; set; }
+        public virtual ICollection<UserActivity> UserActivities { get; set; }
     }
 }

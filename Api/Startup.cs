@@ -1,7 +1,7 @@
 using System.Linq;
 using System.Text;
 using Api.Middleware;
-using Application.Activities;
+using Application.User;
 using Application.Interfaces;
 using AutoMapper;
 using Domain;
@@ -64,9 +64,8 @@ namespace Api
       });
 
       // We will have a lot of handlers but we need to tell mediator once
-      services.AddMediatR(typeof(List.Handler).Assembly);
-
-      services.AddAutoMapper(typeof(List.Handler));
+      services.AddMediatR(typeof(Login.Handler).Assembly);
+      services.AddAutoMapper(typeof(Login.Handler));
 
       services.AddControllers( opt =>
       {
@@ -75,7 +74,7 @@ namespace Api
 
       }).AddFluentValidation(
         cfg => {
-          cfg.RegisterValidatorsFromAssemblyContaining<Create>();
+          cfg.RegisterValidatorsFromAssemblyContaining<Login>();
         }
       );
 
