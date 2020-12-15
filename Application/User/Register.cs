@@ -69,7 +69,7 @@ namespace Application.User
                 
                 if(result.Succeeded) return new User
                 {
-                    DispalyName = user.DisplayName,
+                    Email = user.Email,
                     Token = _jwtGenerator.createToken(user),
                     Username = user.UserName,
             };

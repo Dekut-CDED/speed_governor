@@ -53,7 +53,7 @@ namespace Application.User
                     //TODO: generate token
                     return new User
                     {
-                        DispalyName = user.DisplayName,
+                        Email = user.Email,
                         Token = _jwtgenerator.createToken(user),
                         Username = user.UserName,
                     };
