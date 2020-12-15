@@ -38,7 +38,6 @@ namespace Application.User
                     DispalyName = user.DisplayName,
                     Username = user.UserName,
                     Token = _jwtGenerator.createToken(user),
-                    Image = null
                 };
             }
     }

@@ -72,7 +72,6 @@ namespace Application.User
                     DispalyName = user.DisplayName,
                     Token = _jwtGenerator.createToken(user),
                     Username = user.UserName,
-                    Image = null
             };
                 throw new RestException(HttpStatusCode.BadRequest, new {error = "Failed please Try again"});
             }

@@ -56,7 +56,7 @@ namespace Api
 
     public void ConfigureServices(IServiceCollection services)
     {
-
+      services.AddCors();
       services.AddDbContext<DataContext>(opt =>
       {
           opt.UseLazyLoadingProxies();
@@ -138,6 +138,8 @@ namespace Api
 
       app.UseRouting();
       // use routing
+      // Using routing
+      app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 
       app.UseAuthentication();
       app.UseAuthorization();
