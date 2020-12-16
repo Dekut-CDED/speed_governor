@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Domain;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -25,8 +26,14 @@ namespace Api
                     var usermanager = services.GetRequiredService<UserManager<AppUser>>();
                     context.Database.Migrate();
                     SeedData.SeedActivities(context, usermanager).Wait();
-                    Udp.StartListener(context);
 
+                    void StartUdp()
+                    {
+                        Udp.StartListener(context);
+                    }
+
+                    Thread t = new Thread(new ThreadStart(StartUdp));
+                    t.Start();                   
                     
                 }
                 catch (Exception ex)

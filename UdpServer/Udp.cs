@@ -1,4 +1,5 @@
 ﻿using Domain;
+using Microsoft.EntityFrameworkCore;
 using Persistence;
 using System;
 using System.Net;
@@ -8,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace UdpServer
 {
-   public class Udp
+    public class Udp
     {
 
         private const int listenPort = 3030;
@@ -44,12 +45,12 @@ namespace UdpServer
             }
         }
 
-        private async static Task SaveDB(string stringValues , DataContext dataContext)
+        private async static Task SaveDB(string  mainString , DataContext dataContext)
         {
 
-            if (stringValues != null)
+            if (mainString != null)
             {
-                var stringValues = "16/12/2020," + //0
+                var stringValuesTest = "16/12/2020," + //0
                          "15:33:18," +
                          "868715034074066," +//2
                          "john wahomeKDB " +
@@ -65,7 +66,7 @@ namespace UdpServer
                          "322.799988," +
                          "1," + //14
                          "0";
-                var values = stringValues.Split(',');
+                var values = mainString.Split(',');
 
                 var appUser = new AppUser() { UserName = values[3] };
 
@@ -79,25 +80,25 @@ namespace UdpServer
 
                 var location = new Location()
                 {
-                    Latitude = stringValues[7] + stringValues[8],
-                    Long = stringValues[9] + stringValues[10],
-                    EngineON = stringValues[11].ToString(),
-                    SpeedSignalStatus = stringValues[12].ToString(),
-                    Time = stringValues[1].ToString(),
-                    GpsCourse = stringValues[13].ToString(),
-                    Speed = stringValues[5].ToString(),
+                    Latitude = Double.Parse(values[7]),
+                    Long = Double.Parse(values[9]),
+                    EngineON = values[11].ToString(),
+                    SpeedSignalStatus = values[12].ToString(),
+                    Time = values[1].ToString(),
+                    GpsCourse = values[13].ToString(),
+                    Speed = values[5].ToString(),
                     SpeedGovernor = speedGovernor
                     // TODO Add some more fields, gps on = 14, ignition = 15, overspeed = 16, odometer = 6
                 };
 
-                var speedGov = await dataContext.SpeedGovernors.FindAsync(speedGovernor);
-                if (speedGov == null)
+                var speedGov = await dataContext.SpeedGovernors.AnyAsync(s => s.Imei == values[2]);
+                if (speedGov)
                 {
                     dataContext.SpeedGovernors.Add(speedGovernor);
                 }
 
-                var currentUser = await dataContext.Users.FindAsync(appUser);
-                if (currentUser == null)
+                var currentUser = await dataContext.Users.AnyAsync(u => u.UserName==values[3]);
+                if (currentUser)
                 {
                     dataContext.Users.Add(appUser);
                 }
