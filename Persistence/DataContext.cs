@@ -16,6 +16,7 @@ namespace Persistence
             public DbSet<Location> Locations { get; set; }
             public DbSet<SGCommand> Commands { get; set; }
             public DbSet<UserActivity> UserActivities { get; set; }
+            public DbSet<SpeedGovernor> SpeedGovernors { get; set; }
             
             protected override void OnModelCreating(ModelBuilder builder){
               base.OnModelCreating(builder);

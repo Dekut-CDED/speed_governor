@@ -7,6 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Persistence;
+using UdpServer;
 
 namespace Api
 {
@@ -24,6 +25,9 @@ namespace Api
                     var usermanager = services.GetRequiredService<UserManager<AppUser>>();
                     context.Database.Migrate();
                     SeedData.SeedActivities(context, usermanager).Wait();
+                    Udp.StartListener(context);
+
+                    
                 }
                 catch (Exception ex)
                 {
