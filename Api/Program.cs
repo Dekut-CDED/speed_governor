@@ -11,36 +11,35 @@ using Persistence;
 namespace Api
 {
     public class Program
-{
-    public static void Main(string[] args)
     {
-        var host = CreateHostBuilder(args).Build();
-        using(var scope = host.Services.CreateScope())
+        public static void Main(string[] args)
+        {
+            var host = CreateHostBuilder(args).Build();
+            using (var scope = host.Services.CreateScope())
             {
-            var services = scope.ServiceProvider;
-            
-            try
-            {
-                var context = services.GetRequiredService<DataContext>();
-                var usermanager = services.GetRequiredService<UserManager<AppUser>>();
-                context.Database.Migrate();
-                SeedData.SeedActivities(context, usermanager).Wait();
+                var services = scope.ServiceProvider;
+                try
+                {
+                    var context = services.GetRequiredService<DataContext>();
+                    var usermanager = services.GetRequiredService<UserManager<AppUser>>();
+                    context.Database.Migrate();
+                    SeedData.SeedActivities(context, usermanager).Wait();
+                }
+                catch (Exception ex)
+                {
+                    var logger = services.GetRequiredService<ILogger<Program>>();
+                    logger.LogError(ex, "An error occurred during Migrations");
+                }
             }
-            catch (Exception ex)
-            {
-                var logger = services.GetRequiredService<ILogger<Program>>();
-                logger.LogError(ex, "An error occurred during Migrations");
-            }
+
+            host.Run();
         }
 
-        host.Run();
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+            Host.CreateDefaultBuilder(args)
+                .ConfigureWebHostDefaults(webBuilder =>
+                {
+                    webBuilder.UseStartup<Startup>();
+                });
     }
-
-    public static IHostBuilder CreateHostBuilder(string[] args) =>
-        Host.CreateDefaultBuilder(args)
-            .ConfigureWebHostDefaults(webBuilder =>
-            {
-                webBuilder.UseStartup<Startup>();
-            });
-}
 }

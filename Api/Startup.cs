@@ -112,13 +112,9 @@ namespace Api
                     Name = "Authorization",
                     Description = "copy 'Bearer ' + Valid jwt token into field",
                     In = OpenApiSecurityApiKeyLocation.Header
-
                 });
             });
-
         }
-      
-      
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -130,9 +126,8 @@ namespace Api
       app.UseMiddleware<ErrorHandlinMiddleware>();
       if (env.IsDevelopment())
       {
-         // app.UseDeveloperExceptionPage();
+         app.UseDeveloperExceptionPage();
       }
-
      // app.UseHttpsRedirection();
 
       app.UseRouting();
