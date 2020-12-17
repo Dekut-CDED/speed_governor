@@ -17,22 +17,20 @@ namespace Api
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            using (var scope = host.Services.CreateScope())
-            {
+
+             var scope = host.Services.CreateScope();
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<DataContext>();
                     var usermanager = services.GetRequiredService<UserManager<AppUser>>();
+                    var context = services.GetRequiredService<DataContext>();
                     context.Database.Migrate();
                     SeedData.SeedActivities(context, usermanager).Wait();
 
-                    void StartUdp()
-                    {
-                        Udp.StartListener(context);
-                    }
 
-                    Thread t = new Thread(new ThreadStart(StartUdp));
+                    Thread t = new Thread(new ThreadStart(()=> {
+                        Udp.StartListener(context);
+                                }));
                     t.Start();                   
                     
                 }
@@ -41,7 +39,6 @@ namespace Api
                     var logger = services.GetRequiredService<ILogger<Program>>();
                     logger.LogError(ex, "An error occurred during Migrations");
                 }
-            }
 
             host.Run();
         }
