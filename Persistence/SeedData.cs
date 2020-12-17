@@ -14,9 +14,9 @@ namespace Persistence
             if(!userManager.Users.Any()){
                 var users = new List<AppUser>{
                   new AppUser{
-                    DisplayName = "Edwin",
-                    UserName = "eduuh",
-                    Email = "eduuh@test.com",
+                    DisplayName = "Wahome",
+                    UserName = "johnwahome",
+                    Email = "john@test.com",
                     SpeedGovernors = new List<SpeedGovernor> {
                      new SpeedGovernor {
                        Imei = "232324345454534",
@@ -53,38 +53,9 @@ namespace Persistence
                        }
                      } ,
                      new SpeedGovernor {
-                       Imei = "232324345454534",
+                       Imei = "868715034074066",
                        Phone ="0753480483",
                        PlateNumber = "234232332",
-                       Speeds = new List<Location> {
-                          new Location {
-                             Time = DateTime.Now.ToString(),
-                             Latitude = 0.395154,
-                             Long = 36.975040,
-                             Speed = "03",
-                             GpsCourse= "-3",
-                             SpeedSignalStatus = "34",
-                             EngineON = "34",
-            },
-                          new Location {
-                             Time = DateTime.Now.ToString(),
-                             Latitude = 0.395154,
-                             Long = 36.975040,
-                             Speed = "11",
-                             GpsCourse= "-3",
-                             SpeedSignalStatus = "34",
-                             EngineON = "34",
-            },
-                          new Location {
-                             Time = DateTime.Now.ToString(),
-                             Latitude = 0.395154,
-                             Long = 36.975040,
-                             Speed = "80",
-                             GpsCourse= "-3",
-                             SpeedSignalStatus = "34",
-                             EngineON = "34",
-            },
-                       }
                      }   
                     }
 
