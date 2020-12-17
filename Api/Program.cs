@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Domain;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
@@ -7,6 +8,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Persistence;
+using UdpServer;
 
 namespace Api
 {
@@ -15,22 +17,28 @@ namespace Api
         public static void Main(string[] args)
         {
             var host = CreateHostBuilder(args).Build();
-            using (var scope = host.Services.CreateScope())
-            {
+
+             var scope = host.Services.CreateScope();
                 var services = scope.ServiceProvider;
                 try
                 {
-                    var context = services.GetRequiredService<DataContext>();
                     var usermanager = services.GetRequiredService<UserManager<AppUser>>();
+                    var context = services.GetRequiredService<DataContext>();
                     context.Database.Migrate();
                     SeedData.SeedActivities(context, usermanager).Wait();
+
+
+                    Thread t = new Thread(new ThreadStart(()=> {
+                        Udp.StartListener(context);
+                                }));
+                    t.Start();                   
+                    
                 }
                 catch (Exception ex)
                 {
                     var logger = services.GetRequiredService<ILogger<Program>>();
                     logger.LogError(ex, "An error occurred during Migrations");
                 }
-            }
 
             host.Run();
         }

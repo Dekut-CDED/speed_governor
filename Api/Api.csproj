@@ -24,5 +24,6 @@
     <ProjectReference Include="..\Persistence\Persistence.csproj" />
     <ProjectReference Include="..\Application\Application.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
+    <ProjectReference Include="..\UdpServer\UdpServer.csproj" />
   </ItemGroup>
 </Project>
