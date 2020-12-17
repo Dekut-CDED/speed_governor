@@ -21,6 +21,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using Persistence;
+using Infrastructure.Message;
 
 namespace Api
 {
@@ -86,6 +87,7 @@ namespace Api
 
       services.AddScoped<IJwtGenerator, JwtGenerator>();
       services.AddScoped<IUserAccessor, UserAccessor>();
+      services.AddScoped<IMessage, Message>();
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokenkey"]));
 

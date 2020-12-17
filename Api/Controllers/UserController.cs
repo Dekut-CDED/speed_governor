@@ -1,6 +1,7 @@
 using System.Diagnostics.Tracing;
 using System.Threading.Tasks;
 using Application.User;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -21,6 +22,11 @@ namespace Api.Controllers
         [HttpGet]
         public async Task<ActionResult<User>> CurrentUser(){
             return await Mediator.Send(new CurrentUser.Query());
+        }
+
+        [HttpPost("sendmessage")]
+        public async Task<Unit> SendMessage(SendMessage.Command command){
+            return await Mediator.Send(command);
         }
     }
 }
