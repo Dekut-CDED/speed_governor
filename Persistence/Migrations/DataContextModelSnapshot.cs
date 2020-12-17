@@ -163,7 +163,7 @@ namespace Persistence.Migrations
 
                     b.HasIndex("OwnerId");
 
-                    b.ToTable("SpeedGovernor");
+                    b.ToTable("SpeedGovernors");
                 });
 
             modelBuilder.Entity("Domain.UserActivity", b =>

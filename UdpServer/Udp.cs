@@ -6,6 +6,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace UdpServer
 {
@@ -31,6 +32,7 @@ namespace UdpServer
                 {
                     byte[] bytes = listener.Receive(ref groupEP);
                     var governorData = Encoding.ASCII.GetString(bytes, 0, bytes.Length);
+                    Console.WriteLine(governorData);
                     await SaveDB(governorData, dataContext);
                 }
 
@@ -50,33 +52,25 @@ namespace UdpServer
 
             if (mainString != null)
             {
-                var stringValuesTest = "16/12/2020," + //0
-                         "15:33:18," +
-                         "868715034074066," +//2
-                         "john wahomeKDB " +
-                         "564R," +//4
-                         "0.000000," +
-                         "0," + //6
-                         "0.399453," +
-                         "S," + //8
-                         "36.962791," +
-                         "E," + //10
-                         "0," +
-                         "1," + //12
-                         "322.799988," +
-                         "1," + //14
-                         "0";
+                //var stringValuesTest = "16/12/2020," + //0
+                         //"15:33:18," +
+                         //"868715034074066," +//2
+                         //"john wahomeKDB " +
+                         //"564R," +//4
+                         //"0.000000," +
+                         //"0," + //6
+                         //"0.399453," +
+                         //"S," + //8
+                         //"36.962791," +
+                         //"E," + //10
+                         //"0," +
+                         //"1," + //12
+                         //"322.799988," +
+                         //"1," + //14
+                         //"0";
                 var values = mainString.Split(',');
-
-                var appUser = new AppUser() { UserName = values[3] };
-
-                var speedGovernor = new SpeedGovernor()
-                {
-                    Owner = appUser,
-                    Imei = values[2],
-                    PlateNumber = values[4],
-
-                };
+                
+                var speedGov = dataContext.SpeedGovernors.Where(s => s.Imei == values[2]).FirstOrDefault();
 
                 var location = new Location()
                 {
@@ -87,21 +81,10 @@ namespace UdpServer
                     Time = values[1].ToString(),
                     GpsCourse = values[13].ToString(),
                     Speed = values[5].ToString(),
-                    SpeedGovernor = speedGovernor
+                    SpeedGovernor = speedGov
                     // TODO Add some more fields, gps on = 14, ignition = 15, overspeed = 16, odometer = 6
                 };
 
-                var speedGov = await dataContext.SpeedGovernors.AnyAsync(s => s.Imei == values[2]);
-                if (speedGov)
-                {
-                    dataContext.SpeedGovernors.Add(speedGovernor);
-                }
-
-                var currentUser = await dataContext.Users.AnyAsync(u => u.UserName==values[3]);
-                if (currentUser)
-                {
-                    dataContext.Users.Add(appUser);
-                }
 
                 dataContext.Locations.Add(location);
                 await dataContext.SaveChangesAsync();
