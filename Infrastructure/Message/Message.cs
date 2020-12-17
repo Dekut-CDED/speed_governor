@@ -1,51 +1,29 @@
-using System;
 using AfricasTalkingCS;
 using Application.Interfaces;
 using Domain;
-using Microsoft.Extensions.Configuration;
+using System;
 
 namespace Infrastructure.Message
 {
-    public class Message : IMessage
+    public class MessageService : IMessage
     {
-        private readonly IConfiguration _config;
-        static AfricasTalkingGateway gateway;
 
-        public Message(IConfiguration config)
+        static AfricasTalkingGateway gateway = new AfricasTalkingGateway(AfricasTalkingConstants.Username, AfricasTalkingConstants.Apikey, AfricasTalkingConstants.Env);
+
+        public  dynamic SendMessage(string recepient, string message)
         {
-            _config = config;
-        }
-
-        public MessageResponse SendMessage(string message, string phone)
-        {
-
-            gateway = new AfricasTalkingGateway(_config["AFUsername"], _config["AFApikey"], _config["AFEnv"]);
-
+            
             try
             {
-
-            var messageDemo = "Hello Africa, Jambo Kenya. Mko sawa Lakini?";
-
-            string recepientDemo = "+254742267032";
-
-            var sms = gateway.SendMessage(recepientDemo,   messageDemo + message +  DateTime.Now);
-
-
-            return new MessageResponse
-            {
-            };
-
+                return gateway.SendMessage(recepient, message + DateTime.Now);
             }
-            catch (AfricasTalkingGatewayException ex)
+            catch (AfricasTalkingGatewayException exception)
             {
-                // TODO
-                throw new Exception("Proble with Africas Talking", ex);
-
+                throw exception;
             }
+
 
         }
+
     }
 }
-
-
-

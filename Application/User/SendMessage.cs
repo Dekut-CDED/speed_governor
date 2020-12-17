@@ -30,12 +30,20 @@ namespace Application.User
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
 
-                var messageStatus = _sendMessage.SendMessage(request.Name,request.phone);
-
+              var sms = _sendMessage.SendMessage(request.phone,request.Name);
+                
+              //var activity = new UserActivity()
+                //foreach (var res in sms["SMSMessageData"]["Recipients"])
+                //{
+                //    var number = res["number"];
+                //    var status = res["status"];
+                //    var messageId = res["messageId"];
+                //    var cost = res["cost"];
+                //}
                 // handler logic
-                var success = await _context.SaveChangesAsync() > 0;
+               // var success = await _context.SaveChangesAsync() > 0;
 
-                if (success) return Unit.Value;
+                if (sms) return Unit.Value;
 
                 throw new Exception("Prolem saving Changes");
             }

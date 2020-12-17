@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.Diagnostics.Tracing;
 using System.Threading.Tasks;
 using Application.User;
+using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -27,6 +29,12 @@ namespace Api.Controllers
         [HttpPost("sendmessage")]
         public async Task<Unit> SendMessage(SendMessage.Command command){
             return await Mediator.Send(command);
+        }
+
+        [HttpPost("myspeedgovernors")]
+        public async Task<List<SpeedGovernorDto>> MySpeedGovernor(MySpeedGovernors.Query query)
+        {
+            return await Mediator.Send(query);
         }
     }
 }

@@ -25,7 +25,7 @@ using Infrastructure.Message;
 
 namespace Api
 {
-  public class Startup
+    public class Startup
   {
     public Startup(IConfiguration configuration)
     {
@@ -87,7 +87,7 @@ namespace Api
 
       services.AddScoped<IJwtGenerator, JwtGenerator>();
       services.AddScoped<IUserAccessor, UserAccessor>();
-      services.AddScoped<IMessage, Message>();
+      services.AddScoped<IMessage, MessageService>();
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokenkey"]));
 
