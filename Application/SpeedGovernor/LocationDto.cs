@@ -1,6 +1,6 @@
-namespace Domain
+namespace Application
 {
-    public class Location
+    public class LocationDto
     {
         public int Id { get; set; }
         public string  Time { get; set; }
@@ -10,6 +10,5 @@ namespace Domain
         public string GpsCourse { get; set; }
         public string SpeedSignalStatus { get; set; }
         public string EngineON { get; set; }
-        public virtual SpeedGovernor SpeedGovernor { get; set; }
     }
 }
