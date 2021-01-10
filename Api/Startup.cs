@@ -22,6 +22,7 @@ using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using Persistence;
 using Infrastructure.Message;
+using System;
 
 namespace Api
 {
@@ -48,8 +49,9 @@ namespace Api
     public void ConfigureProductionServices(IServiceCollection services){
       services.AddDbContext<DataContext>(opt =>
       {
-          opt.UseLazyLoadingProxies();
-          opt.UseMySql(Configuration.GetConnectionString("DefaultConnection"));
+        opt.UseLazyLoadingProxies();
+          opt.UseMySql(Configuration.GetConnectionString("DefaultConnection"), options => options.ServerVersion(new Version(8, 0, 19), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MySql).EnableRetryOnFailure()
+        );
       });
 
          ConfigureServices(services);
