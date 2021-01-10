@@ -42,11 +42,12 @@ namespace Application.User
                     throw new RestException(HttpStatusCode.Unauthorized, "User not authorized");
                 }
 
-                var speedgovernor = _context.SpeedGovernors.Where(s => s.Id == request.Id);
+                SpeedGovernor speedgovernor = await _context.SpeedGovernors.FindAsync(request.Id);
+
                 if (speedgovernor == null)
                     throw new RestException(HttpStatusCode.NotFound, "Speed Governor does not exist");
 
-                var location = _context.Locations.FirstOrDefault(s => s.SpeedGovernor == speedgovernor);
+                var location = _context.Locations.Where(s => s.SpeedGovernor.Imei == speedgovernor.Imei ).FirstOrDefault();
 
                 return _mapper.Map<Location, LocationDto>(location);
                 // Handler logic goes here
