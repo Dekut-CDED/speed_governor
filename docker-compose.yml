@@ -7,9 +7,12 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
+      - 3030:3030
       - 5022:5022
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
+    depends_on: 
+      - mysql_speedgovernor
 
   mysql_speedgovernor:
     image: mysql:latest
