@@ -5,10 +5,12 @@ services:
     image: ${DOCKER_REGISTRY-}api
     build:
       context: .
-      dockerfile: Api/Docker
+      dockerfile: ./Dockerfile
     ports:
       - 5030:5030
       - 5031:5031
+    environment: 
+        ASPNETCORE_ENVIRONMENT: Development
 
   db: 
     image: mysql
@@ -16,7 +18,9 @@ services:
     restart: always
     environment: 
        MYSQL_ROOT_PASSWORD: example
+       MYSQL_USER: @speedgovernor
 
+       
   adminer:
     image: adminer
     restart: always

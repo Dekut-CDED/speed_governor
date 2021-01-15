@@ -22,9 +22,9 @@
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development"
+        "ASPNETCORE_ENVIRONMENT": "Production"
       },
-      "applicationUrl": "https://*:5030;http://*:5031"
+      "applicationUrl": "http://*:5031"
     },
     "Docker": {
       "commandName": "Docker",
