@@ -23,6 +23,8 @@ using NSwag;
 using Persistence;
 using Infrastructure.Message;
 using System;
+using Serilog;
+using Api.Extensions;
 
 namespace Api
 {
@@ -126,15 +128,12 @@ namespace Api
 
       app.UseOpenApi();
       app.UseSwaggerUi3();
-      //added custom middleware.
-      app.UseMiddleware<ErrorHandlinMiddleware>();
-      if (env.IsDevelopment())
-      {
-         app.UseDeveloperExceptionPage();
-      }
+            //added custom middleware.
+       app.UseMiddleware<ErrorHandlingMiddleware>();
      // app.UseHttpsRedirection();
 
       app.UseRouting();
+      app.UseSerilogRequestLogging();
       // use routing
       // Using routing
       app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
@@ -146,6 +145,7 @@ namespace Api
       {
         endpoints.MapControllers();
       });
+
     }
   }
 }
