@@ -5,20 +5,34 @@ services:
     image: ${DOCKER_REGISTRY-}api
     build:
       context: .
-      dockerfile: Api/Docker
+      dockerfile: ./Dockerfile
     ports:
-      - 5030:5030
-      - 5031:5031
+      - 3030:3030
+      - 5022:5022
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+    depends_on: 
+      - mysql_speedgovernor
 
-  db: 
-    image: mysql
+  mysql_speedgovernor:
+    image: mysql:latest
     command: --default-authentication-plugin=mysql_native_password
-    restart: always
-    environment: 
-       MYSQL_ROOT_PASSWORD: example
-
-  adminer:
-    image: adminer
-    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
     ports:
-      - 8083:8080
+      - 3306
+    volumes:
+      - mysql_db_data:/var/lib/mysql
+    healthcheck:
+       test: out=$$(mysqladmin ping -h localhost -P 3306 -u root --password=rootpassword 2>&1); echo $$out | grep 'mysqld is alive' || { echo $$out; exit 1; }
+
+  adminer_container:
+    image: adminer:latest
+    environment:
+      ADMINER_DEFAULT_SERVER: mysql_speedgovernor
+    ports:
+      - 9000:8080
+
+volumes:
+  mysql_db_data:
+

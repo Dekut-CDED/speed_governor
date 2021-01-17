@@ -2,7 +2,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces;
-using Domain;
 using MediatR;
 using Persistence;
 
@@ -30,7 +29,7 @@ namespace Application.User
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
 
-              var sms = _sendMessage.SendMessage(request.phone,request.Name);
+              var sms = await _sendMessage.SendMessage(request.phone,request.Name);
                 
               //var activity = new UserActivity()
                 //foreach (var res in sms["SMSMessageData"]["Recipients"])

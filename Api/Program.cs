@@ -27,7 +27,6 @@ namespace Api
                     context.Database.Migrate();
                     SeedData.SeedActivities(context, usermanager).Wait();
 
-
                     Thread t = new Thread(new ThreadStart(()=> {
                         Udp.StartListener(context);
                                 }));
