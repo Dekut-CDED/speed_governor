@@ -44,22 +44,23 @@ namespace Application.User
             {
                 AppUser user = await _userManager.FindByEmailAsync(request.Email);
 
-                if (user == null) throw new RestException(HttpStatusCode.Unauthorized, new { User = "Not Authorized " });
+                if (user == null)
+                {
+                    throw new RestException(HttpStatusCode.Unauthorized, new { User = "Not Authorized " });
+                }
 
                 var result = await _signinmanager.CheckPasswordSignInAsync(user, request.Password, false);
 
-                if (result.Succeeded)
+                if (!result.Succeeded)
                 {
-                    //TODO: generate token
-                    return new User
-                    {
-                        Email = user.Email,
-                        Token = _jwtgenerator.createToken(user),
-                        Username = user.UserName,
-                    };
-
+                    throw new RestException(HttpStatusCode.Unauthorized, new { User = "User Not authorized" });
                 }
-                throw new RestException(HttpStatusCode.Unauthorized, new {User = "Not authorized"});
+                return new User
+                {
+                    Email = user.Email,
+                    Token = _jwtgenerator.createToken(user),
+                    Username = user.UserName,
+                };
 
 
             }
