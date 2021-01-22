@@ -9,8 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
+
     [AllowAnonymous]
     [Produces("application/json")]
+    [ApiVersion("1.0")]
     public class UserController : BaseController
     {
         [HttpPost("login")]

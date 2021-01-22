@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
 {
+   [ApiVersion("1.0")]
     public class ActivitiesController : BaseController
     {
         
