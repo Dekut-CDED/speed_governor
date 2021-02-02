@@ -25,6 +25,8 @@ using Infrastructure.Message;
 using System;
 using Serilog;
 using Api.Extensions;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Versioning;
 
 namespace Api
 {
@@ -120,7 +122,17 @@ namespace Api
                     In = OpenApiSecurityApiKeyLocation.Header
                 });
             });
+
+            services.AddApiVersioning(config =>
+            {
+                config.AssumeDefaultVersionWhenUnspecified = true;
+                config.DefaultApiVersion = ApiVersion.Default;
+                config.ReportApiVersions = true;
+                config.ApiVersionReader = new HeaderApiVersionReader("api-version");
+            });
+
         }
+
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
