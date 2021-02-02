@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using System.Net;
 using AutoMapper;
 using Application.Errors;
+using speedGovernor = Domain.SpeedGovernor;
 
 
 namespace Application.User
@@ -38,16 +39,17 @@ namespace Application.User
             {
                 // Handler logic goes here
                 var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
-                if(user == null){
+                if (user == null)
+                {
                     throw new RestException(HttpStatusCode.Unauthorized, "User not authorized");
                 }
 
-                SpeedGovernor speedgovernor = await _context.SpeedGovernors.FindAsync(request.Id);
+                var speedgovernor = await _context.SpeedGovernors.FindAsync(request.Id);
 
                 if (speedgovernor == null)
                     throw new RestException(HttpStatusCode.NotFound, "Speed Governor does not exist");
 
-                var location = _context.Locations.Where(s => s.SpeedGovernor.Imei == speedgovernor.Imei ).FirstOrDefault();
+                var location = _context.Locations.Where(s => s.SpeedGovernor.Imei == speedgovernor.Imei).FirstOrDefault();
 
                 return _mapper.Map<Location, LocationDto>(location);
                 // Handler logic goes here

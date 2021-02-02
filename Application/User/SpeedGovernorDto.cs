@@ -1,5 +1,4 @@
-﻿
-namespace Application.User
+﻿namespace Application.User
 {
    public class SpeedGovernorDto
     {
