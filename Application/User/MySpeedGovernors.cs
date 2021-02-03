@@ -1,14 +1,14 @@
 using System.Collections.Generic;
-using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces;
 using MediatR;
 using Persistence;
-using Domain;
+using speedGovernor = Domain.SpeedGovernor;
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using AutoMapper;
+using Domain;
 
 namespace Application.User
 {
@@ -40,7 +40,7 @@ namespace Application.User
 
                 var speedgovernors = _context.SpeedGovernors.Where(s => s.Owner.Email == user.Email).ToList();
 
-                return _mapper.Map<List<SpeedGovernor>, List<SpeedGovernorDto>>(speedgovernors);
+                return _mapper.Map<List<speedGovernor>, List<SpeedGovernorDto>>(speedgovernors);
                 // Handler logic goes here
             }
         }

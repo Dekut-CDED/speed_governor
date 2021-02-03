@@ -1,6 +1,7 @@
 using Application.User;
 using AutoMapper;
 using Domain;
+using speedGovernor = Domain.SpeedGovernor;
 
 namespace Application.Activities
 {
@@ -10,7 +11,7 @@ namespace Application.Activities
         {
             // CreateMap<Activity, ActivityDto>();
             CreateMap<UserActivity, AttendeeDto>().ForMember(d => d.Username, o => o.MapFrom(s => s.AppUser.UserName)).ForMember( d => d.DisplayName, o => o.MapFrom(s => s.AppUser.DisplayName));
-            CreateMap<SpeedGovernor, SpeedGovernorDto>();
+            CreateMap<speedGovernor, SpeedGovernorDto>();
         }
     }
 }
