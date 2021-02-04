@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.User;
+using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -43,6 +44,7 @@ namespace Api.Controllers
                     );
         }
 
+        [Authorize(Roles = Role.Admin)]
         [HttpGet("all")]
         public async Task<ActionResult<List<User>>> GetAllUsers(){
             return await Mediator.Send(new GetUsers.Query() 

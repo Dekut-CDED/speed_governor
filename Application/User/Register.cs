@@ -23,6 +23,7 @@ namespace Application.User
             public string Email { get; set; }
             public string Password { get; set; }
             public string Imei { get; set; }
+            public string Role {get; set;}
             
         }
 
@@ -34,6 +35,8 @@ namespace Application.User
                 RuleFor(x => x.UserName).NotEmpty();
                 RuleFor(x => x.Email).NotEmpty().EmailAddress();
                 RuleFor(x => x.Password).Password();
+                RuleFor(x => x.Role).NotEmpty();
+
             }
         }
 

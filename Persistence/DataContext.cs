@@ -20,7 +20,8 @@ namespace Persistence
             
             protected override void OnModelCreating(ModelBuilder builder){
               base.OnModelCreating(builder);
-
+            // set up the default role of the user to user
+            builder.Entity<AppUser>().Property(user => user.Role).HasDefaultValue("User");
             // one to many relationships
             builder.Entity<SpeedGovernor>().HasOne(s => s.Owner).WithMany(s => s.SpeedGovernors);
 
