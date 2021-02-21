@@ -95,7 +95,7 @@ namespace Api
       services.AddScoped<IUserAccessor, UserAccessor>();
       services.AddScoped<IMessage, MessageService>();
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokenkey"]));
+      var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokenkey"]));
 
       services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
       {
@@ -157,7 +157,6 @@ namespace Api
       {
         endpoints.MapControllers();
       });
-
     }
   }
 }

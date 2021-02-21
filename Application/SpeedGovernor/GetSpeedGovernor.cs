@@ -34,8 +34,7 @@ namespace Application.SpeedGovernor
                 _userManager = userManager;
                 _userAccessor = userAccessor;
             }
-             public async Task<SpeedGovernorDto> Handle(Query request,
-                   CancellationToken cancellationToken)
+             public async Task<SpeedGovernorDto> Handle(Query request, CancellationToken cancellationToken)
              {
 
                 var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());

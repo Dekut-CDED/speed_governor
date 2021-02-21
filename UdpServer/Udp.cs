@@ -1,5 +1,4 @@
 ﻿using Domain;
-using Microsoft.EntityFrameworkCore;
 using Persistence;
 using System;
 using System.Net;
@@ -14,7 +13,6 @@ namespace UdpServer
     {
 
         private const int listenPort = 3030;
-
 
         public async static void StartListener(DataContext dataContext)
 
@@ -82,16 +80,12 @@ namespace UdpServer
                     GpsCourse = values[13].ToString(),
                     Speed = values[5].ToString(),
                     SpeedGovernor = speedGov
-                    // TODO Add some more fields, gps on = 14, ignition = 15, overspeed = 16, odometer = 6
+                    // TODO Add some more fields, gps on = 14, ignition = 15, overspeed = 16, odometer = 6, vibration, fuellevel
                 };
 
-
                 dataContext.Locations.Add(location);
-                await dataContext.SaveChangesAsync();
-                
-
+                await dataContext.SaveChangesAsync();               
             }
-
         }
     }
 }
