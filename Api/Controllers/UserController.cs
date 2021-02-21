@@ -26,7 +26,7 @@ namespace Api.Controllers
             return await Mediator.Send(new CurrentUser.Query());
         }
 
-        [HttpPost("sendmessage")]
+        [HttpPost("command")]
         public async Task<Unit> SendMessage(SendMessage.Command command){
             return await Mediator.Send(command);
         }

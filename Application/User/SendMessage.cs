@@ -17,9 +17,10 @@ namespace Application.User
     {
         public class Command : IRequest
         {
-            public string Name { get; set; }
-            public string phone { get; set; }
             public  string  Message { get; set; }
+            // use this id to get the phone number from database after verifying the user sending the command
+            //then send the command to that number
+            public  string  GvnId { get; set; }
         }
        
         public class Handler : IRequestHandler<Command>
@@ -39,7 +40,7 @@ namespace Application.User
             {
 
                 //var sms = await _sendMessage.SendMessage(request.phone,request.Name);
-                var twilioSms = await _sendMessage.SendTwilioMessage(request.Name, request.Message);
+                //var twilioSms = await _sendMessage.SendTwilioMessage(request.Name, request.Message);
 
                 //var activity = new UserActivity()
                 //foreach (var res in sms["SMSMessageData"]["Recipients"])
@@ -66,7 +67,8 @@ namespace Application.User
                     "+254742267032", "Humphry"
                 }
             };
-                var messageBody = $"Hello Humphry, welcome to Twilio, this is a message from {request.Name} : {request.Message}";
+                //Change this to the command to shut down, restart or decelerate the car
+                var messageBody = $"Hello Humphry, welcome to Twilio, this is a message for {request.GvnId} : {request.Message}";
 
                 foreach (var person in people)
                 {
