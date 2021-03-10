@@ -39,7 +39,10 @@ namespace Persistence.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("Imei")
+                    b.Property<string>("FirstName")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("LastName")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<bool>("LockoutEnabled")
@@ -65,11 +68,6 @@ namespace Persistence.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<string>("Role")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("longtext CHARACTER SET utf8mb4")
-                        .HasDefaultValue("User");
-
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
@@ -94,9 +92,8 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.Location", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("EngineON")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -113,8 +110,8 @@ namespace Persistence.Migrations
                     b.Property<string>("Speed")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
-                    b.Property<int?>("SpeedGovernorId")
-                        .HasColumnType("int");
+                    b.Property<string>("SpeedGovernorId")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
 
                     b.Property<string>("SpeedSignalStatus")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -129,7 +126,7 @@ namespace Persistence.Migrations
                     b.ToTable("Locations");
                 });
 
-            modelBuilder.Entity("Domain.SGCommand", b =>
+            modelBuilder.Entity("Domain.SGCommandActivity", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -148,9 +145,11 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.SpeedGovernor", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasColumnType("varchar(255) CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Fuellevel")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("Imei")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
@@ -162,6 +161,9 @@ namespace Persistence.Migrations
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.Property<string>("PlateNumber")
+                        .HasColumnType("longtext CHARACTER SET utf8mb4");
+
+                    b.Property<string>("Vibrations")
                         .HasColumnType("longtext CHARACTER SET utf8mb4");
 
                     b.HasKey("Id");
@@ -323,7 +325,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Location", b =>
                 {
                     b.HasOne("Domain.SpeedGovernor", "SpeedGovernor")
-                        .WithMany("Speeds")
+                        .WithMany("Locations")
                         .HasForeignKey("SpeedGovernorId");
                 });
 
@@ -336,7 +338,7 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.UserActivity", b =>
                 {
-                    b.HasOne("Domain.SGCommand", "Command")
+                    b.HasOne("Domain.SGCommandActivity", "Command")
                         .WithMany("UserActivities")
                         .HasForeignKey("ActivityId")
                         .OnDelete(DeleteBehavior.Cascade)

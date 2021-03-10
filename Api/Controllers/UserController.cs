@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application.User;
@@ -30,7 +29,7 @@ namespace Api.Controllers
             return await Mediator.Send(query);
         }
         [HttpPost("register")]
-        public async Task<ActionResult<User>> login(Register.Command command){
+        public async Task<ActionResult<User>> Register(Register.Command command){
             return await Mediator.Send(command);
         }
         [HttpGet]

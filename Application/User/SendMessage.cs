@@ -11,8 +11,10 @@ namespace Application.User
     {
         public class Command : IRequest
         {
+            public string SpeedGovernorID { get; set; }
             public string Name { get; set; }
-            public string phone { get; set; }
+            public string Phone { get; set; }
+            
         }
 
         public class Handler : IRequestHandler<Command>
@@ -29,7 +31,9 @@ namespace Application.User
             public async Task<Unit> Handle(Command request, CancellationToken cancellationToken)
             {
 
-              var sms = await _sendMessage.SendMessage(request.phone,request.Name);
+              var sms = await _sendMessage.SendMessage(request.Phone,request.Name);
+              // User user accessor to get the user phone number.
+              // check the role of authorized user.
                 
               //var activity = new UserActivity()
                 //foreach (var res in sms["SMSMessageData"]["Recipients"])

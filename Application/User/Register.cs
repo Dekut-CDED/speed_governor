@@ -63,7 +63,6 @@ namespace Application.User
                     DisplayName = request.DisplayName,
                     Email = request.Email,
                     UserName = request.UserName,
-                    Imei = request.Imei
                 };
 
                 var result = await _userManager.CreateAsync(user, request.Password);

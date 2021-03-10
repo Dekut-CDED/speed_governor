@@ -2,113 +2,74 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Bogus;
 using Domain;
 using Microsoft.AspNetCore.Identity;
 
 namespace Persistence
 {
+
     public class SeedData
     {
+        private static readonly Random _random = new Random();
+        string[] roles = new[] { "admin", "retailer", "user" };
+        private static readonly string v = $"{Guid.NewGuid()}";
+        public static Faker<AppUser> Fakeusers { get; } = new Faker<AppUser>()
+                                 .RuleFor(p => p.FirstName, f => f.Name.FindName())
+                                 .RuleFor(p => p.LastName, f => f.Name.LastName())
+                                 .RuleFor(p => p.UserName, f => f.Name.LastName())
+                                 .RuleFor(p => p.Email, f => f.Internet.Email())
+                                 .RuleFor(p => p.PhoneNumber, f => f.Phone.PhoneNumber())
+                                 .RuleFor(p => p.SpeedGovernors, f => FakeSpeedGovernor.Generate(10));
+        public static Faker<Location> FakeLocations { get; } = new Faker<Location>()
+                                  .RuleFor(l=> l.Id, f => Guid.NewGuid().ToString())
+                                  .RuleFor(l => l.Time, f => DateTime.Now.ToString())
+                                  .RuleFor(l => l.Latitude, f => f.Address.Latitude())
+                                  .RuleFor(l => l.Long, f => f.Address.Longitude())
+                                  .RuleFor(l => l.Speed, "54")
+                                  .RuleFor(l => l.SpeedSignalStatus, "54")
+                                  .RuleFor(l => l.EngineON, "54");
+        public static Faker<SpeedGovernor> FakeSpeedGovernor { get; } = new Faker<SpeedGovernor>()
+                                   .RuleFor(s => s.Id, f => Guid.NewGuid().ToString())
+                                   .RuleFor(s => s.Imei, f => Guid.NewGuid().ToString())
+                                   .RuleFor(s => s.Phone, f => f.Phone.PhoneNumber())
+                                   .RuleFor(s => s.PlateNumber, f => f.Vehicle.Vin())
+                                   .RuleFor(s => s.Fuellevel, f => f.Vehicle.Fuel())
+                                   .RuleFor(s => s.Locations, f => FakeLocations.Generate(10))
+                                   .RuleFor(s => s.Vibrations, f => f.Vehicle.Fuel());
+
+        public static Faker<SGCommandActivity> FakeActivity { get; } = new Faker<SGCommandActivity>()
+                                     .RuleFor(s => s.Description, f => f.Company.CatchPhrase())
+                                     .RuleFor(s => s.Name, f => f.Company.CompanyName());
+
         public static async Task SeedActivities(DataContext context, UserManager<AppUser> userManager){
+
+            var usersfake = Fakeusers.Generate(10);
+
+            var fakeactivities = FakeActivity.Generate(10);
+            var useractivities = new List<UserActivity>();
+            int i = 0;
+            foreach (var user in usersfake)
+            {
+                useractivities.Add(new UserActivity() { ActivityId = fakeactivities[i].Id, Command = fakeactivities[i], AppUser = user, AppUserId = user.Id, IsAdmin = true, DateTriggered = DateTime.Now });
+                i++;
+            }
             
+            var admin = new AppUser
+            {
+                DisplayName = "Wahome",
+                UserName = "johnwahome",
+                Email = "john@test.com",
+                SpeedGovernors = FakeSpeedGovernor.Generate(8)
+            };
+            usersfake.Add(admin);
             if(!userManager.Users.Any()){
-                var users = new List<AppUser>{
-                  new AppUser{
-                    DisplayName = "Wahome",
-                    UserName = "johnwahome",
-                    Email = "john@test.com",
-                    SpeedGovernors = new List<SpeedGovernor> {
-                     new SpeedGovernor {
-                       Imei = "232324345454534",
-                       Phone ="0753480483",
-                       PlateNumber = "234232332",
-                       Speeds = new List<Location> {
-                          new Location {
-                             Time = DateTime.Now.ToString(),
-                             Latitude = -0.395154,
-                             Long = 36.965040,
-                             Speed = "57",
-                             GpsCourse= "-3",
-                             SpeedSignalStatus = "34",
-                             EngineON = "34",
-            },
-                          new Location {
-                             Time = DateTime.Now.ToString(),
-                             Latitude = -0.395154,
-                             Long = 36.965040,
-                             Speed = "64",
-                             GpsCourse= "-3",
-                             SpeedSignalStatus = "34",
-                             EngineON = "34",
-            },
-                          new Location {
-                             Time = DateTime.Now.ToString(),
-                             Latitude = -0.395154,
-                             Long = 36.975040,
-                             Speed = "79",
-                             GpsCourse= "-3",
-                             SpeedSignalStatus = "34",
-                             EngineON = "34",
-            },
-                       }
-                     } ,
-                     new SpeedGovernor {
-                       Imei = "868715034074066",
-                       Phone ="0753480483",
-                       PlateNumber = "234232332",
-                     }   
-                    }
-
-            },
-                  new AppUser{
-                    DisplayName = "jane",
-                    UserName = "jane",
-                    Email = "jane@test.com"
-                    },
-                  new AppUser{
-                    DisplayName = "kim",
-                    UserName = "kim",
-                    Email = "kim@test.com"
-                    },
-                };
-
-                var commands = new List<SGCommand>
+                foreach (var user in usersfake)
                 {
-                  new SGCommand {
-                     Description = "Stop car",
-                     Name = "3434",
-                  },
-                  new SGCommand {
-                     Description = "View fuel",
-                     Name = "3434",
-                  }
-                };
-
-                foreach (var user in users)
-                {
-                    // this create the users and adds them to the store
                   await  userManager.CreateAsync(user, "Pa$$w0rd");
-
                 }
-
-                var activities = new List<UserActivity>
-                {
-                   new UserActivity {
-                      AppUser = users[0],
-                      Command = commands[0],
-                   },
-                   new UserActivity {
-                      AppUser = users[1],
-                      Command = commands[0],
-                   },
-                   new UserActivity {
-                      AppUser = users[1],
-                      Command = commands[1],
-                   }
-                };
-
-                context.Commands.AddRange(commands);
-                context.UserActivities.AddRange(activities);
+                context.Commands.AddRange(fakeactivities);
+                context.UserActivities.AddRange(useractivities);
                 await context.SaveChangesAsync();
             }
 
@@ -116,3 +77,4 @@ namespace Persistence
         
     }
 }
+

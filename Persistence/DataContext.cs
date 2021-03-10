@@ -14,7 +14,7 @@ namespace Persistence
             }
 
             public DbSet<Location> Locations { get; set; }
-            public DbSet<SGCommand> Commands { get; set; }
+            public DbSet<SGCommandActivity> Commands { get; set; }
             public DbSet<UserActivity> UserActivities { get; set; }
             public DbSet<SpeedGovernor> SpeedGovernors { get; set; }
             
@@ -25,7 +25,7 @@ namespace Persistence
             // one to many relationships
             builder.Entity<SpeedGovernor>().HasOne(s => s.Owner).WithMany(s => s.SpeedGovernors);
 
-            builder.Entity<Location>().HasOne(s => s.SpeedGovernor).WithMany(l => l.Speeds);
+            builder.Entity<Location>().HasOne(s => s.SpeedGovernor).WithMany(l => l.Locations);
 
 
             // many to many relationship
