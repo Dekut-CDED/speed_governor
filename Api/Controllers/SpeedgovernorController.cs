@@ -26,9 +26,14 @@ namespace Api.Controllers
 
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<SpeedGovernorDto>> GetSpeedGovornor(int id){
+        public async Task<ActionResult<SpeedGovernorDto>> GetSpeedGovornor(string id){
             return await Mediator.Send(new GetSpeedGovernor.Query(){Id=id});
         }
+
+       /* [HttpDelete("{id}")]
+        public async Task<ActionResult<Unit>> DeleteSpeedGovornor(string id){
+            return await Mediator.Send(new DeleteSpeedGovernor.Query(){Id=id});
+        }*/
 
     }
 }

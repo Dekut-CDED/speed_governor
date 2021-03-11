@@ -1,27 +1,27 @@
-using MediatR;
-using System.Threading.Tasks;
-using System.Threading;
-using Persistence;
-using AutoMapper;
-using Application.User;
-using Domain;
-using speedGovernor = Domain.SpeedGovernor;
-using Application.Interfaces;
-using Application.Errors;
+using System.Data.Common;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
+using Application.Errors;
+using Application.Interfaces;
+using Application.User;
+using AutoMapper;
+using Domain;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Persistence;
 
 namespace Application.SpeedGovernor
 {
-    public class GetSpeedGovernor
+    public class DeleteSpeedGovernor
     {
-
-         public class Query : IRequest<SpeedGovernorDto>
+        
+         public class Query : IRequest<Unit>
          {
            public string Id { get; set; }
          }
 
-         public class Handler : IRequestHandler<Query, SpeedGovernorDto>
+         public class Handler : IRequestHandler<Query, Unit>
          {
              private readonly DataContext _context;
             private readonly UserManager<AppUser> _userManager;
@@ -34,21 +34,23 @@ namespace Application.SpeedGovernor
                 _userManager = userManager;
                 _userAccessor = userAccessor;
             }
-             public async Task<SpeedGovernorDto> Handle(Query request,
+             public async Task<Unit> Handle(Query request,
                    CancellationToken cancellationToken)
-             {
+            {
 
                 var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
 
-                if(user == null) {
-                   throw new RestException(HttpStatusCode.Unauthorized, new { User = "Not authorize to access the code" });
+                if (user == null)
+                {
+                    throw new RestException(HttpStatusCode.Unauthorized, new { User = "Not authorize to access the code" });
                 }
 
-                 var speedgovernor = await _context.SpeedGovernors.FindAsync(request.Id);
-
-               return _mapper.Map<speedGovernor, SpeedGovernorDto>(speedgovernor);
-             }
-         }
+                var speedgovernor = await _context.SpeedGovernors.FindAsync(request.Id);
+                _context.SpeedGovernors.Remove(speedgovernor);
+                var result = await _context.SaveChangesAsync();
+                return new Unit();
+            }
+        }
 
     }
 }

@@ -44,9 +44,8 @@ namespace Persistence
 
         public static async Task SeedActivities(DataContext context, UserManager<AppUser> userManager){
 
-            var usersfake = Fakeusers.Generate(10);
-
-            var fakeactivities = FakeActivity.Generate(10);
+            var usersfake = Fakeusers.Generate(100);
+            var fakeactivities = FakeActivity.Generate(100);
             var useractivities = new List<UserActivity>();
             int i = 0;
             foreach (var user in usersfake)

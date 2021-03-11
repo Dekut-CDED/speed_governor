@@ -14,8 +14,6 @@ namespace UdpServer
     {
 
         private const int listenPort = 3030;
-
-
         public async static void StartListener(DataContext dataContext)
 
         {
