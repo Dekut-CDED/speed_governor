@@ -15,12 +15,12 @@ COPY ["UdpServer/UdpServer.csproj", "UdpServer/"]
 
 RUN dotnet restore "Api/Api.csproj"
 COPY . .
-WORKDIR "/src/Api"
+WORKDIR "/src/Api" ASPNETCORE_ENVIRONMENT=Production
 ENV ASPNETCORE_ENVIRONMENT=Production
 ENV PATH="$PATH:/root/.dotnet/tools"
 RUN dotnet build "Api.csproj" -c Release -o /app/build
 RUN dotnet tool install --global dotnet-ef --version 3.1.8
-RUN dotnet ef migrations add MysqlDockerMigrations -p ../Persistence -s .
+RUN  ASPNETCORE_ENVIRONMENT=Production dotnet ef migrations add MysqlDockerMigrations -p ../Persistence -s .
 
 FROM build AS publish
 

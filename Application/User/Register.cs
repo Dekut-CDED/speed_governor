@@ -34,6 +34,7 @@ namespace Application.User
                 RuleFor(x => x.UserName).NotEmpty();
                 RuleFor(x => x.Email).NotEmpty().EmailAddress();
                 RuleFor(x => x.Password).Password();
+
             }
         }
 
@@ -62,7 +63,6 @@ namespace Application.User
                     DisplayName = request.DisplayName,
                     Email = request.Email,
                     UserName = request.UserName,
-                    Imei = request.Imei
                 };
 
                 var result = await _userManager.CreateAsync(user, request.Password);

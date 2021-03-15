@@ -17,16 +17,15 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 using NSwag;
 using Persistence;
 using Infrastructure.Message;
 using System;
 using Serilog;
-using Api.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Api.Background;
 
 namespace Api
 {
@@ -77,6 +76,10 @@ namespace Api
       services.AddControllers( opt =>
       {
           var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
+          //TODO create user role policy
+          //options.AddPolicy("ElevatedRights", policy =>
+           //policy.RequireRole("Administrator", "PowerUser", "BackupAdministrator"));
+           //
           opt.Filters.Add(new AuthorizeFilter(policy));
 
       }).AddFluentValidation(
@@ -88,6 +91,7 @@ namespace Api
       // configure Identity
       var builder = services.AddIdentityCore<AppUser>();
       var identitybuilder = new IdentityBuilder(builder.UserType, builder.Services);
+      identitybuilder.AddRoles<IdentityRole>();
       identitybuilder.AddEntityFrameworkStores<DataContext>();
       identitybuilder.AddSignInManager<SignInManager<AppUser>>();
 
@@ -95,8 +99,7 @@ namespace Api
       services.AddScoped<IUserAccessor, UserAccessor>();
       services.AddScoped<IMessage, MessageService>();
 
-            var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokenkey"]));
-
+      var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokenkey"]));
       services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(opt =>
       {
           opt.TokenValidationParameters = new TokenValidationParameters
@@ -107,8 +110,8 @@ namespace Api
               ValidateIssuer = false
           };
       });
-
-        services.AddSwaggerDocument(document =>
+            services.AddHostedService<SeedDataHostedService>();
+            services.AddSwaggerDocument(document =>
             {
                 document.Title = "Speed Governor";
                 document.DocumentName = "v1";
@@ -161,3 +164,5 @@ namespace Api
     }
   }
 }
+
+//https://docs.microsoft.com/en-us/aspnet/core/security/authorization/roles?view=aspnetcore-5.0#:~:text=Role%2Dbased%20authorization%20checks%20are,to%20access%20the%20requested%20resource.

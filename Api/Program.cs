@@ -30,7 +30,8 @@ namespace Api
                 .ReadFrom.Configuration(Configuration)
                 .WriteTo.Console(
                     outputTemplate: "[{Timestamp:HH:mm:ss} {Level:u3}] {Message:lj} {Properties:j}{NewLine}{Exception}")
-                .CreateLogger();
+                .CreateLogger()
+                ;
 
             var host = CreateHostBuilder(args).Build();
             var scope = host.Services.CreateScope();
@@ -44,7 +45,6 @@ namespace Api
 
                 Log.Information("Migrating the database from the migrations");
                 context.Database.Migrate();
-                SeedData.SeedActivities(context, usermanager).Wait();
 
                 Thread t = new Thread(new ThreadStart(()=> {
                         Udp.StartListener(context);

@@ -11,6 +11,7 @@ namespace Application.User
         public int AccessFailedCount { get; set; }
         public bool PhoneNumberConfirmed { get; set; }
         public DateTimeOffset? LockoutEnd { get; set; } 
+        public string Role {get; set;}
         
     }
 }
