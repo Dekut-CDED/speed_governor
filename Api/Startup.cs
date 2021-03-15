@@ -25,6 +25,7 @@ using System;
 using Serilog;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Api.Background;
 
 namespace Api
 {
@@ -109,8 +110,8 @@ namespace Api
               ValidateIssuer = false
           };
       });
-
-        services.AddSwaggerDocument(document =>
+            services.AddHostedService<SeedDataHostedService>();
+            services.AddSwaggerDocument(document =>
             {
                 document.Title = "Speed Governor";
                 document.DocumentName = "v1";
