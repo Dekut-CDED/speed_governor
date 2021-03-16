@@ -11,7 +11,7 @@ namespace Domain
      public string Vibrations { get; set; }
      
      
-        public virtual AppUser Owner { get; set; }
+    public virtual AppUser Owner { get; set; }
      public virtual ICollection<Location> Locations { get; set; }
 
      // vibration
