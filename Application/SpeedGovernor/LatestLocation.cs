@@ -9,8 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using System.Net;
 using AutoMapper;
 using Application.Errors;
-using speedGovernor = Domain.SpeedGovernor;
-
+using location = Domain.Location;
+using Microsoft.EntityFrameworkCore;
 
 namespace Application.User
 {
@@ -18,7 +18,7 @@ namespace Application.User
     {
         public class Query : IRequest<LocationDto>
         {
-            public int Id { get; set; }
+            public string Id { get; set; }
         }
 
         public class Handler : IRequestHandler<Query, LocationDto>
@@ -49,9 +49,9 @@ namespace Application.User
                 if (speedgovernor == null)
                     throw new RestException(HttpStatusCode.NotFound, "Speed Governor does not exist");
 
-                var location = _context.Locations.Where(s => s.SpeedGovernor.Imei == speedgovernor.Imei).FirstOrDefault();
+                var location = await _context.Locations.Where(s => s.SpeedGovernor.Imei == speedgovernor.Imei).SingleOrDefaultAsync();
 
-                return _mapper.Map<Location, LocationDto>(location);
+                return _mapper.Map<location, LocationDto>(location);
                 // Handler logic goes here
             }
         }

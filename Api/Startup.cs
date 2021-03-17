@@ -26,6 +26,7 @@ using Serilog;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Api.Background;
+using Api.SignalRhub;
 
 namespace Api
 {
@@ -62,7 +63,6 @@ namespace Api
 
     public void ConfigureServices(IServiceCollection services)
     {
-      services.AddCors();
       services.AddDbContext<DataContext>(opt =>
       {
           opt.UseLazyLoadingProxies();
@@ -110,7 +110,6 @@ namespace Api
               ValidateIssuer = false
           };
       });
-            services.AddHostedService<SeedDataHostedService>();
             services.AddSwaggerDocument(document =>
             {
                 document.Title = "Speed Governor";
@@ -134,6 +133,13 @@ namespace Api
                 config.ApiVersionReader = new HeaderApiVersionReader("api-version");
             });
 
+            // background service
+
+          services.AddCors();
+          services.AddSignalR();
+          services.AddHostedService<SeedDataHostedService>();
+            services.AddHostedService<LocationBrokerPub>();
+
         }
 
 
@@ -142,6 +148,8 @@ namespace Api
     {
 
       app.UseOpenApi();
+      app.UseDefaultFiles();
+      app.UseStaticFiles();
       app.UseSwaggerUi3();
             //added custom middleware.
        app.UseMiddleware<ErrorHandlingMiddleware>();
@@ -149,16 +157,18 @@ namespace Api
 
       app.UseRouting();
       app.UseSerilogRequestLogging();
-      // use routing
-      // Using routing
-      app.UseCors(x => x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
+            // use routing
+            // Using routing
+          app.UseCors(options =>
+                    options.WithOrigins("http://127.0.0.1:5500").AllowAnyHeader().AllowCredentials()
+               );
       app.UseAuthentication();
       app.UseAuthorization();
 
       app.UseEndpoints(endpoints =>
       {
-        endpoints.MapControllers();
+          endpoints.MapControllers();
+          endpoints.MapHub<SignalRealTimeLocation>("/realtime");
       });
 
     }
