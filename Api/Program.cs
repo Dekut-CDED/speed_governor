@@ -46,10 +46,11 @@ namespace Api
                 Log.Information("Migrating the database from the migrations");
                 context.Database.Migrate();
 
-                Thread t = new Thread(new ThreadStart(()=> {
+         /*       Thread t = new Thread(new ThreadStart(()=> {
                         Udp.StartListener(context);
                                 }));
-                t.Start();                   
+                
+                t.Start();   */                
              host.Run();
 
             }

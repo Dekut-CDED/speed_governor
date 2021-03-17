@@ -138,7 +138,8 @@ namespace Api
           services.AddCors();
           services.AddSignalR();
           services.AddHostedService<SeedDataHostedService>();
-            services.AddHostedService<LocationBrokerPub>();
+          services.AddHostedService<LocationBrokerPub>();
+          services.AddHostedService<UdpServerBackground>();
 
         }
 
