@@ -54,14 +54,14 @@ namespace Api.Controllers
                     );
         }
 
-        [Authorize(Roles = Role.Admin)]
+        [Authorize(Roles = "Admin")]
         [HttpGet("all")]
         public async Task<ActionResult<List<User>>> GetAllUsers(){
             return await Mediator.Send(new GetUsers.Query() 
                     );
         }
         
-        [HttpPost("addrole/")]
+        [HttpPost("addusertorole/")]
         public async  Task<ActionResult> AddUserRole(RoleViewModel model)
         {
             var user = await _userManager.FindByEmailAsync(model.UserEmail);
@@ -69,16 +69,5 @@ namespace Api.Controllers
            return Ok(result);
         }
         
-        [HttpDelete("removefromRole")]
-        public async  Task<ActionResult> RemoveUserFromRole(RoleViewModel model)
-        {
-            var user = await _userManager.FindByEmailAsync(model.UserEmail);
-           var result= await  _userManager.RemoveFromRoleAsync(user, model.Role);
-           return Ok(result);
-        }
     }
-    public class RoleViewModel {
-        public string UserEmail{ get; set; }
-        public string Role { get; set; }
-        }
     }

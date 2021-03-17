@@ -53,7 +53,6 @@ namespace Persistence
                 useractivities.Add(new UserActivity() { ActivityId = fakeactivities[i].Id, Command = fakeactivities[i], AppUser = user, AppUserId = user.Id, IsAdmin = true, DateTriggered = DateTime.Now });
                 i++;
             }
-            
             var admin = new AppUser
             {
                 DisplayName = "Wahome",

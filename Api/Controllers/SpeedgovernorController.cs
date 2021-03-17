@@ -14,7 +14,7 @@ namespace Api.Controllers
     {
         // Get the current location     
         [HttpGet("{id}/location")]
-        public async Task<ActionResult<LocationDto>> GetLatestLocation(int id){
+        public async Task<ActionResult<LocationDto>> GetLatestLocation(string id){
             return await Mediator.Send(new LatestLocation.Query(){Id=id});
         }
 

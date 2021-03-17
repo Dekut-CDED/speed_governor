@@ -2,7 +2,7 @@ namespace Application
 {
     public class LocationDto
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string  Time { get; set; }
         public string Speed { get; set; }
         public double Latitude { get; set; }

@@ -3,9 +3,9 @@ using location = Domain.Location;
 
 namespace Application
 {
-    public class MappingProfiles : Profile
+    public class MappingProfile: Profile
   {
-      public MappingProfiles()
+      public MappingProfile()
       {
           CreateMap<location, LocationDto>();
       }
