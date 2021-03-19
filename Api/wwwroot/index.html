@@ -3,40 +3,34 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>RealTimeService</title>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.css" rel="stylesheet">
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.1.1/mapbox-gl.js"></script>
+    <link rel="stylesheet" href="css/bootstrap.css">
+    <style>
+    #map { top: 0; bottom: 0; height: 800px; width: 60%;}
+     ul {overflow:auto; overflow-y:scroll;}
+     #list{height: 500px;}
+    </style>
 </head>
 <body>
-<div class="container">
-        <div class="row">&nbsp;</div>
-        <div class="row">
-            <div class="col-2">User</div>
-            <div class="col-4"><input type="text" id="userInput" /></div>
-        </div>
-        <div class="row">
-            <div class="col-2">Message</div>
-            <div class="col-4"><input type="text" id="messageInput" /></div>
-        </div>
-        <div class="row">&nbsp;</div>
-        <div class="row">
-            <div class="col-6">
-                <input type="button" id="sendButton" value="Send Message" />
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-12">
-            <hr />
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-6">
-            <ul id="messagesList"></ul>
-        </div>
-    </div>
 
-    <div>
-       <div id="messageCount"></div>
-    </div>
+<div class="container"> 
+<div class="row">
+    <div id="messageCount"></div>
+</div>
+<div class="row">
+<div id="map" class="col-8">
+</div>
+<div class="col-4" id="list">
+    <ul id="messagesList" ></ul>
+ </div>
+ </div>
+</div>
+
+
+<script src="https://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.7/signalr.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/3.1.7/signalr.min.js"></script>
 <script src="./js/index.js"></script>
 </body>
