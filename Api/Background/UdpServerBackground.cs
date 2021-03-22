@@ -29,6 +29,10 @@ namespace Api.Background
             groupEp = new IPEndPoint(IPAddress.Any, port);
             listner = new UdpClient(groupEp);
 
+            //redis
+            //string recordkey = "Speedgovernor_" + DateTime.Now.ToString("yyyyMMdd_hhmm");
+           // speedgovernors = await cache.GetRecordAsync<WeatherForcast[]>(recordkey);
+
             Console.WriteLine($"waiting for bloadcast at port {port}");
             while (true)
             {

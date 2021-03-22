@@ -96,7 +96,7 @@ namespace Api
       identitybuilder.AddSignInManager<SignInManager<AppUser>>();
 
       services.AddScoped<IJwtGenerator, JwtGenerator>();
-      services.AddScoped<IUserAccessor, UserAccessor>();
+            services.AddScoped<IUserAccessor, UserAccessor>();
       services.AddScoped<IMessage, MessageService>();
 
       var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokenkey"]));
@@ -140,6 +140,15 @@ namespace Api
           services.AddHostedService<SeedDataHostedService>();
           services.AddHostedService<LocationBrokerPub>();
           services.AddHostedService<UdpServerBackground>();
+
+            // redis cache
+          services.AddStackExchangeRedisCache(options => {
+            options.Configuration = Configuration.GetConnectionString("Redis");
+            options.InstanceName = "speedgov_";
+          });
+
+
+
 
         }
 
