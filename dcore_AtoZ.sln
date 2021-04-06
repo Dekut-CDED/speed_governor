@@ -17,7 +17,7 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UdpServer", "UdpServer\UdpServer.csproj", "{22515795-9451-4C78-B60A-366E857E877D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "apitests", "apitests\apitests.csproj", "{0A48C517-8DE7-408E-8081-F8F6B217AB58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Apitests", "apitests\Apitests.csproj", "{0A48C517-8DE7-408E-8081-F8F6B217AB58}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

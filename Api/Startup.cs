@@ -96,7 +96,7 @@ namespace Api
       identitybuilder.AddSignInManager<SignInManager<AppUser>>();
 
       services.AddScoped<IJwtGenerator, JwtGenerator>();
-            services.AddScoped<IUserAccessor, UserAccessor>();
+      services.AddScoped<IUserAccessor, UserAccessor>();
       services.AddScoped<IMessage, MessageService>();
 
       var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Tokenkey"]));
