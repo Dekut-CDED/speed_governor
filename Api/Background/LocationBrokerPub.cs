@@ -19,9 +19,8 @@ namespace Api.Background
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             while (!stoppingToken.IsCancellationRequested) {
-                await Task.Delay(1000);
-                var eventMessage = new EventMessage($"Id {Guid.NewGuid():N}", $"Title {Guid.NewGuid():N}", DateTime.UtcNow);
-               await locationbrokerhubcontext.Clients.All.SendAsync("onMessageReceived",eventMessage, stoppingToken);
+                //await Task.Delay(1000);
+               //await locationbrokerhubcontext.Clients.All.SendAsync("onMessageReceived",eventMessage, stoppingToken);
             }
         }
     }

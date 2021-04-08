@@ -35,6 +35,7 @@ namespace Api.Background
                 var bytes = await listner.ReceiveAsync();
                 var data = Encoding.ASCII.GetString(bytes.Buffer, 0, bytes.Buffer.Length);
                 var result = data.TrimStart(chartoTrim).Trim(chartoTrim).Split(",");
+                Console.WriteLine(result);
                 await locationhub.Clients.All.SendAsync("onMessageReceived", result, stoppingToken);
             }
         }
