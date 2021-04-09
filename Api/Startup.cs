@@ -22,7 +22,7 @@ using NSwag;
 using Persistence;
 using Infrastructure.Message;
 using System;
-using Serilog;
+//using Serilog;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Api.Background;
@@ -47,18 +47,18 @@ namespace Api
                 opt.UseLazyLoadingProxies();
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
-
+            services.AddMvc(options => options.EnableEndpointRouting = false).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             ConfigureServices(services);
         }
         public void ConfigureProductionServices(IServiceCollection services)
         {
             services.AddDbContext<DataContext>(opt =>
             {
-                opt.UseLazyLoadingProxies();
-                opt.UseMySql(Configuration.GetConnectionString("DefaultConnection"), options => options.ServerVersion(new Version(8, 0, 19), Pomelo.EntityFrameworkCore.MySql.Infrastructure.ServerType.MySql).EnableRetryOnFailure()
-              );
+                opt.UseSqlServer(Configuration.GetConnectionString("AzureSqlServiceConnectionString"));
             });
-
+            services.AddMvc(options => options.EnableEndpointRouting = false).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
             ConfigureServices(services);
         }
 
@@ -152,7 +152,6 @@ namespace Api
             services.AddCors();
             services.AddSignalR();
             services.AddHostedService<SeedDataHostedService>();
-            // services.AddHostedService<LocationBrokerPub>();
             services.AddHostedService<UdpServerBackground>();
 
             //   services.AddSingleton<IEmailSender, EmailSender>();
@@ -182,7 +181,7 @@ namespace Api
 
             app.UseRouting();
             app.UseHttpsRedirection();
-            app.UseSerilogRequestLogging();
+            //app.UseSerilogRequestLogging();
             // use routing
             // Using routing
             app.UseCors(options =>
