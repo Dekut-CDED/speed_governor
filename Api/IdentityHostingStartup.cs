@@ -12,6 +12,7 @@ namespace UploadandDowloadService.Data
 {
     public class IdentityHostingStartup : IHostingStartup
     {
+
         public void Configure(IWebHostBuilder builder)
         {
             builder.ConfigureServices((context, services) =>
@@ -19,7 +20,7 @@ namespace UploadandDowloadService.Data
 
                 services.AddDbContext<DataContext>(opt =>
                {
-                   opt.UseSqlServer("Server=tcp:kaizenserver.database.windows.net,1433;Initial Catalog=cded;Persist Security Info=False;User ID=kaizenadmin;Password=pK}w/5cfF<RwvRjWGSB5RJ=^^;MultipleActiveResultSets=False;Encrypt=True;TrustServerCertificate=False;Connection Timeout=30;");
+                   opt.UseSqlServer("Server=black;Database=speedgovernor;User=sa;Password=Password_123;MultipleActiveResultSets=true");
                });
 
                 var builder = services.AddIdentityCore<AppUser>();

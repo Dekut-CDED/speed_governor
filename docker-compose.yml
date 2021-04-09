@@ -2,7 +2,6 @@ version: '3.4'
 
 services:
   api:
-    image: ${DOCKER_REGISTRY-}api
     build:
       context: .
       dockerfile: ./Dockerfile
@@ -12,27 +11,14 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Production
     depends_on: 
-      - mysql_speedgovernor
+      - sqlserver
 
-  mysql_speedgovernor:
-    image: mysql:latest
-    command: --default-authentication-plugin=mysql_native_password
-    environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server
     ports:
       - 3306
-    volumes:
-      - mysql_db_data:/var/lib/mysql
-    healthcheck:
-       test: out=$$(mysqladmin ping -h localhost -P 3306 -u root --password=rootpassword 2>&1); echo $$out | grep 'mysqld is alive' || { echo $$out; exit 1; }
-
-  adminer_container:
-    image: adminer:latest
-    environment:
-      ADMINER_DEFAULT_SERVER: mysql_speedgovernor
-    ports:
-      - 9000:8080
-
-volumes:
-  mysql_db_data:
+    environment: 
+      ACCEPT_EULA: "Y"
+      SA_PASSWORD: "Password_123"
+      MSSQL_PID: "Express"
 

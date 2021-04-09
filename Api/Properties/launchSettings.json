@@ -20,11 +20,11 @@
     "Api": {
       "commandName": "Project",
       "launchBrowser": true,
-      "launchUrl": "swagger",
+      "launchUrl": "",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Production"
       },
-      "applicationUrl": "http://*:5022"
+      "applicationUrl": "http://0.0.0.0:5022;https://0.0.0.0:5001"
     },
     "Docker": {
       "commandName": "Docker",
