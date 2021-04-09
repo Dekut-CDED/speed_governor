@@ -9,9 +9,8 @@ namespace Application.User
         public string Email { get; set; }
         public string PhoneNumer {get; set;}
         public int AccessFailedCount { get; set; }
-        public bool PhoneNumberConfirmed { get; set; }
         public DateTimeOffset? LockoutEnd { get; set; } 
-        public string Role {get; set;}
+     
         
     }
 }

@@ -55,7 +55,8 @@ namespace Persistence
             }
             var admin = new AppUser
             {
-                DisplayName = "Wahome",
+                FirstName = "John",
+                LastName = "Wahome",
                 UserName = "johnwahome",
                 Email = "john@test.com",
                 SpeedGovernors = FakeSpeedGovernor.Generate(8)

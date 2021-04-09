@@ -18,20 +18,24 @@ namespace Application.User
     {
         public class Command : IRequest<User>
         {
-            public string DisplayName { get; set; }
+            public string Lastname { get; set; }
+            public string FirstName { get; set; }
+            public string PhoneNumber { get; set; }
             public string UserName { get; set; }
             public string Email { get; set; }
             public string Password { get; set; }
-            public string Imei { get; set; }
-            
+
+
         }
 
         public class CommandValidotor : AbstractValidator<Command>
         {
             public CommandValidotor()
             {
-                RuleFor(x => x.DisplayName).NotEmpty();
                 RuleFor(x => x.UserName).NotEmpty();
+                RuleFor(x => x.FirstName).NotEmpty();
+                RuleFor(x => x.Lastname).NotEmpty();
+                RuleFor(x => x.PhoneNumber).NotEmpty();
                 RuleFor(x => x.Email).NotEmpty().EmailAddress();
                 RuleFor(x => x.Password).Password();
 
@@ -60,9 +64,12 @@ namespace Application.User
 
                 var user = new AppUser
                 {
-                    DisplayName = request.DisplayName,
                     Email = request.Email,
                     UserName = request.UserName,
+                    FirstName = request.FirstName,
+                    LastName = request.Lastname,
+                    PhoneNumber = request.PhoneNumber
+               
                 };
 
                 var result = await _userManager.CreateAsync(user, request.Password);

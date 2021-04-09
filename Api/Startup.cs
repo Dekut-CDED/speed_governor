@@ -26,6 +26,7 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Api.Background;
+using Microsoft.AspNetCore.Identity.UI.Services;
 
 namespace Api
 {
@@ -90,11 +91,11 @@ namespace Api
               }
             );
 
-            var builder = services.AddIdentityCore<AppUser>();
-            var identitybuilder = new IdentityBuilder(builder.UserType, builder.Services);
-            identitybuilder.AddRoles<IdentityRole>();
-            identitybuilder.AddEntityFrameworkStores<DataContext>();
-            identitybuilder.AddSignInManager<SignInManager<AppUser>>();
+
+            services.AddIdentity<AppUser, IdentityRole>()
+             .AddEntityFrameworkStores<DataContext>()
+             .AddDefaultTokenProviders()
+             .AddDefaultUI();
 
 
             services.Configure<IdentityOptions>(options =>
@@ -154,7 +155,7 @@ namespace Api
             services.AddHostedService<SeedDataHostedService>();
             services.AddHostedService<UdpServerBackground>();
 
-            //   services.AddSingleton<IEmailSender, EmailSender>();
+             services.AddSingleton<IEmailSender, EmailSender>();
 
             services.ConfigureApplicationCookie(options =>
             {
