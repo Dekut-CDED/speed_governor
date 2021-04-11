@@ -14,6 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Application.Roles;
 
 namespace Api.Areas.Identity.Pages.Account
 {
@@ -22,16 +23,19 @@ namespace Api.Areas.Identity.Pages.Account
     {
         private readonly SignInManager<AppUser> _signInManager;
         private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<IdentityRole> roleManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
 
         public RegisterModel(
             UserManager<AppUser> userManager,
+            RoleManager<IdentityRole> roleManager,
             SignInManager<AppUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender)
         {
             _userManager = userManager;
+            this.roleManager = roleManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
@@ -91,14 +95,24 @@ namespace Api.Areas.Identity.Pages.Account
 
         public async Task<IActionResult> OnPostAsync(string returnUrl = null)
         {
+
+            string role = Request.Form["rdUserRole"].ToString();
             returnUrl ??= Url.Content("~/");
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new AppUser { FirstName = Input.FirstName, LastName = Input.LastName, PhoneNumber = Input.PhoneNumber,  UserName = Input.Email, Email = Input.Email };
+                var user = new AppUser { FirstName = Input.FirstName, LastName = Input.LastName, PhoneNumber = Input.PhoneNumber, UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
+                if (!await roleManager.RoleExistsAsync(role))
+                {
+                    roleManager.CreateAsync(new IdentityRole(Roles.CdedAdmin.ToString())).GetAwaiter().GetResult();
+                    roleManager.CreateAsync(new IdentityRole(Roles.CdedAdmin.ToString())).GetAwaiter().GetResult();
+                    roleManager.CreateAsync(new IdentityRole(Roles.User.ToString())).GetAwaiter().GetResult();
+                }
                 if (result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(user, role);
+
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -109,8 +123,8 @@ namespace Api.Areas.Identity.Pages.Account
                         values: new { area = "Identity", userId = user.Id, code = code, returnUrl = returnUrl },
                         protocol: Request.Scheme);
 
-                  //  await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
-                   //     $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
+                    //  await _emailSender.SendEmailAsync(Input.Email, "Confirm your email",
+                    //     $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>clicking here</a>.");
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
