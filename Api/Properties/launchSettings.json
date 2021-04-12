@@ -17,6 +17,7 @@
         "ASPNETCORE_ENVIRONMENT": "Production"
       }
     },
+
     "Api": {
       "commandName": "Project",
       "launchBrowser": true,

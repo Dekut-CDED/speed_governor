@@ -29,6 +29,7 @@ using Api.Background;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
+using Api.SignalRhub;
 
 namespace Api
 {
@@ -50,7 +51,7 @@ namespace Api
                 opt.UseLazyLoadingProxies();
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddMvc(options => options.EnableEndpointRouting = false).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
+            services.AddMvc(options => options.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             ConfigureServices(services);
         }
@@ -60,7 +61,7 @@ namespace Api
             {
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
-            services.AddMvc(options => options.EnableEndpointRouting = false).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
+            services.AddMvc(options => options.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             ConfigureServices(services);
         }
@@ -206,8 +207,9 @@ namespace Api
                 endpoints.MapRazorPages();
                 endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}"
+                pattern: "{controller=Home}/{action=Index}/{id?}"             
                 );
+                endpoints.MapHub<SignalRealTimeLocation>("/location/realTime");
             });
         }
     }

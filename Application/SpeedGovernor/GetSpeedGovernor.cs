@@ -27,28 +27,28 @@ namespace Application.SpeedGovernor
             private readonly UserManager<AppUser> _userManager;
             private readonly IUserAccessor _userAccessor;
             private readonly IMapper _mapper;
-             public Handler(DataContext context,UserManager<AppUser> userManager, IUserAccessor userAccessor ,IMapper mapper)
-             {
-                 _mapper = mapper;
-                 _context = context;
+            public Handler(DataContext context,UserManager<AppUser> userManager, IUserAccessor userAccessor ,IMapper mapper)
+            {
+                _mapper = mapper;
+                _context = context;
                 _userManager = userManager;
                 _userAccessor = userAccessor;
             }
-             public async Task<SpeedGovernorDto> Handle(Query request,
-                   CancellationToken cancellationToken)
-             {
+            public async Task<SpeedGovernorDto> Handle(Query request,
+                CancellationToken cancellationToken)
+            {
 
-                var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
+            var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
 
-                if(user == null) {
-                   throw new RestException(HttpStatusCode.Unauthorized, new { User = "Not authorize to access the code" });
-                }
+            if(user == null) 
+            {
+                throw new RestException(HttpStatusCode.Unauthorized, new { User = "Not authorize to access the code" });
+            }
 
-                 var speedgovernor = await _context.SpeedGovernors.FindAsync(request.Id);
+            var speedgovernor = await _context.SpeedGovernors.FindAsync(request.Id);
 
-               return _mapper.Map<speedGovernor, SpeedGovernorDto>(speedgovernor);
-             }
+            return _mapper.Map<speedGovernor, SpeedGovernorDto>(speedgovernor);
+            }
          }
-
     }
 }
