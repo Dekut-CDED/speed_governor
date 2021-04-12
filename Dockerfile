@@ -1,6 +1,8 @@
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /app
 EXPOSE 5022
+EXPOSE 5021
+EXPOSE 3030
 ENV ASPNETCORE_URLS http://+:5022
 WORKDIR /src
 COPY ["Api/Api.csproj", "Api/"]
