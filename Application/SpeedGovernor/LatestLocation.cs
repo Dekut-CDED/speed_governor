@@ -27,18 +27,21 @@ namespace Application.User
             private readonly IUserAccessor _userAccessor;
             private readonly UserManager<AppUser> _userManager;
             private readonly IMapper _mapper;
-            public Handler(DataContext context, IUserAccessor userAccessor, UserManager<AppUser> userManager, IMapper mapper)
+            private readonly IUnitofWork _unitofWork;
+            public Handler(IUnitofWork unitofWork, DataContext context, IUserAccessor userAccessor, UserManager<AppUser> userManager, IMapper mapper)
             {
+                this._unitofWork = unitofWork;
                 _userManager = userManager;
                 _userAccessor = userAccessor;
                 _context = context;
                 _mapper = mapper;
+
             }
             public async Task<LocationDto> Handle(Query request,
                 CancellationToken cancellationToken)
             {
                 // Handler logic goes here
-                var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
+                var user = await _userManager.FindByIdAsync(_userAccessor.GetCurrentUsername());
                 if (user == null)
                 {
                     throw new RestException(HttpStatusCode.Unauthorized, "User not authorized");

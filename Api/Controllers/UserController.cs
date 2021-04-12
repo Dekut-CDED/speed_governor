@@ -25,7 +25,7 @@ namespace Api.Controllers
             _userManager = userManager;
         }
         [HttpPost("login")]
-        public async Task<ActionResult<User>> login(Login.Query query)
+        public async Task<ActionResult<object>> login(Login.Query query)
         {
             return await Mediator.Send(query);
         }
@@ -41,7 +41,7 @@ namespace Api.Controllers
             return await Mediator.Send(new ConfirmEmail.Query() { userId = id, token = token });
         }
         [HttpGet]
-        public async Task<ActionResult<User>> CurrentUser()
+        public async Task<ActionResult<object>> CurrentUser()
         {
             return await Mediator.Send(new CurrentUser.Query());
         }
@@ -65,12 +65,14 @@ namespace Api.Controllers
                     );
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "CdedAdmin")]
         [HttpGet("all")]
-        public async Task<ActionResult<List<User>>> GetAllUsers()
+        public async Task<ActionResult> GetAllUsers()
         {
-            return await Mediator.Send(new GetUsers.Query()
+            var result = await Mediator.Send(new GetUsers.Query()
                     );
+
+            return Json(new { data = result });
         }
 
         [HttpPost("addusertorole/")]

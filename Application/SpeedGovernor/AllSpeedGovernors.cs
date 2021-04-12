@@ -18,39 +18,40 @@ namespace Application.SpeedGovernor
     public class AllSpeedGovernors
     {
 
-         public class Query : IRequest<List<SpeedGovernorDto>>
-         {
+        public class Query : IRequest<List<SpeedGovernorDto>>
+        {
 
-         }
+        }
 
-         public class Handler : IRequestHandler<Query, List<SpeedGovernorDto>>
-         {
-             private readonly DataContext _context;
+        public class Handler : IRequestHandler<Query, List<SpeedGovernorDto>>
+        {
+            private readonly DataContext _context;
             private readonly UserManager<AppUser> _userManager;
             private readonly IUserAccessor _userAccessor;
             private readonly IMapper _mapper;
-             public Handler(DataContext context,UserManager<AppUser> userManager, IUserAccessor userAccessor ,IMapper mapper)
-             {
-                 _mapper = mapper;
-                 _context = context;
+            public Handler(DataContext context, UserManager<AppUser> userManager, IUserAccessor userAccessor, IMapper mapper)
+            {
+                _mapper = mapper;
+                _context = context;
                 _userManager = userManager;
                 _userAccessor = userAccessor;
             }
-             public async Task<List<SpeedGovernorDto>> Handle(Query request,
-                   CancellationToken cancellationToken)
-             {
+            public async Task<List<SpeedGovernorDto>> Handle(Query request,
+                  CancellationToken cancellationToken)
+            {
 
-                var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
+                var user = await _userManager.FindByIdAsync(_userAccessor.GetCurrentUsername());
 
-                if(user == null) {
-                   throw new RestException(HttpStatusCode.Unauthorized, new { User = "Not authorize to access the code" });
+                if (user == null)
+                {
+                    throw new RestException(HttpStatusCode.Unauthorized, new { User = "Not authorize to access the code" });
                 }
 
-                 var speedgovernors = await _context.SpeedGovernors.ToListAsync();
+                var speedgovernors = await _context.SpeedGovernors.ToListAsync();
 
-               return _mapper.Map<List<speedGovernor>, List<SpeedGovernorDto>>(speedgovernors);
-             }
-         }
+                return _mapper.Map<List<speedGovernor>, List<SpeedGovernorDto>>(speedgovernors);
+            }
+        }
 
     }
 }
