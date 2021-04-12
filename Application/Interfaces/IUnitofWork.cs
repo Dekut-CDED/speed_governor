@@ -5,5 +5,6 @@ namespace Application.Interfaces
         void Save();
 
         IAppUser AppUser { get; }
+        ILocation Location { get; }
     }
 }

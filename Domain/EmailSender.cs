@@ -7,7 +7,6 @@ namespace Domain
 {
     public class EmailSender : IEmailSender
     {
-
         MailMessage mailmessage = new MailMessage();
         private readonly string _apikey;
         private readonly SmtpClient client;

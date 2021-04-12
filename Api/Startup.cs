@@ -173,6 +173,7 @@ namespace Api
             services.AddHostedService<UdpServerBackground>();
 
             services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddScoped<IUnitofWork, UnitofWork>();
 
             services.ConfigureApplicationCookie(options =>
             {

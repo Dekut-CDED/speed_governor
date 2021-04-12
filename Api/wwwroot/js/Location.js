@@ -7,16 +7,19 @@ $(document).ready(function () {
 function LoadList() {
     dataTable = $('#Dt_Load').DataTable({
         "ajax": {
-            "url": "/api/SpeedGovernor/all",
+            "url": "/api/",
             "type": "GET",
             "datatype": "json"
         },
         "columns": [
-            { "data": "imei", "width": "20%" },
-            { "data": "plateNumber", "width": "10%" },
-            { "data": "phone", "width": "15%" },
-            { "data": "fuellevel", "width": "20%" },
-            { "data": "vibrations", "width": "20%" },
+            { "data": "id", "width": "5%" },
+            { "data": "Time", "width": "10%" },
+            { "data": "speed", "width": "5%" },
+            { "data": "latitude", "width": "10%" },
+            { "data": "long", "width": "10%" },
+            { "data": "gpsCource", "width": "10%" },
+            { "data": "speedSignalStatus", "width": "10%" },
+            { "data": "engineON", "width": "5%" },
             {
                 "data": { id: "id", lockoutEnd: "lockoutEnd" },
                 "render": function (data) {
