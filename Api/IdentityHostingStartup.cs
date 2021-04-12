@@ -20,7 +20,7 @@ namespace UploadandDowloadService.Data
 
                 services.AddDbContext<DataContext>(opt =>
                {
-                   opt.UseSqlServer("Server=black;Database=speedgovernor;User=sa;Password=Password_123;MultipleActiveResultSets=true");
+                   opt.UseSqlServer("Server=41.89.227.168;Database=speedgovernor;User=sa;Password=Password_123;MultipleActiveResultSets=true");
                });
 
                 var builder = services.AddIdentityCore<AppUser>();
