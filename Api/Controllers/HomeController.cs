@@ -22,7 +22,17 @@ namespace Api.Controllers
         }
         public IActionResult Index()
         {
-            return View();
+            if (!User.Identity.IsAuthenticated)
+            {
+                return RedirectToPage("/Account/Register");
+            }
+
+            if (!User.IsInRole(Roles.CdedAdmin.ToString()))
+            {
+                return RedirectToPage("/Admin/Home/Index");
+            }
+
+            return RedirectToPage("/Retailer/Home/Index");
         }
 
         public IActionResult Privacy()

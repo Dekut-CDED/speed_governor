@@ -14,41 +14,42 @@ namespace Application.User
 {
     public class GetUsers
     {
-    public class Query : IRequest<List<User>>
-    {
-    }
+        public class Query : IRequest<List<User>>
+        {
+        }
 
-    public class Handler : IRequestHandler<Query, List<User>>
-    {
+        public class Handler : IRequestHandler<Query, List<User>>
+        {
             private readonly UserManager<AppUser> _userManager;
             private readonly IJwtGenerator _jwtGenerator;
             private readonly IUserAccessor _userAccessor;
             private readonly IMapper _mapper;
 
             public Handler(UserManager<AppUser> userManager, IJwtGenerator jwtGenerator, IUserAccessor userAccessor, IMapper mapper)
-        {
+            {
                 _userManager = userManager;
                 _jwtGenerator = jwtGenerator;
                 _userAccessor = userAccessor;
                 _mapper = mapper;
             }
-        public async Task<List<User>> Handle(Query request,
-              CancellationToken cancellationToken)
-        {
+            public async Task<List<User>> Handle(Query request,
+                  CancellationToken cancellationToken)
+            {
                 // Handler logic goes here
                 //TODO CHECK FOR THE ROLE
-                var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
+                var user = await _userManager.FindByIdAsync(_userAccessor.GetCurrentUsername());
 
-                if(user == null) {
-                   throw new RestException(HttpStatusCode.Unauthorized, new { User = "Not authorize to access the code" });
+                if (user == null)
+                {
+                    throw new RestException(HttpStatusCode.Unauthorized, new { User = "Not authorize to access the code" });
                 }
 
                 var foundusers = await _userManager.Users.ToListAsync();
 
-                return _mapper.Map<List<AppUser>,List<User>>(foundusers);
+                return _mapper.Map<List<AppUser>, List<User>>(foundusers);
             }
 
-    }
-        
+        }
+
     }
 }

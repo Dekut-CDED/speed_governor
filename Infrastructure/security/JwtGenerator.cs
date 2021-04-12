@@ -23,11 +23,11 @@ namespace Infrastructure.security
         {
             var claims = new List<Claim>
             {
-                new Claim(JwtRegisteredClaimNames.NameId, user.UserName),
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id),
                 //new Claim(ClaimTypes.Role, user.Role),
             };
             // generate some signing credentials
-           var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
+            var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha512Signature);
 
             // 
             var tokenDescriptor = new SecurityTokenDescriptor
