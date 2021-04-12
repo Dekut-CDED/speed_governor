@@ -29,6 +29,8 @@ using Api.Background;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
+using System.Net.Mail;
+using System.Net;
 
 namespace Api
 {
@@ -115,6 +117,11 @@ namespace Api
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IMessage, MessageService>();
+            services.AddSingleton(x => new SmtpClient("smtp.gmail.com")
+            {
+                Credentials = new NetworkCredential("edwinkamaumuraya0@gmail.com", "edd0715209404k"),
+                EnableSsl = true
+            });
 
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddScoped<IUrlHelper>(x =>
