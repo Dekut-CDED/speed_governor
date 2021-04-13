@@ -51,7 +51,7 @@ function LoadList() {
 function LockUnlock(id) {
     $.ajax({
         type: 'POST',
-        url: '/user',
+        url: '/api/User/lockout',
         data: JSON.stringify(id),
         contentType: "application/json",
         success: function (data) {

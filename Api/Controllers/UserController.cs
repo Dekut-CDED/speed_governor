@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Application.Interfaces;
 using Application.User;
 using Domain;
 using MediatR;
@@ -18,9 +20,11 @@ namespace Api.Controllers
     {
         private readonly DataContext _context;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IUnitofWork _unitofwork;
 
-        public UserController(DataContext context, UserManager<AppUser> userManager)
+        public UserController(DataContext context, UserManager<AppUser> userManager, IUnitofWork unitofwork)
         {
+            this._unitofwork = unitofwork;
             _context = context;
             _userManager = userManager;
         }
@@ -83,5 +87,29 @@ namespace Api.Controllers
             return Ok(result);
         }
 
+        [HttpPost("lockout")]
+        public async Task<ActionResult> LockUnlock([FromBody] LockUnlock lockunlock)
+        {
+            var objectfromdb = _unitofwork.AppUser.Get(lockunlock.id);
+            if (objectfromdb == null)
+            {
+                return Json(new { success = false, message = "Error while Locking and Unlocking" });
+            }
+            if (objectfromdb.LockoutEnd != null && objectfromdb.LockoutEnd > DateTime.Now)
+            {
+                objectfromdb.LockoutEnd = DateTime.Now;
+            }
+            else
+            {
+                objectfromdb.LockoutEnd = DateTime.Now.AddYears(100);
+            }
+            _unitofwork.Save();
+            return Json(new { success = true, message = "Operation Succesfully" });
+        }
+
+    }
+    public class LockUnlock
+    {
+        public string id { get; set; }
     }
 }
