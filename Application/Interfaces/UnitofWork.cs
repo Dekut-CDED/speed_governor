@@ -28,10 +28,13 @@ namespace Application.Interfaces
 
             AppUser = new AppUserRepository(db);
             Location = new LocationRepository(db);
-
+            SpeedGovernor = new SpeedGovernorRepository(db);
         }
         public IAppUser AppUser { get; private set; }
         public ILocation Location { get; private set; }
+
+        public ISpeedGovernor SpeedGovernor { get; private set; }
+
         public void Save()
         {
             db.SaveChangesAsync();

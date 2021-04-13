@@ -7,7 +7,7 @@ $(document).ready(function () {
 function LoadList() {
     dataTable = $('#Dt_Load').DataTable({
         "ajax": {
-            "url": "/api/",
+            "url": "/api/@id",
             "type": "GET",
             "datatype": "json"
         },
@@ -21,12 +21,12 @@ function LoadList() {
             { "data": "speedSignalStatus", "width": "10%" },
             { "data": "engineON", "width": "5%" },
             {
-                "data": { id: "id", lockoutEnd: "lockoutEnd" },
+                "data": { id: "id", latitude: "latitude", logitude: "long" },
                 "render": function (data) {
                     return `
                          <div class="text-center"> 
-                           <a class="btn btn-primary text-white" style="cussor:pointer, width:100px;" onClick=LockUnlock('${data.id}')>
-                             <i class="fas fa-view"</i> View SpeedGovernor
+                           <a class="btn btn-primary text-white" style="cussor:pointer, width:100px;" onClick=LockUnlock('${data}')>
+                             <i class="fas fa-view"</i> View Location
                     </a></div>`;
                 }
                 ,
@@ -57,3 +57,6 @@ function LockUnlock(id) {
         }
     });
 }
+
+
+// TODO route to the another dotnet page from js
