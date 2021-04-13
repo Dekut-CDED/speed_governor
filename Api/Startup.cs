@@ -176,6 +176,13 @@ namespace Api
             });
             services.AddMvc(options => options.EnableEndpointRouting = false).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+
+            // Redis Caching Service
+            services.AddStackExchangeRedisCache(options =>
+            {
+                options.Configuration = "localhost";
+                options.InstanceName = "GovernorCache";
+            });
         }
 
 

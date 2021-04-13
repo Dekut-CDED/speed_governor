@@ -12,6 +12,7 @@ using Persistence;
 using System.Linq;
 using Domain;
 using Newtonsoft.Json;
+using Microsoft.Extensions.Caching.Distributed;
 
 namespace Api.Background
 {
@@ -23,11 +24,17 @@ namespace Api.Background
         private IPEndPoint groupEp;
         private readonly IConfiguration _config;
         private DataContext _dataContext;
-        public UdpServerBackground(IHubContext<SignalRealTimeLocation> locationhub, IConfiguration config, DataContext dataContext)
+        private IDistributedCache _cache;
+        private IHostApplicationLifetime _lifetime;
+        public UdpServerBackground(IHubContext<SignalRealTimeLocation> locationhub,
+            IConfiguration config, DataContext dataContext,
+            IHostApplicationLifetime lifetime, IDistributedCache cache)
         {
             this._config = config;
             this.locationhub = locationhub;
             this._dataContext = dataContext;
+            this._cache = cache;
+            this._lifetime = lifetime;
         }
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
@@ -67,6 +74,17 @@ namespace Api.Background
                         var jsonLocation = JsonConvert.SerializeObject(location);
                         await locationhub.Clients.All.SendAsync(speedGov.Phone, location, stoppingToken);
 
+
+                        // Save to Redis Distributed Cache
+
+                        _lifetime.ApplicationStarted.Register(() =>
+                           {
+                               byte[] cachedGovernor = Encoding.UTF8.GetBytes(location.ToString());
+                               var options = new DistributedCacheEntryOptions().
+                                              SetSlidingExpiration(TimeSpan.FromSeconds(59));
+                               _cache.Set("cachedGovernor", cachedGovernor, options);
+                           }
+                        );
 
                         await SaveDB(location);
                     }                   
