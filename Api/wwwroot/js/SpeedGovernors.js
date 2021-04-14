@@ -22,7 +22,7 @@ function LoadList() {
                 "render": function (data) {
                     return `
                          <div class="text-center"> 
-                           <a class="btn btn-primary text-white" style="cussor:pointer, width:100px;" onClick=LockUnlock('${data.id}')>
+                           <a class="btn btn-primary text-white" style="cussor:pointer, width:100px;" href="/Admin/SpeedGovernors/Profile/Index/${data.id}">
                              <i class="fas fa-view"</i> View SpeedGovernor
                     </a></div>`;
                 }

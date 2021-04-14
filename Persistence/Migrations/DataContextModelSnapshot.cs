@@ -110,7 +110,7 @@ namespace Persistence.Migrations
                     b.Property<string>("Speed")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("SpeedGovernorId")
+                    b.Property<string>("SpeedGovId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SpeedSignalStatus")
@@ -121,7 +121,7 @@ namespace Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("SpeedGovernorId");
+                    b.HasIndex("SpeedGovId");
 
                     b.ToTable("Locations");
                 });
@@ -330,7 +330,7 @@ namespace Persistence.Migrations
                 {
                     b.HasOne("Domain.SpeedGovernor", "SpeedGovernor")
                         .WithMany("Locations")
-                        .HasForeignKey("SpeedGovernorId");
+                        .HasForeignKey("SpeedGovId");
 
                     b.Navigation("SpeedGovernor");
                 });

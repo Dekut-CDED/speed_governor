@@ -15,7 +15,6 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using NSwag;
@@ -29,6 +28,9 @@ using Api.Background;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
+using System.Net.Mail;
+using System.Net;
+using Microsoft.Extensions.Configuration;
 
 namespace Api
 {
@@ -115,6 +117,11 @@ namespace Api
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IMessage, MessageService>();
+            services.AddSingleton(x => new SmtpClient("smtp.gmail.com")
+            {
+                Credentials = new NetworkCredential("edwinkamaumuraya0@gmail.com", "edd0715209404k"),
+                EnableSsl = true
+            });
 
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddScoped<IUrlHelper>(x =>
@@ -166,6 +173,7 @@ namespace Api
             services.AddHostedService<UdpServerBackground>();
 
             services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddScoped<IUnitofWork, UnitofWork>();
 
             services.ConfigureApplicationCookie(options =>
             {

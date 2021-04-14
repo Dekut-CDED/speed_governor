@@ -1,11 +1,15 @@
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Application.Interfaces;
 using Application.User;
 using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Persistence;
 
 namespace Api.Controllers
@@ -18,9 +22,11 @@ namespace Api.Controllers
     {
         private readonly DataContext _context;
         private readonly UserManager<AppUser> _userManager;
+        private readonly IUnitofWork _unitofwork;
 
-        public UserController(DataContext context, UserManager<AppUser> userManager)
+        public UserController(DataContext context, UserManager<AppUser> userManager, IUnitofWork unitofwork)
         {
+            this._unitofwork = unitofwork;
             _context = context;
             _userManager = userManager;
         }
@@ -83,5 +89,48 @@ namespace Api.Controllers
             return Ok(result);
         }
 
+        [HttpPost("lockout")]
+        public async Task<ActionResult> LockUnlock([FromBody] LockUnlock obj)
+        {
+            var objectfromdb = _unitofwork.AppUser.Get(obj.id);
+
+            if (objectfromdb == null)
+            {
+                return Json(new { success = false, message = "Error while Locking and Unlocking" });
+            }
+
+            if (objectfromdb.LockoutEnd != null && objectfromdb.LockoutEnd > DateTime.Now)
+            {
+                objectfromdb.LockoutEnd = DateTime.Now;
+            }
+            else
+            {
+
+                objectfromdb.LockoutEnd = DateTime.Now.AddYears(100);
+            }
+            _unitofwork.Save();
+            return Json(new { success = true, message = "Operation Succesfully" });
+        }
+
+        [HttpGet("UserList")]
+        public async Task<ActionResult> UserNameList()
+        {
+            var usersNames = _unitofwork.AppUser.GetAll().Select(o => new DropDownUserList
+            {
+                Id = o.Id,
+                FullName = o.FullName
+            });
+            return Json(new { data = usersNames });
+        }
+
+    }
+    public class DropDownUserList
+    {
+        public String Id { get; set; }
+        public string FullName { get; set; }
+    }
+    public class LockUnlock
+    {
+        public string id { get; set; }
     }
 }

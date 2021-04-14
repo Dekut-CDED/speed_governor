@@ -22,15 +22,15 @@ namespace Api.Controllers
         }
         public IActionResult Index()
         {
-            //if (!User.Identity.IsAuthenticated)
-            //{
-                //return RedirectToPage("/Account/Register");
-            //}
+            // if (!User.Identity.IsAuthenticated)
+            // {
+            //     return RedirectToPage("/Account/Register");
+            // }
 
-            //if (!User.IsInRole(Roles.CdedAdmin.ToString()))
-            //{
-                //return RedirectToPage("/Admin/Home/Index");
-            //}
+            // if (!User.IsInRole(Roles.CdedAdmin.ToString()))
+            // {
+            //     return RedirectToPage("/Admin/Home/Index");
+            // }
 
             return View();
         }
