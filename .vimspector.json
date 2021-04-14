@@ -1,0 +1,13 @@
+{
+    "configurations": {
+        "launch": {
+            "adapter": "netcoredbg",
+             "configuration": {
+                 "request": "launch", 
+                  "program": "${workspaceFolder}/Api/bin/Debug/net5.0/Api.dll",
+                 "args": [],
+                 "stopAtEntry": false 
+             }
+        }
+    }
+}

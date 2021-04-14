@@ -37,7 +37,7 @@ namespace Application.Interfaces
 
         public void Save()
         {
-            db.SaveChangesAsync();
+            db.SaveChanges();
         }
 
 
