@@ -2,7 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Persistence;
 
-namespace Kaizen.Api
+namespace Api
 {
     public class SpeedContextFactory : IDesignTimeDbContextFactory<DataContext>
     {
