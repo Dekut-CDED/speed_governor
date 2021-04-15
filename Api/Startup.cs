@@ -181,7 +181,7 @@ namespace Api
             services.AddStackExchangeRedisCache(options =>
             {
                 options.Configuration = "localhost";
-                options.InstanceName = "GovernorCache";
+                options.InstanceName = "governorCache";
             });
         }
 

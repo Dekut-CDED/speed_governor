@@ -52,6 +52,5 @@ namespace Application.SpeedGovernor
                 return _mapper.Map<List<speedGovernor>, List<SpeedGovernorDto>>(speedgovernors);
             }
         }
-
     }
 }

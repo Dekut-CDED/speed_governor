@@ -1,12 +1,7 @@
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
-using Application.Errors;
 using Application.Roles;
-using Application.User;
 using Domain;
-using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,27 +10,29 @@ using Persistence;
 
 namespace Api.Controllers
 {
-    //[Authorize(Roles = Role.Admin)]
+    [Authorize(AuthenticationSchemes = "Bearer")]
     public class RolesController : Controller
     {
         private readonly DataContext _context;
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public RolesController(DataContext context, UserManager<AppUser> userManager, RoleManager<IdentityRole> roleManager)
+        public RolesController(DataContext context, UserManager<AppUser> userManager, 
+                               RoleManager<IdentityRole> roleManager)
         {
             _context = context;
             _userManager = userManager;
             _roleManager = roleManager;
         }
-        //[Authorize(Roles = Role.Admin)]
 
+        [Authorize(AuthenticationSchemes = "Bearer", Roles = Role.Admin)]
         [HttpGet("getall")]
         public async Task<ActionResult<List<IdentityRole>>> GetAllRoles()
         {
             return await _context.Roles.ToListAsync();
         }
 
+        [AllowAnonymous]
         [HttpPost("createrole")]
         public async Task<ActionResult<UsersRole>> CreateRole(UsersRole role)
         {

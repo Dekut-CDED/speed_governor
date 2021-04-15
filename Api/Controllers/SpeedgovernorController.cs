@@ -1,9 +1,7 @@
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Application;
 using Application.SpeedGovernor;
 using Application.User;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Api.Controllers
