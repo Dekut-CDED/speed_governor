@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Application.Interfaces;
 using Application.User;
@@ -10,10 +9,6 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
 using Persistence;
 
 namespace Api.Controllers
@@ -26,17 +21,11 @@ namespace Api.Controllers
         private readonly UserManager<AppUser> _userManager;
         private readonly IUnitofWork _unitofwork;
 
-        private IDistributedCache _cache;
-        private IHostApplicationLifetime _lifetime;
-
-        public UserController(DataContext context, UserManager<AppUser> userManager,
-                              IDistributedCache cache, IHostApplicationLifetime lifetime, IUnitofWork unitofwork)
+        public UserController(DataContext context, UserManager<AppUser> userManager, IUnitofWork unitofwork)
         {
             this._unitofwork = unitofwork;
             _context = context;
             _userManager = userManager;
-            _cache =  cache;
-            _lifetime = lifetime;
         }
 
         [HttpPost("login")]
@@ -87,7 +76,7 @@ namespace Api.Controllers
                     );
         }
 
-        [Authorize(AuthenticationSchemes ="Bearer", Roles = Role.Admin)]
+        //[Authorize(AuthenticationSchemes ="Bearer", Roles = Role.Admin)]
         [HttpGet("all")]
         public async Task<ActionResult> GetAllUsers()
         {
@@ -95,24 +84,17 @@ namespace Api.Controllers
 
             return Json(new { data = result });
         }
-
+        
         [HttpGet("cachedUsers")]
-        public async Task<ActionResult> GetLastRegistered()
+        public async Task<ActionResult> GetCachedUsers()
         {
 
-            byte[] cachedUsers = await _cache.GetAsync("cachedUsers");
-
-            if (cachedUsers != null)
-            {
-                var usersstring = Encoding.UTF8.GetString(cachedUsers);
-                var users = JsonConvert.DeserializeObject<List<UserCacheDto>>(usersstring);
-                return Json(new { data = users });
-            }
-
-            return null;
+            var cachedUsers = await Mediator.Send(new GetCachedUsers.Query());
+            
+            return Json(new { data = cachedUsers });
         }
 
-        [HttpPost("addusertorole/")]
+        [HttpPost("addusertorole")]
         public async Task<ActionResult> AddUserRole(RoleViewModel model)
         {
             var user = await _userManager.FindByEmailAsync(model.UserEmail);

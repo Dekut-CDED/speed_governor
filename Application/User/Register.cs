@@ -23,8 +23,6 @@ using StackExchange.Redis;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using AutoMapper;
-using System.Runtime.Serialization.Formatters.Binary;
-using System.IO;
 
 namespace Application.User
 {
@@ -40,8 +38,6 @@ namespace Application.User
             public string Email { get; set; }
             public string Password { get; set; }
             public string Role { get; set; }
-
-
         }
         
         public class CommandValidotor : AbstractValidator<Command>
@@ -54,7 +50,6 @@ namespace Application.User
                 RuleFor(x => x.PhoneNumber).NotEmpty();
                 RuleFor(x => x.Email).NotEmpty().EmailAddress();
                 RuleFor(x => x.Password);
-
             }
         }
 

@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Application.Errors;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
-using Microsoft.Extensions.Logging;
 using Serilog;
 
 namespace Api.Middleware
@@ -46,6 +45,7 @@ namespace Api.Middleware
                     context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
                     break;
             }
+
             context.Response.ContentType = "application/json";
             if (errors != null)
             {
@@ -56,7 +56,6 @@ namespace Api.Middleware
 
                 await context.Response.WriteAsync(result);
             }
-
         }
     }
 }

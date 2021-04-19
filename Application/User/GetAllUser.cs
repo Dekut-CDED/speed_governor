@@ -48,8 +48,6 @@ namespace Application.User
 
                 return _mapper.Map<List<AppUser>, List<User>>(foundusers);
             }
-
         }
-
     }
 }
