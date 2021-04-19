@@ -146,13 +146,10 @@ namespace Persistence.Migrations
 
             modelBuilder.Entity("Domain.SpeedGovernor", b =>
                 {
-                    b.Property<string>("Id")
+                    b.Property<string>("Imei")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Fuellevel")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Imei")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("OwnerId")
@@ -167,7 +164,7 @@ namespace Persistence.Migrations
                     b.Property<string>("Vibrations")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("Imei");
 
                     b.HasIndex("OwnerId");
 

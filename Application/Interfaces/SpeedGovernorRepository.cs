@@ -9,5 +9,10 @@ namespace Application.Interfaces
         {
             this._context = context;
         }
+
+        public void Update(speedGovernor gov)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

@@ -6,11 +6,13 @@
 <div class="border backgroundWhite container">
     <div class="row">
         <div class="col-6">
-            <h2 class="text-primary">Location for SpeedgovenorA</h2>
+            <h4 class="text-primary">Location for @Model.SpeedGovernor.Imei</h4>
         </div>
 
         <div class="col-6 text-right">
-            <a asp-page="/Account/Register" class="btn btn-primary"> <i class="fas fa-plus"></i> &nbsp; Register New</a>
+            <a asp-page="/Admin/SpeedGovernors/Upsert/Index" class="btn btn-primary"> <i class="fas fa-plus"></i>
+                &nbsp;
+                Track SpeedGovernor</a>
         </div>
     </div>
     <br> <br />

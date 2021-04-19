@@ -31,6 +31,8 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using System.Net.Mail;
 using System.Net;
 using Microsoft.Extensions.Configuration;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Http;
 
 namespace Api
 {
@@ -117,11 +119,11 @@ namespace Api
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IMessage, MessageService>();
-            services.AddSingleton(x => new SmtpClient("smtp.gmail.com")
-            {
-                Credentials = new NetworkCredential("edwinkamaumuraya0@gmail.com", "edd0715209404k"),
-                EnableSsl = true
-            });
+            //services.AddScoped<SmtpClient>(x => new SmtpClient("smtp.gmail.com")
+            //{
+            //  Credentials = new NetworkCredential("edwinkamaumuraya0@gmail.com", "edd0715209404k"),
+            // EnableSsl = true
+            //});
 
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddScoped<IUrlHelper>(x =>
@@ -174,13 +176,25 @@ namespace Api
 
             services.AddSingleton<IEmailSender, EmailSender>();
             services.AddScoped<IUnitofWork, UnitofWork>();
-
-            services.ConfigureApplicationCookie(options =>
+            services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
+            options =>
             {
-                options.LoginPath = "/Account/Login";
-                options.AccessDeniedPath = "/Account/Login";
+
+                // options.Cookie.Expiration = TimeSpan.FromMinutes(20);
+                options.LoginPath = new PathString("/Identity/Account/Login");
+                options.LogoutPath = "/Account/Logout";
                 options.AccessDeniedPath = "/Account/AccessDenied";
+                options.SlidingExpiration = true;
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+
             });
+
+            // services.ConfigureApplicationCookie(options =>
+            // {
+            //     options.LoginPath = "/Identity/Account/Login";
+            //     options.AccessDeniedPath = "/Identity/Account/Login";
+            //     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
+            // });
             services.AddMvc(options => options.EnableEndpointRouting = false).SetCompatibilityVersion(Microsoft.AspNetCore.Mvc.CompatibilityVersion.Version_3_0);
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
         }

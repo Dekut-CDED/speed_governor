@@ -1,18 +1,25 @@
 ﻿using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Configuration;
+using System;
+using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace Domain
 {
-    public class EmailSender : IEmailSender
+    public class EmailSender : IEmailSender, IDisposable
     {
         MailMessage mailmessage = new MailMessage();
         private readonly string _apikey;
         private readonly SmtpClient client;
-        public EmailSender(IConfiguration config, SmtpClient client)
+        public EmailSender(IConfiguration config)
         {
-            this.client = client;
+            client = new SmtpClient("smtp.gmail.com")
+            {
+                Credentials = new NetworkCredential("edwinkamaumuraya0@gmail.com", "edd0715209404k"),
+                Port = 587,
+                EnableSsl = true
+            };
             _apikey = config["SendGridApiKey"];
         }
         public Task SendEmailAsync(string email, string subject, string htmlMessage)
@@ -25,6 +32,13 @@ namespace Domain
             mailmessage.IsBodyHtml = true;
             client.Send(mailmessage);
             return Task.CompletedTask;
+
         }
+
+        public void Dispose()
+        {
+            client.Dispose();
+        }
+
     }
 }
