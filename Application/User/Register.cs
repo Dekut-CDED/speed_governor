@@ -23,6 +23,8 @@ using StackExchange.Redis;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using AutoMapper;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.IO;
 
 namespace Application.User
 {
@@ -146,6 +148,9 @@ namespace Application.User
 
                 _lifetime.ApplicationStarted.Register(() =>
                 {
+
+                    var usersString = JsonConvert.SerializeObject(users);
+                    cachedUsers = Encoding.UTF8.GetBytes(usersString);
                     var options = new DistributedCacheEntryOptions().
                                    SetSlidingExpiration(TimeSpan.FromDays(365));
                     _cache.Set("cachedUsers", cachedUsers, options);
