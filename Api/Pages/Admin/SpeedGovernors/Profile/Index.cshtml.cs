@@ -23,7 +23,7 @@ namespace Api.Admin.SpeedGovernors.Profile
             Locations = new List<Location>();
             if (id != null)
             {
-                SpeedGovernor = unitofWork.SpeedGovernor.GetFirstOrDefault(s => s.Id == id, "Owner");
+                SpeedGovernor = unitofWork.SpeedGovernor.GetFirstOrDefault(s => s.Imei == id, "Owner");
                 Locations = unitofWork.Location.GetAll(s => s.SpeedGovId == id);
             }
         }

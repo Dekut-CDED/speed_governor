@@ -22,7 +22,7 @@ namespace Persistence
                                  .RuleFor(p => p.PhoneNumber, f => f.Phone.PhoneNumber())
                                  .RuleFor(p => p.SpeedGovernors, f => FakeSpeedGovernor.Generate(10));
         public static Faker<Location> FakeLocations { get; } = new Faker<Location>()
-                                  .RuleFor(l=> l.Id, f => Guid.NewGuid().ToString())
+                                  .RuleFor(l => l.Id, f => Guid.NewGuid().ToString())
                                   .RuleFor(l => l.Time, f => DateTime.Now.ToString())
                                   .RuleFor(l => l.Latitude, f => f.Address.Latitude())
                                   .RuleFor(l => l.Long, f => f.Address.Longitude())
@@ -30,7 +30,6 @@ namespace Persistence
                                   .RuleFor(l => l.SpeedSignalStatus, "54")
                                   .RuleFor(l => l.EngineON, "54");
         public static Faker<SpeedGovernor> FakeSpeedGovernor { get; } = new Faker<SpeedGovernor>()
-                                   .RuleFor(s => s.Id, f => Guid.NewGuid().ToString())
                                    .RuleFor(s => s.Imei, f => Guid.NewGuid().ToString())
                                    .RuleFor(s => s.Phone, f => f.Phone.PhoneNumber())
                                    .RuleFor(s => s.PlateNumber, f => f.Vehicle.Vin())
@@ -42,7 +41,8 @@ namespace Persistence
                                      .RuleFor(s => s.Description, f => f.Company.CatchPhrase())
                                      .RuleFor(s => s.Name, f => f.Company.CompanyName());
 
-        public static async Task SeedActivities(DataContext context, UserManager<AppUser> userManager){
+        public static async Task SeedActivities(DataContext context, UserManager<AppUser> userManager)
+        {
 
             var usersfake = Fakeusers.Generate(100);
             var fakeactivities = FakeActivity.Generate(100);
@@ -62,10 +62,11 @@ namespace Persistence
                 SpeedGovernors = FakeSpeedGovernor.Generate(8)
             };
             usersfake.Add(admin);
-            if(!userManager.Users.Any()){
+            if (!userManager.Users.Any())
+            {
                 foreach (var user in usersfake)
                 {
-                  await  userManager.CreateAsync(user, "Pa$$w0rd");
+                    await userManager.CreateAsync(user, "Pa$$w0rd");
                 }
                 context.Commands.AddRange(fakeactivities);
                 context.UserActivities.AddRange(useractivities);
@@ -73,7 +74,7 @@ namespace Persistence
             }
 
         }
-        
+
     }
 }
 
