@@ -9,6 +9,7 @@ namespace Application.User
         {
             // CreateMap<Activity, ActivityDto>();
             CreateMap<AppUser, User>();
+            CreateMap<AppUser, UserCacheDto>();
         }
     }
 }
