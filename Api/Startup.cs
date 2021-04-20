@@ -202,7 +202,7 @@ namespace Api
             // Redis Caching Service
             services.AddStackExchangeRedisCache(options =>
             {
-                options.Configuration = "localhost";
+                options.Configuration = "41.89.227.168";
                 options.InstanceName = "governorCache";
             });
         }
@@ -236,7 +236,7 @@ namespace Api
                 endpoints.MapRazorPages();
                 endpoints.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Home}/{action=Index}/{id?}"             
+                pattern: "{controller=Home}/{action=Index}/{id?}"
                 );
                 endpoints.MapHub<SignalRealTimeLocation>("/location/realTime");
             });
