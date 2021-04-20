@@ -52,6 +52,7 @@ namespace Application.User
                 if (speedgovernor == null)
                     throw new RestException(HttpStatusCode.NotFound, "Speed Governor does not exist");
 
+                // Try to use Redis here to get location
                 var location = await _context.Locations.Where(s => s.SpeedGovernor.Imei == speedgovernor.Imei).SingleOrDefaultAsync();
 
                 return _mapper.Map<location, LocationDto>(location);

@@ -25,31 +25,31 @@ namespace Application.User
             private readonly IUserAccessor _userAccessor;
             private readonly IMapper _mapper;
 
-            public Handler(UserManager<AppUser> userManager, IJwtGenerator jwtGenerator, IUserAccessor userAccessor, IMapper mapper)
-        {
+            public Handler(UserManager<AppUser> userManager, IJwtGenerator jwtGenerator,  IUserAccessor userAccessor, IMapper mapper)
+            {
                 _userManager = userManager;
                 _jwtGenerator = jwtGenerator;
                 _userAccessor = userAccessor;
                 _mapper = mapper;
             }
-        public async Task<User> Handle(Query request,
-              CancellationToken cancellationToken)
-        {
-                // Handler logic goes here
-                //TODO CHECK FOR THE ROLE
-                var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
+            public async Task<User> Handle(Query request, CancellationToken cancellationToken)
+            {
+                    // Handler logic goes here
+                    //TODO CHECK FOR THE ROLE
+                    var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
 
-                if(user == null) {
-                   throw new RestException(HttpStatusCode.Unauthorized, new { User = "Not authorize to access the code" });
+                    if(user == null) 
+                    {
+                       throw new RestException(HttpStatusCode.Unauthorized, new { User = "Not authorize to access the code" });
+                    }
+
+                    var founduser = await _userManager.FindByIdAsync(request.Id);
+
+                    return _mapper.Map<AppUser,User>(founduser);
+
                 }
 
-                var founduser = await _userManager.FindByIdAsync(request.Id);
-
-                return _mapper.Map<AppUser,User>(founduser);
-
             }
-
-    }
         
     }
 }

@@ -8,7 +8,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Application.Errors;
 using Application.Interfaces;
-using Application.validators;
 using Domain;
 using FluentValidation;
 using MediatR;
@@ -18,11 +17,18 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Hosting;
+using StackExchange.Redis;
+using Newtonsoft.Json;
+using System.Collections.Generic;
+using AutoMapper;
 
 namespace Application.User
 {
     public class Register
-    {
+    {               
+
         public class Command : IRequest<AuthenticationResult>
         {
             public string Lastname { get; set; }
@@ -32,10 +38,8 @@ namespace Application.User
             public string Email { get; set; }
             public string Password { get; set; }
             public string Role { get; set; }
-
-
         }
-
+        
         public class CommandValidotor : AbstractValidator<Command>
         {
             public CommandValidotor()
@@ -46,7 +50,6 @@ namespace Application.User
                 RuleFor(x => x.PhoneNumber).NotEmpty();
                 RuleFor(x => x.Email).NotEmpty().EmailAddress();
                 RuleFor(x => x.Password);
-
             }
         }
 
@@ -61,7 +64,16 @@ namespace Application.User
             private readonly IHttpContextAccessor __httpcontextAccessor;
             private readonly IEmailSender _emailsender;
 
-            public Handler(DataContext context, IEmailSender emailsender, IHttpContextAccessor _httpcontextAccessor, IUrlHelper _urlhelper, RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager, IJwtGenerator jwtGenerator)
+            private IDistributedCache _cache;
+            private IHostApplicationLifetime _lifetime;
+            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost");
+            private IMapper _mapper;
+
+            public Handler(DataContext context, IEmailSender emailsender, 
+                IHttpContextAccessor _httpcontextAccessor, IUrlHelper _urlhelper, 
+                RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager, 
+                IJwtGenerator jwtGenerator, IHostApplicationLifetime lifetime, IDistributedCache cache,
+                IMapper mapper)
             {
                 this._emailsender = emailsender;
                 this.__httpcontextAccessor = _httpcontextAccessor;
@@ -71,6 +83,9 @@ namespace Application.User
                 _userManager = userManager;
                 this.jwtGeneratorI = jwtGenerator;
                 _jwtGenerator = jwtGenerator;
+                this._cache = cache;
+                this._lifetime = lifetime;
+                this._mapper = mapper;
             }
             //Mediator unit is an empty unit/object
             public async Task<AuthenticationResult> Handle(Command request, CancellationToken cancellationToken)
@@ -88,6 +103,7 @@ namespace Application.User
                     LastName = request.Lastname,
                     PhoneNumber = request.PhoneNumber
                 };
+
                 var result = await _userManager.CreateAsync(user, request.Password);
 
                 if (!result.Succeeded)
@@ -105,6 +121,38 @@ namespace Application.User
                     await _userManager.AddToRoleAsync(user, request.Role);
                 }
 
+                #region Redis Test
+                // Test the Redis Thing Here
+                
+                byte[] cachedUsers = await _cache.GetAsync("cachedUsers");
+                List<UserCacheDto> users = new List<UserCacheDto>();
+                var userDto = _mapper.Map<AppUser, UserCacheDto>(user);
+
+                if (cachedUsers != null)
+                {
+                    var appUsersString = Encoding.UTF8.GetString(cachedUsers);
+                    var appUsers = JsonConvert.DeserializeObject<List<UserCacheDto>>(appUsersString);
+                    appUsers.Add(userDto);
+                    users.AddRange(appUsers);
+                }
+
+                else
+                {
+                    users.Add(userDto);
+                }
+
+                _lifetime.ApplicationStarted.Register(() =>
+                {
+
+                    var usersString = JsonConvert.SerializeObject(users);
+                    cachedUsers = Encoding.UTF8.GetBytes(usersString);
+                    var options = new DistributedCacheEntryOptions().
+                                   SetSlidingExpiration(TimeSpan.FromDays(365));
+                    _cache.Set("cachedUsers", cachedUsers, options);
+                }
+                   );
+
+                #endregion
 
                 var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                 code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
