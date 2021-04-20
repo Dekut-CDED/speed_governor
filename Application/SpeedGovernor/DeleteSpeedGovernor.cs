@@ -15,30 +15,30 @@ namespace Application.SpeedGovernor
 {
     public class DeleteSpeedGovernor
     {
-        
-         public class Query : IRequest<Unit>
-         {
-           public string Id { get; set; }
-         }
 
-         public class Handler : IRequestHandler<Query, Unit>
-         {
-             private readonly DataContext _context;
+        public class Query : IRequest<Unit>
+        {
+            public string Id { get; set; }
+        }
+
+        public class Handler : IRequestHandler<Query, Unit>
+        {
+            private readonly DataContext _context;
             private readonly UserManager<AppUser> _userManager;
             private readonly IUserAccessor _userAccessor;
             private readonly IMapper _mapper;
-             public Handler(DataContext context,UserManager<AppUser> userManager, IUserAccessor userAccessor ,IMapper mapper)
-             {
-                 _mapper = mapper;
-                 _context = context;
+            public Handler(DataContext context, UserManager<AppUser> userManager, IUserAccessor userAccessor, IMapper mapper)
+            {
+                _mapper = mapper;
+                _context = context;
                 _userManager = userManager;
                 _userAccessor = userAccessor;
             }
-             public async Task<Unit> Handle(Query request,
-                   CancellationToken cancellationToken)
+            public async Task<Unit> Handle(Query request,
+                  CancellationToken cancellationToken)
             {
 
-                var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
+                var user = await _userManager.FindByIdAsync(_userAccessor.GetCurrentUsername());
 
                 if (user == null)
                 {

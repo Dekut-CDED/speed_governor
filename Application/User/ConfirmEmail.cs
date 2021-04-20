@@ -35,7 +35,7 @@ namespace Application.User
                   CancellationToken cancellationToken)
             {
                 // Handler logic goes here
-                var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
+                var user = await _userManager.FindByIdAsync(_userAccessor.GetCurrentUsername());
 
                 if (request.userId == null || request.token == null)
                 {
