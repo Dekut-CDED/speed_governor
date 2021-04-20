@@ -29,13 +29,15 @@ namespace Api.Controllers
         }
 
         [HttpPost("login")]
+        [AllowAnonymous]
         public async Task<ActionResult<object>> login(Login.Query query)
         {
             return await Mediator.Send(query);
         }
 
-        [AllowAnonymous]
+
         [HttpPost("register")]
+        [AllowAnonymous]
         public async Task<ActionResult<AuthenticationResult>> Register(Register.Command command)
         {
             return await Mediator.Send(command);
@@ -84,13 +86,13 @@ namespace Api.Controllers
 
             return Json(new { data = result });
         }
-        
+
         [HttpGet("cachedUsers")]
         public async Task<ActionResult> GetCachedUsers()
         {
 
             var cachedUsers = await Mediator.Send(new GetCachedUsers.Query());
-            
+
             return Json(new { data = cachedUsers });
         }
 

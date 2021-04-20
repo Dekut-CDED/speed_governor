@@ -27,7 +27,7 @@ using AutoMapper;
 namespace Application.User
 {
     public class Register
-    {               
+    {
 
         public class Command : IRequest<AuthenticationResult>
         {
@@ -39,7 +39,7 @@ namespace Application.User
             public string Password { get; set; }
             public string Role { get; set; }
         }
-        
+
         public class CommandValidotor : AbstractValidator<Command>
         {
             public CommandValidotor()
@@ -66,12 +66,12 @@ namespace Application.User
 
             private IDistributedCache _cache;
             private IHostApplicationLifetime _lifetime;
-            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("localhost");
+            ConnectionMultiplexer redis = ConnectionMultiplexer.Connect("41.89.227.168");
             private IMapper _mapper;
 
-            public Handler(DataContext context, IEmailSender emailsender, 
-                IHttpContextAccessor _httpcontextAccessor, IUrlHelper _urlhelper, 
-                RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager, 
+            public Handler(DataContext context, IEmailSender emailsender,
+                IHttpContextAccessor _httpcontextAccessor, IUrlHelper _urlhelper,
+                RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager,
                 IJwtGenerator jwtGenerator, IHostApplicationLifetime lifetime, IDistributedCache cache,
                 IMapper mapper)
             {
@@ -123,7 +123,7 @@ namespace Application.User
 
                 #region Redis Test
                 // Test the Redis Thing Here
-                
+
                 byte[] cachedUsers = await _cache.GetAsync("cachedUsers");
                 List<UserCacheDto> users = new List<UserCacheDto>();
                 var userDto = _mapper.Map<AppUser, UserCacheDto>(user);
