@@ -40,9 +40,9 @@ namespace Application.User
                 CancellationToken cancellationToken)
             {
                 // Handler logic goes here
-                var user = await _userManager.FindByNameAsync(_userAccessor.GetCurrentUsername());
+                var user = await _userManager.FindByIdAsync(_userAccessor.GetCurrentUsername());
 
-                if (user == null) throw new RestException(System.Net.HttpStatusCode.Unauthorized, new { Error = "Please use the bearer token"});
+                if (user == null) throw new RestException(System.Net.HttpStatusCode.Unauthorized, new { Error = "Please use the bearer token" });
 
                 var speedgovernors = await _context.SpeedGovernors.Where(s => s.Owner.Email == user.Email).ToListAsync();
 

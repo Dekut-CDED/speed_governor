@@ -44,34 +44,45 @@ namespace Persistence
         public static async Task SeedActivities(DataContext context, UserManager<AppUser> userManager)
         {
 
-            var usersfake = Fakeusers.Generate(100);
-            var fakeactivities = FakeActivity.Generate(100);
-            var useractivities = new List<UserActivity>();
-            int i = 0;
-            foreach (var user in usersfake)
+
+            var speedgov = new SpeedGovernor
             {
-                useractivities.Add(new UserActivity() { ActivityId = fakeactivities[i].Id, Command = fakeactivities[i], AppUser = user, AppUserId = user.Id, IsAdmin = true, DateTriggered = DateTime.Now });
-                i++;
-            }
-            var admin = new AppUser
-            {
-                FirstName = "John",
-                LastName = "Wahome",
-                UserName = "johnwahome",
-                Email = "john@test.com",
-                SpeedGovernors = FakeSpeedGovernor.Generate(8)
+                Phone = "07152094578",
+                Imei = "451282484",
+                PlateNumber = "KCU 808H",
+                OwnerId = "83603a79-4ef0-48f8-9c57-b805aa009e1c"
             };
-            usersfake.Add(admin);
-            if (!userManager.Users.Any())
-            {
-                foreach (var user in usersfake)
-                {
-                    await userManager.CreateAsync(user, "Pa$$w0rd");
-                }
-                context.Commands.AddRange(fakeactivities);
-                context.UserActivities.AddRange(useractivities);
-                await context.SaveChangesAsync();
-            }
+
+            context.SpeedGovernors.Add(speedgov);
+            await context.SaveChangesAsync();
+            // var usersfake = Fakeusers.Generate(100);
+            // var fakeactivities = FakeActivity.Generate(100);
+            // var useractivities = new List<UserActivity>();
+            // int i = 0;
+            // foreach (var user in usersfake)
+            // {
+            //     useractivities.Add(new UserActivity() { ActivityId = fakeactivities[i].Id, Command = fakeactivities[i], AppUser = user, AppUserId = user.Id, IsAdmin = true, DateTriggered = DateTime.Now });
+            //     i++;
+            // }
+            // var admin = new AppUser
+            // {
+            //     FirstName = "John",
+            //     LastName = "Wahome",
+            //     UserName = "johnwahome",
+            //     Email = "john@test.com",
+            //     SpeedGovernors = FakeSpeedGovernor.Generate(8)
+            // };
+            // usersfake.Add(admin);
+            // if (!userManager.Users.Any())
+            // {
+            //     foreach (var user in usersfake)
+            //     {
+            //         await userManager.CreateAsync(user, "Pa$$w0rd");
+            //     }
+            //     context.Commands.AddRange(fakeactivities);
+            //     context.UserActivities.AddRange(useractivities);
+            //     await context.SaveChangesAsync();
+            // }
 
         }
 
