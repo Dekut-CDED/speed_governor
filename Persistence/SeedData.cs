@@ -44,7 +44,8 @@ namespace Persistence
         public static async Task SeedActivities(DataContext context, UserManager<AppUser> userManager)
         {
 
-
+            #region test
+            // Use this to seed the speed governor for tests
             var speedgov = new SpeedGovernor
             {
                 Phone = "07152094578",
@@ -53,8 +54,10 @@ namespace Persistence
                 OwnerId = "83603a79-4ef0-48f8-9c57-b805aa009e1c"
             };
 
-            context.SpeedGovernors.Add(speedgov);
-            await context.SaveChangesAsync();
+            //context.SpeedGovernors.Add(speedgov);
+            //await context.SaveChangesAsync();
+            #endregion
+
             // var usersfake = Fakeusers.Generate(100);
             // var fakeactivities = FakeActivity.Generate(100);
             // var useractivities = new List<UserActivity>();
