@@ -8,6 +8,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Persistence;
+using Persistence.Migrations;
 using Serilog;
 
 namespace Api
@@ -40,8 +41,8 @@ namespace Api
                 Log.Information("Getting the Speed Governors Engines Up");
                 var usermanager = services.GetRequiredService<UserManager<AppUser>>();
                 var context = services.GetRequiredService<DataContext>();
-
                 Log.Information("Migrating the database from the migrations");
+                AdminSeeder.SeedData(usermanager, context).Wait();
                 context.Database.Migrate();
 
                 host.Run();

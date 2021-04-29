@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -24,9 +25,11 @@ namespace Application.User
             private readonly IJwtGenerator _jwtGenerator;
             private readonly IUserAccessor _userAccessor;
             private readonly IMapper _mapper;
+            private readonly IUnitofWork _unitofwork;
 
-            public Handler(UserManager<AppUser> userManager, IJwtGenerator jwtGenerator, IUserAccessor userAccessor, IMapper mapper)
+            public Handler(UserManager<AppUser> userManager, IJwtGenerator jwtGenerator, IUserAccessor userAccessor, IMapper mapper, IUnitofWork unitofwork)
             {
+                this._unitofwork = unitofwork;
                 _userManager = userManager;
                 _jwtGenerator = jwtGenerator;
                 _userAccessor = userAccessor;
@@ -44,7 +47,7 @@ namespace Application.User
                     throw new RestException(HttpStatusCode.Unauthorized, new { User = "Not authorize to access the code" });
                 }
 
-                var foundusers = await _userManager.Users.ToListAsync();
+                var foundusers = _unitofwork.AppUser.GetAll(null, null, "Role").ToList();
 
                 return _mapper.Map<List<AppUser>, List<User>>(foundusers);
             }
