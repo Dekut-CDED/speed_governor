@@ -57,8 +57,6 @@ namespace Application.User
             private readonly DataContext _context;
             private readonly RoleManager<IdentityRole> roleManager;
             private readonly UserManager<AppUser> _userManager;
-            private readonly IJwtGenerator jwtGeneratorI;
-            private readonly IJwtGenerator _jwtGenerator;
             private readonly IUrlHelper __urlhelper;
             private readonly IHttpContextAccessor __httpcontextAccessor;
             private readonly IEmailSender _emailsender;
@@ -71,7 +69,7 @@ namespace Application.User
             public Handler(DataContext context, IEmailSender emailsender,
                 IHttpContextAccessor _httpcontextAccessor, IUrlHelper _urlhelper,
                 RoleManager<IdentityRole> roleManager, UserManager<AppUser> userManager,
-                IJwtGenerator jwtGenerator, IHostApplicationLifetime lifetime, IDistributedCache cache,
+                IHostApplicationLifetime lifetime, IDistributedCache cache,
                 IMapper mapper)
             {
                 this._emailsender = emailsender;
@@ -80,8 +78,6 @@ namespace Application.User
                 _context = context;
                 this.roleManager = roleManager;
                 _userManager = userManager;
-                this.jwtGeneratorI = jwtGenerator;
-                _jwtGenerator = jwtGenerator;
                 this._cache = cache;
                 this._lifetime = lifetime;
                 this._mapper = mapper;
@@ -164,11 +160,14 @@ namespace Application.User
                 await _emailsender.SendEmailAsync(user.Email, "Confirm your email",
                    $"Please confirm your account by <a href='{HtmlEncoder.Default.Encode(confirmationLink)}'>clicking here</a>.");
 
+
                 return new AuthenticationResult
                 {
                     Success = true,
                     Info = "Please Check your Email to Confirm It"
                 };
+
+
 
             }
 

@@ -105,9 +105,9 @@ namespace Api.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (!await roleManager.RoleExistsAsync(role))
                 {
-                    roleManager.CreateAsync(new IdentityRole(Roles.CdedAdmin.ToString())).GetAwaiter().GetResult();
-                    roleManager.CreateAsync(new IdentityRole(Roles.CdedAdmin.ToString())).GetAwaiter().GetResult();
-                    roleManager.CreateAsync(new IdentityRole(Roles.User.ToString())).GetAwaiter().GetResult();
+                    roleManager.CreateAsync(new IdentityRole(Role.Admin)).GetAwaiter().GetResult();
+                    roleManager.CreateAsync(new IdentityRole(Role.Retailer)).GetAwaiter().GetResult();
+                    roleManager.CreateAsync(new IdentityRole(Role.User)).GetAwaiter().GetResult();
                 }
                 if (result.Succeeded)
                 {
