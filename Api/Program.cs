@@ -44,7 +44,9 @@ namespace Api
                 var context = services.GetRequiredService<DataContext>();
                 Log.Information("Migrating the database from the migrations");
                 context.Database.Migrate();
-               // AdminSeeder.SeedData(usermanager, context, roleManager).Wait();
+
+                //  AdminSeeder.SeedData(usermanager, context, roleManager).Wait();
+              
                 host.Run();
             }
 

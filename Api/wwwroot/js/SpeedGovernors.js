@@ -15,8 +15,7 @@ function LoadList() {
             { "data": "imei", "width": "20%" },
             { "data": "plateNumber", "width": "10%" },
             { "data": "phone", "width": "15%" },
-            { "data": "fuellevel", "width": "20%" },
-            { "data": "vibrations", "width": "20%" },
+            { "data": "Owner", "width": "20%" },
             {
                 "data": { imei: "imei", lockoutEnd: "lockoutEnd" },
                 "render": function (data) {

@@ -72,7 +72,7 @@ namespace Api.Admin.SpeedGovernors.Upsert
 
         public IActionResult OnPost()
         {
-            var user = Request.Form["userlist"];
+            var userId = Request.Form["userlist"];
 
             SpeedgovObj = new SpeedGovernor();
             if (ModelState.IsValid)
@@ -82,7 +82,7 @@ namespace Api.Admin.SpeedGovernors.Upsert
 
             if (SpeedgovObj.Imei == null)
             {
-                var speedGovernor = new SpeedGovernor { Imei = Input.Imei, Phone = Input.PhoneNumber, PlateNumber = Input.PlateNumber };
+                var speedGovernor = new SpeedGovernor { Imei = Input.Imei, Phone = Input.PhoneNumber, PlateNumber = Input.PlateNumber, OwnerId = userId };
                 _unitofwork.SpeedGovernor.Add(speedGovernor);
             }
             else
