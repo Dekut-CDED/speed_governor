@@ -67,8 +67,7 @@ namespace Api.Background
                             // TODO Add some more fields, gps on = 14, ignition = 15, overspeed = 16, odometer = 6, vibration, fuellevel
                         };
                         var jsonLocation = JsonConvert.SerializeObject(location);
-                        await locationhub.Clients.All.SendAsync(speedGov.Phone, location, stoppingToken);
-
+                        await locationhub.Clients.All.SendAsync("SpeedGovernorlocation", location);
                         await SaveDB(location);
                     }                   
                 }
