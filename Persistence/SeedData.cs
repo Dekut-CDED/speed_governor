@@ -22,7 +22,6 @@ namespace Persistence
                                  .RuleFor(p => p.PhoneNumber, f => f.Phone.PhoneNumber())
                                  .RuleFor(p => p.SpeedGovernors, f => FakeSpeedGovernor.Generate(10));
         public static Faker<Location> FakeLocations { get; } = new Faker<Location>()
-                                  .RuleFor(l => l.Id, f => Guid.NewGuid().ToString())
                                   .RuleFor(l => l.Time, f => DateTime.Now.ToString())
                                   .RuleFor(l => l.Latitude, f => f.Address.Latitude())
                                   .RuleFor(l => l.Long, f => f.Address.Longitude())
@@ -54,38 +53,38 @@ namespace Persistence
                 OwnerId = "83603a79-4ef0-48f8-9c57-b805aa009e1c"
             };
 
-            //context.SpeedGovernors.Add(speedgov);
-            //await context.SaveChangesAsync();
+            context.SpeedGovernors.Add(speedgov);
+            await context.SaveChangesAsync();
             #endregion
 
-            // var usersfake = Fakeusers.Generate(100);
-            // var fakeactivities = FakeActivity.Generate(100);
-            // var useractivities = new List<UserActivity>();
-            // int i = 0;
+            var usersfake = Fakeusers.Generate(100);
+            var fakeactivities = FakeActivity.Generate(100);
+            var useractivities = new List<UserActivity>();
+            //int i = 0;
             // foreach (var user in usersfake)
             // {
             //     useractivities.Add(new UserActivity() { ActivityId = fakeactivities[i].Id, Command = fakeactivities[i], AppUser = user, AppUserId = user.Id, IsAdmin = true, DateTriggered = DateTime.Now });
             //     i++;
             // }
-            // var admin = new AppUser
-            // {
-            //     FirstName = "John",
-            //     LastName = "Wahome",
-            //     UserName = "johnwahome",
-            //     Email = "john@test.com",
-            //     SpeedGovernors = FakeSpeedGovernor.Generate(8)
-            // };
-            // usersfake.Add(admin);
-            // if (!userManager.Users.Any())
-            // {
-            //     foreach (var user in usersfake)
-            //     {
-            //         await userManager.CreateAsync(user, "Pa$$w0rd");
-            //     }
-            //     context.Commands.AddRange(fakeactivities);
-            //     context.UserActivities.AddRange(useractivities);
-            //     await context.SaveChangesAsync();
-            // }
+            var admin = new AppUser
+            {
+                FirstName = "John",
+                LastName = "Wahome",
+                UserName = "johnwahome",
+                Email = "john@test.com",
+                SpeedGovernors = FakeSpeedGovernor.Generate(8)
+            };
+            usersfake.Add(admin);
+            if (!userManager.Users.Any())
+            {
+                foreach (var user in usersfake)
+                {
+                    await userManager.CreateAsync(user, "Pa$$w0rd");
+                }
+                context.Commands.AddRange(fakeactivities);
+                context.UserActivities.AddRange(useractivities);
+                await context.SaveChangesAsync();
+            }
 
         }
 

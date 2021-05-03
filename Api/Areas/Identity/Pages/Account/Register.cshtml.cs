@@ -9,12 +9,12 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Domain;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Application.Roles;
+using Application.Interfaces;
 
 namespace Api.Areas.Identity.Pages.Account
 {
@@ -105,9 +105,9 @@ namespace Api.Areas.Identity.Pages.Account
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (!await roleManager.RoleExistsAsync(role))
                 {
-                    roleManager.CreateAsync(new IdentityRole(Roles.CdedAdmin.ToString())).GetAwaiter().GetResult();
-                    roleManager.CreateAsync(new IdentityRole(Roles.CdedAdmin.ToString())).GetAwaiter().GetResult();
-                    roleManager.CreateAsync(new IdentityRole(Roles.User.ToString())).GetAwaiter().GetResult();
+                    roleManager.CreateAsync(new IdentityRole(Role.Admin)).GetAwaiter().GetResult();
+                    roleManager.CreateAsync(new IdentityRole(Role.Retailer)).GetAwaiter().GetResult();
+                    roleManager.CreateAsync(new IdentityRole(Role.User)).GetAwaiter().GetResult();
                 }
                 if (result.Succeeded)
                 {

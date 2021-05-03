@@ -25,7 +25,7 @@ namespace Api.Controllers
             _roleManager = roleManager;
         }
 
-        [Authorize(AuthenticationSchemes = "Bearer", Roles = Role.Admin)]
+        //[Authorize(Roles = Role.Admin)]
         [HttpGet("getall")]
         public async Task<ActionResult<List<IdentityRole>>> GetAllRoles()
         {

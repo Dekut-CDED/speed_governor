@@ -25,15 +25,13 @@ using System;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Api.Background;
-using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
-using System.Net.Mail;
-using System.Net;
 using Microsoft.Extensions.Configuration;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Api.SignalRhub;
+using Infrastructure.EmailHelper;
 
 namespace Api
 {
@@ -55,6 +53,7 @@ namespace Api
                 opt.UseLazyLoadingProxies();
                 opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
             });
+
             services.AddMvc(options => options.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             ConfigureServices(services);
@@ -65,6 +64,8 @@ namespace Api
             {
                 opt.UseSqlServer(Configuration.GetConnectionString("DefaultConnection"));
             });
+
+
             services.AddMvc(options => options.EnableEndpointRouting = false).SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             ConfigureServices(services);
@@ -120,11 +121,6 @@ namespace Api
             services.AddScoped<IJwtGenerator, JwtGenerator>();
             services.AddScoped<IUserAccessor, UserAccessor>();
             services.AddScoped<IMessage, MessageService>();
-            //services.AddScoped<SmtpClient>(x => new SmtpClient("smtp.gmail.com")
-            //{
-            //  Credentials = new NetworkCredential("edwinkamaumuraya0@gmail.com", "edd0715209404k"),
-            // EnableSsl = true
-            //});
 
             services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
             services.AddScoped<IUrlHelper>(x =>
@@ -172,10 +168,9 @@ namespace Api
 
             services.AddCors();
             services.AddSignalR();
-            services.AddHostedService<SeedDataHostedService>();
+            // services.AddHostedService<SeedDataHostedService>();
             services.AddHostedService<UdpServerBackground>();
-
-            services.AddSingleton<IEmailSender, EmailSender>();
+            services.AddScoped<IEmailSender, Infrastructure.EmailHelper.EmailSender>();
             services.AddScoped<IUnitofWork, UnitofWork>();
             services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
             options =>
@@ -205,6 +200,8 @@ namespace Api
                 options.Configuration = "41.89.227.168";
                 options.InstanceName = "governorCache";
             });
+
+            services.Configure<SendGridSettings>(Configuration.GetSection("SendGrid"));
         }
 
 
