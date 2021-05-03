@@ -40,14 +40,14 @@ namespace Api
             {
                 Log.Information("Getting the Speed Governors Engines Up");
                 var usermanager = services.GetRequiredService<UserManager<AppUser>>();
+                var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
                 var context = services.GetRequiredService<DataContext>();
                 Log.Information("Migrating the database from the migrations");
-                AdminSeeder.SeedData(usermanager, context).Wait();
                 context.Database.Migrate();
-
+                AdminSeeder.SeedData(usermanager, context, roleManager).Wait();
                 host.Run();
-
             }
+
             catch (Exception ex)
             {
                 Log.Error(ex, "An error occurrred during Migrations");
