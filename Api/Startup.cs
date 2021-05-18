@@ -168,7 +168,7 @@ namespace Api
 
             services.AddCors();
             services.AddSignalR();
-            services.AddHostedService<SeedDataHostedService>();
+            //services.AddHostedService<SeedDataHostedService>();
             services.AddHostedService<UdpServerBackground>();
             services.AddScoped<IEmailSender, Infrastructure.EmailHelper.EmailSender>();
             services.AddScoped<IUnitofWork, UnitofWork>();

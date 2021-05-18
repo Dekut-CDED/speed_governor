@@ -9,7 +9,7 @@ namespace Api
         public DataContext CreateDbContext(string[] args)
         {
             var optionsBuilder = new DbContextOptionsBuilder<DataContext>();
-            optionsBuilder.UseSqlServer("Server=black;Database=speed;User=sa;Password=Password_123;MultipleActiveResultSets=true");
+            optionsBuilder.UseSqlServer("Server=41.89.227.168;Database=speed;User=sa;Password=Password_123;MultipleActiveResultSets=true");
             return new DataContext(optionsBuilder.Options);
         }
     }
