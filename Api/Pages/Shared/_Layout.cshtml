@@ -8,7 +8,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>@ViewData["Title"] - Speedgovernor admin</title>
+    <title>@ViewData["Title"] - Cded admin</title>
 
     <link rel="stylesheet" href="~/css/site.css" />
 
@@ -30,51 +30,44 @@
     <header>
 
         <nav class="nav">
-                     <div>
-                    <input type="checkbox" id="check">
-                    <label for="check" class="checkbtn">
-                        <i class="fas fa-bars"></i>
-                    </label>
-            <div class="logo">
-                <p>SpeedGovernor</p>
-            </div>
+            <div>
+                <input type="checkbox" id="check">
+                <label for="check" class="checkbtn">
+                    <i class="fas fa-bars"></i>
+                </label>
+                <div class="logo">
+                    <div id="logo">
+                    <img src="~/images/CDED.png" alt="Site Logo" />
+                    <p>SpeedGovernor</p>
+                    </div>
+                </div>
 
                 <ul>
                     @if (User.IsInRole(Role.Admin.ToString()))
                     {
                         <li>
-                            <a  asp-page="/Admin/Home/Index">Home</a>
+                            <a asp-page="/Admin/Home/Index">Home</a>
+                        </li>
+                        <li>
+                            <a asp-page="/Admin/Users/Home/Home">Users</a>
+                        </li>
+                        <li>
+                            <a asp-page="/Admin/Roles/Roles">Roles</a>
+                        </li>
+                        <li>
+                            <a asp-page="/Admin/SpeedGovernors/Home/Home">Speedgovernor</a>
                         </li>
                     }
                     else if (User.IsInRole(Role.Retailer.ToString()))
                     {
                         <li>
-                            <a  asp-page="/Retailer/Home/Index">Home</a>
+                            <a asp-page="/Retailer/Home/Index">Home</a>
                         </li>
                     }
-                    else if (User.IsInRole(Role.Admin.ToString()))
-                    {
-                        <li>
-                            <a  asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    }
-                    @if (User.IsInRole(Role.Admin.ToString()))
-                    {
-                        <li class="nav-item dropdown">
-                            <a  href="#" id="navbarDropdown"
-                            data-toggle="dropdown">Admin</a>
-
-                            <div class="dropdown-menu bg-primary">
-                                <a class="dropdown-item text-white"
-                                asp-page="/Admin/SpeedGovernors/Home/Home">Speedgovernor</a>
-                                <a class="dropdown-item text-white" asp-page="/Admin/Users/Home/Home">Users</a>
-                                <a class="dropdown-item text-white" asp-page="/Admin/Roles/Roles">Roles</a>
-                            </div>
-                        </li>
-                    }
+                   
+                    <partial name="_LoginPartial" />
                 </ul>
-                <partial name="_LoginPartial" />
-              
+
             </div>
         </nav>
 
@@ -87,18 +80,9 @@
             @RenderBody()
 
         </main>
-
     </div>
-
-    <footer class="border-top footer text-muted text-white bg-dark">
-
-        <div class="container-fluid text-white">
-
-            CDED | Copyright &copy;|2021<a class="text-white" asp-area="" asp-controller="Home"
-                asp-action="Privacy"></a>
-
-        </div>
-    </footer>
+   
+    <partial name="_Footer">
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
 

@@ -105,6 +105,22 @@ section .contentBx .formBx  .inputBx input[type="submit"] {
     cursor: pointer;
 }
 
+ li .formBx  .inputBx input[type="submit"] {
+    background: #ff4584;
+    color: #fff;
+    outline: none;
+    border: none;
+    cursor: pointer;
+    font-size: larger;
+    margin: 15px;
+    padding: 15px;
+}
+
+li .formBx {
+    width: 75px;
+    height: 100px;
+}
+
 section .contentBx .formBx  .inputBx input[type="submit"]:hover {
     background: #f53677;
 }
@@ -166,10 +182,16 @@ section .contentBx .formBx  .inputBx p a {
     background-color: #fff;
     line-height: 75px;
     padding: 0px 80px;
+    box-shadow: 0 2px 2px -2px rgba(0,0,0,.2);
 }
 
 .nav .logo {
     float: left;
+}
+
+.nav .logo #logo {
+    display: flex;
+    justify-content:space-evenly
 }
 
 .nav .logo p {
@@ -273,5 +295,55 @@ section .contentBx .formBx  .inputBx p a {
 
 }
 
+.container {
+    padding: 15px
+}
 
+.upper {
+    height: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.lower{
+  height: 20%;   
+}
+footer {
+    margin-top: 60px;
+}
+.div-upper {
+    flex:1;
+}
 
+.div-upper p {
+    position: relative;
+
+}
+
+.div-upper h2 {
+   font-weight: 600;
+   font-size: 1.5em;
+   text-transform: uppercase;
+   margin-bottom: 20px;
+   border-bottom: 4px solid #17662e;
+   display: inline-block;
+   letter-spacing: 1px;
+}
+.footer-banner {
+    position:absolute;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+    bottom: 0;
+    background: rgba(104, 113, 128,0.8);
+    width: 100%;
+    height: 300px;
+    padding: 50px;
+}
+
+@media (max-width: 768px) {
+    .upper {
+        flex-direction: row;
+    }
+}
