@@ -12,6 +12,7 @@ using Application.Interfaces;
 using Application.Errors;
 using System.Net;
 using Microsoft.AspNetCore.Identity;
+using System.Linq;
 
 namespace Application.SpeedGovernor
 {
@@ -29,9 +30,12 @@ namespace Application.SpeedGovernor
             private readonly UserManager<AppUser> _userManager;
             private readonly IUserAccessor _userAccessor;
             private readonly IMapper _mapper;
-            public Handler(DataContext context, UserManager<AppUser> userManager, IUserAccessor userAccessor, IMapper mapper)
+            private readonly IUnitofWork _unitofwork;
+
+            public Handler(DataContext context, UserManager<AppUser> userManager, IUserAccessor userAccessor, IMapper mapper, IUnitofWork unitofwork)
             {
                 _mapper = mapper;
+                _unitofwork = unitofwork;
                 _context = context;
                 _userManager = userManager;
                 _userAccessor = userAccessor;
@@ -47,7 +51,7 @@ namespace Application.SpeedGovernor
                     throw new RestException(HttpStatusCode.Unauthorized, new { User = "Not authorize to access the code" });
                 }
 
-                var speedgovernors = await _context.SpeedGovernors.ToListAsync();
+                var speedgovernors = _unitofwork.SpeedGovernor.GetAll(null,null,"Owner").ToList();
 
                 return _mapper.Map<List<speedGovernor>, List<SpeedGovernorDto>>(speedgovernors);
             }

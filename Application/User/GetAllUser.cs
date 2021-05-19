@@ -47,7 +47,7 @@ namespace Application.User
                     throw new RestException(HttpStatusCode.Unauthorized, new { User = "Not authorize to access the code" });
                 }
 
-                var foundusers = _unitofwork.AppUser.GetAll(null, null, "Role").ToList();
+                var foundusers = _unitofwork.AppUser.GetAll().ToList();
 
                 return _mapper.Map<List<AppUser>, List<User>>(foundusers);
             }

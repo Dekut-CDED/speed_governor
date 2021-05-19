@@ -72,7 +72,7 @@ namespace Api.Admin.SpeedGovernors.Upsert
 
         public IActionResult OnPost()
         {
-            var userId = Request.Form["userlist"];
+            var userId = Request.Form["userlist"].ToString();
 
             SpeedgovObj = new SpeedGovernor();
             if (ModelState.IsValid)

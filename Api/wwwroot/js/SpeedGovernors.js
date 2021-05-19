@@ -13,20 +13,20 @@ function LoadList() {
         },
         "columns": [
             { "data": "imei", "width": "20%" },
-            { "data": "plateNumber", "width": "10%" },
-            { "data": "phone", "width": "15%" },
-            { "data": "Owner", "width": "20%" },
+            { "data": "plateNumber", "width": "20%" },
+            { "data": "phone", "width": "20%" },
+            { "data": "owner", "width": "20%" },
             {
                 "data": { imei: "imei", lockoutEnd: "lockoutEnd" },
                 "render": function (data) {
                     return `
                          <div class="text-center"> 
                            <a class="btn btn-primary text-white" style="cussor:pointer, width:100px;" href="/Admin/SpeedGovernors/Profile/Index/${data.imei}">
-                             <i class="fas fa-view"</i> View SpeedGovernor
+                             <i class="fas fa-view"</i> SpeedGovernor Details
                     </a></div>`;
                 }
                 ,
-                "width": "100%"
+                "width": "20%"
             }
         ],
         "language": {

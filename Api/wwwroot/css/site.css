@@ -1,3 +1,12 @@
+:root {
+
+  --theadColor: rgb(23,102,46);
+
+  --theadTextColor: #fff;
+
+  --darkColor:#f5f5f5;
+
+}
 * {
     margin: 0;
     padding: 0;
@@ -367,3 +376,222 @@ body{
     height: 350px;
     padding: 20px;
 }   
+
+.register-list {
+    display: flex;
+    justify-content: space-between;
+}
+
+.register-link {
+    font-size: 22px;
+    background-color: rgb(23,102,46);
+    padding: 10px;
+}
+
+.register-link a {
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+
+ table.dataTable {
+
+       border:2px solid rgb(170, 11, 11);
+
+      }
+
+      thead {
+
+        background-color: var(--theadColor);
+
+        
+
+      }
+
+      thead > tr,
+
+      thead > tr > th {
+
+        background-color: transparent;
+
+        color: var(--theadTextColor) !important;
+
+        font-weight: 300;
+    
+          text-align: start;
+
+      }
+
+      table.dataTable thead th,
+
+      table.dataTable thead td {
+
+        border-bottom: 0px solid #111 !important;
+
+      }
+
+      .dataTables_wrapper > div {
+
+        margin: 5px;
+
+      }
+
+      table.dataTable.display tbody tr.even > .sorting_1,
+
+      table.dataTable.order-column.stripe tbody tr.even> .sorting_1 table.dataTable.display
+
+        tbody
+
+        tr.even,
+
+      table.dataTable.display tbody tr.odd > .sorting_1,
+
+      table.dataTable.order-column.stripe tbody tr.odd > .sorting_1,
+
+      table.dataTable.display tbody tr.odd {
+
+        background-color: #ffffff;
+
+      }
+
+      table.dataTable thead th {
+
+        position: relative;
+
+        background-image: none !important;
+
+      }
+
+      table.dataTable thead th.sorting:after,
+
+      table.dataTable thead th.sorting_asc:after,
+
+      table.dataTable thead th.sorting_desc:after {
+
+        position: absolute;
+
+        top: 12px;
+
+        right: 8px;
+
+        display: block;
+
+        font-family: "Font Awesome\ 5 Free";
+
+      }
+
+      table.dataTable thead th.sorting:after {
+
+        content: "\f0dc";
+
+        color: #ddd;
+
+        font-size: 1em;
+
+        padding-top: 0.12em;
+
+      }
+
+      table.dataTable thead th.sorting_asc:after {
+
+        content: "\f0de";
+
+      }
+
+      table.dataTable thead th.sorting_desc:after {
+
+        content: "\f0dd";
+
+      }
+      tbody tr {
+          font-weight: 600;
+          font-size:20px
+      }
+      table.dataTable.display tbody tr:hover > .sorting_1,
+
+      table.dataTable.order-column.hover tbody tr:hover > .sorting_1,
+
+      tbody tr:hover {
+
+        background-color: var(--darkColor) !important;
+
+        color: #000;
+        font-weight: 600;
+
+      }
+
+      .dataTables_wrapper .dataTables_paginate .paginate_button.current, 
+
+      .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+
+             background: none !important;
+
+             border-radius: 50px;
+
+         background-color: var(--theadColor) !important;
+
+         color:#000 !important
+
+      }
+
+.paginate_button.current:hover
+
+{
+
+        background: none !important;
+
+             border-radius: 50px;
+
+             background-color: var(--darkColor) !important;
+
+         color:#fff !important
+
+}
+
+.paging_simple_numbers {
+    color: #fff;
+}
+
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover,
+
+.dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+
+  border: 1px solid #979797;
+
+  background: none !important;
+
+  border-radius: 50px !important;
+
+   background-color: var(--darkColor) !important;
+
+   color: #fff !important;
+
+}
+
+section[class="speedgove-create"]{
+    justify-content: center;
+}
+section[class="speedgove-create"] .contentBx{
+    display: flex;
+    justify-content:flex-start ;
+    align-items:unset;
+    margin-top: 0px;
+    min-width: 600px;
+    height: 500px;
+}
+
+section[class="speedgove-create"] .contentBx .inputBx {
+    display: block;
+    margin: 20px;
+}
+
+.inputBx select{
+    padding: 5px;
+    border-radius: 10px;
+    margin: 10px;
+    font-size: large;
+
+}
+
+
