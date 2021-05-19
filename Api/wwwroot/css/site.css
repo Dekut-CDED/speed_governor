@@ -295,15 +295,13 @@ section .contentBx .formBx  .inputBx p a {
 
 }
 
-.container {
-    padding: 15px
-}
 
 .upper {
     height: 80%;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    align-items: center;
 }
 .lower{
   height: 20%;   
@@ -329,21 +327,43 @@ footer {
    display: inline-block;
    letter-spacing: 1px;
 }
-.footer-banner {
-    position:absolute;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    justify-content: center;
-    bottom: 0;
-    background: rgba(104, 113, 128,0.8);
-    width: 100%;
-    height: 300px;
-    padding: 50px;
-}
 
 @media (max-width: 768px) {
     .upper {
         flex-direction: row;
     }
 }
+
+.container {
+    padding: 15px;
+    position: relative;
+    width: 100%;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 0px;
+}
+body{
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+#page-container {
+    width: 100%;
+    min-height: 100vh;
+}
+
+ .footer-banner {
+    background: rgba(104, 113, 128);
+    display: flex;
+    flex-direction: column;
+    height: 350px;
+    padding: 20px;
+}   
