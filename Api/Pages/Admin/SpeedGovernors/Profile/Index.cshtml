@@ -1,21 +1,24 @@
 ﻿@page "{id}"
 @model Api.Admin.SpeedGovernors.Profile.IndexModel
 
-<H1>The Page For view A single speed governor</H1>
 
 <div class="border backgroundWhite container">
-    <div class="row">
-        <div class="col-6">
+
+    <div class="row  register-list">
+        <div class="reg-text">
             <h4 class="text-primary">Location for @Model.SpeedGovernor.Imei</h4>
         </div>
 
-        <div class="col-6 text-right">
-            <a asp-page="/Admin/SpeedGovernors/Upsert/Index" class="btn btn-primary"> <i class="fas fa-plus"></i>
+        <div class="register-link">
+            <a asp-page="/Admin/SpeedGovernors/Map/Map" asp-route-imei="@Model.SpeedGovernor.Imei"> <i class="fas fa-plus"></i>
                 &nbsp;
                 Track SpeedGovernor</a>
         </div>
     </div>
+
     <br> <br />
+
+   <div class="row">
 
     <table id="Dt_Load" class="table table-striped table-bordered" style="width: 100%;">
         <thead>
@@ -40,7 +43,7 @@
                     <td>@location.GpsCourse</td>
                     <td>@location.SpeedSignalStatus</td>
                     <td>
-                        <a asp-page="/Admin/SpeedGovernors/Map/Map" asp-route-lat="@location.Latitude"
+                        <a asp-page="/Admin/SpeedGovernors/Map/Index" asp-route-lat="@location.Latitude"
                         asp-route-long="@location.Long" class="btn btn-primary"> <i class="fas fa-plus"></i> &nbsp;
                             ViewonMap</a>
                     </td>
@@ -48,4 +51,5 @@
             }
         </tbody>
     </table>
+   </div>
 </div>

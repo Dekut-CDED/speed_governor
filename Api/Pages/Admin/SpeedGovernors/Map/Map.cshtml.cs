@@ -1,15 +1,11 @@
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Api.Pages.Admin.SpeedGovernors.Map
+namespace Api.Admin.SpeedGovernors.Map
 {
     public class MapModel : PageModel
     {
-        public double latitude;
-        public double lo;
-        public void OnGet(double lat, double longitude)
+        public void OnGet()
         {
-            latitude = lat;
-            lo = longitude;
         }
     }
 }

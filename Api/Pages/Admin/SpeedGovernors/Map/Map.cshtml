@@ -1,17 +1,12 @@
-﻿@page "{lat},{long}"
-
-@model Api.Pages.Admin.SpeedGovernors.Map.MapModel
+﻿@page
+@model Api.Admin.SpeedGovernors.Map.MapModel
 @{
-    Layout = "_Layout";
 }
+
 <h1>Map view</h1>
-
+<div class="row">
 <div id="map" style="height: 700px;width: 100%;"></div>
-
-<h3>@Model.latitude</h3>
-<h3>@Model.lo</h3>
-
-
+</div>
 
 @section Scripts {
 <script src="~/js/Map.js"></script>
