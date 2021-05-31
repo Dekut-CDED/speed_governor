@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
@@ -19,7 +20,14 @@ namespace Application.Interfaces
         }
         public void Add(T entity)
         {
-            dbset.Add(entity);
+            try
+            {
+                dbset.Add(entity);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex);
+            }
         }
 
         public IEnumerable<T> GetAll(Expression<System.Func<T, bool>> filter = null, System.Func<System.Linq.IQueryable<T>, System.Linq.IOrderedQueryable<T>> orderby = null, string incluedproperties = null)

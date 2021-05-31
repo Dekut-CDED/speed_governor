@@ -3,27 +3,26 @@ let cpusNo = require('os').cpus().length
 let cluster = require("cluster")
 let faker = require("faker")
 let v4 = require('uuid')
+const { random } = require('faker')
 
-class SpeedGov {
-    constructor(phone, ownerId, imei, plateNumber,) {
-        this.imei = imei
-        this.phone = phone
-        this.plateNumber = plateNumber
-        this.ownerId = ownerId
-    }
-}
+// speed gov available in the database
+const speedgov = ["12345", "12346", "12347", "12348", "12349"]
+
 class Location {
-    constructor(lat, long, ownerid, speedGov) {
-        this.lat = lat
-        this.long = long
-        this.ownerid = ownerid
-        this.speedGov = speedGov
+    constructor(lat, long, gpscourse, speedGov) {
+        this.Latitude = lat
+        this.Long = long
+        this.Time = Date.now()
+        this.GpsCourse = gpscourse
+        this.EngineON = true
+        this.SpeedSignalStatus = true
+        this.Speed = 45
+        this.SpeedGovId = speedGov
     }
 }
 
 var ownerId = v4.v1();
-const fakespeedgov = new SpeedGov(faker.phone.phoneNumber(), ownerId, v4.v4(), faker.vehicle.vrm())
-const fakeLocation = new Location(faker.address.latitude(), faker.address.longitude(), ownerId, fakespeedgov)
+const fakeLocation = new Location(faker.address.latitude(), faker.address.longitude(), ownerId, speedgov[Math.floor(Math.random() * speedgov.length)])
 
 if (cluster.isMaster) {
     for (var i = 0; i < cpusNo; i++) {
@@ -46,7 +45,7 @@ async function sendNewLocation(fakeLocation) {
     }
 
     try {
-        await client.connect("9999", "localhost")
+        await client.connect("3030", "localhost")
         setInterval(async () => {
             await send(client, fakeLocation)
             console.log(fakeLocation)

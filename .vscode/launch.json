@@ -46,6 +46,8 @@
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",
+            "requireExactSource": false,
+            "enableStepFiltering": false,
         }
     ]
 }
