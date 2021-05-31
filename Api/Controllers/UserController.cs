@@ -13,6 +13,8 @@ using Persistence;
 
 namespace Api.Controllers
 {
+    using Domain.Dto;
+
     [Produces("application/json")]
     [ApiVersion("1.0")]
     public class UserController : BaseController

@@ -3,16 +3,15 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Errors;
 using Application.Interfaces;
 using AutoMapper;
-using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.User
 {
+    using Domain;
     public class GetUsers
     {
         public class Query : IRequest<List<User>>

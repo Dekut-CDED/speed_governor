@@ -1,15 +1,14 @@
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Errors;
 using Application.Interfaces;
 using AutoMapper;
-using Domain;
 using MediatR;
 using Microsoft.AspNetCore.Identity;
 
 namespace Application.User
 {
+    using Domain;
     public class GetUserById
     {
         public class Query : IRequest<User>

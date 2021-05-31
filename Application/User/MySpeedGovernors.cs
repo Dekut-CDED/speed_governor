@@ -1,21 +1,19 @@
-using System.Security.Cryptography;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces;
 using MediatR;
-using Persistence;
-using speedGovernor = Domain.SpeedGovernor;
-using System.Linq;
 using Microsoft.AspNetCore.Identity;
-using AutoMapper;
-using Domain;
-using Application.Errors;
 using Microsoft.EntityFrameworkCore;
+using Persistence;
 
 namespace Application.User
 {
+    using AutoMapper;
+    using Domain;
+    using Domain.Dto;
     public class MySpeedGovernors
     {
         public class Query : IRequest<List<SpeedGovernorDto>>
@@ -50,7 +48,7 @@ namespace Application.User
                 {
                     Console.WriteLine(item);
                 }
-                return _mapper.Map<List<speedGovernor>, List<SpeedGovernorDto>>(speedgovernors);
+                return _mapper.Map<List<SpeedGovernor>, List<SpeedGovernorDto>>(speedgovernors);
                 // Handler logic goes here
             }
         }

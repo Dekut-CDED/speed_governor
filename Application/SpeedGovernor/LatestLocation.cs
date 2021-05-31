@@ -1,19 +1,18 @@
+using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Application.Interfaces;
-using MediatR;
-using Persistence;
-using Domain;
-using System.Linq;
-using Microsoft.AspNetCore.Identity;
-using System.Net;
 using AutoMapper;
-using Application.Errors;
-using location = Domain.Location;
+using MediatR;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Persistence;
 
 namespace Application.User
 {
+
+    using Domain;
     public class LatestLocation
     {
         public class Query : IRequest<LocationDto>
@@ -55,7 +54,7 @@ namespace Application.User
                 // Try to use Redis here to get location
                 var location = await _context.Locations.Where(s => s.SpeedGovernor.Imei == speedgovernor.Imei).SingleOrDefaultAsync();
 
-                return _mapper.Map<location, LocationDto>(location);
+                return _mapper.Map<Location, LocationDto>(location);
                 // Handler logic goes here
             }
         }

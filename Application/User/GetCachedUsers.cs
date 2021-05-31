@@ -1,14 +1,15 @@
-﻿using MediatR;
-using Microsoft.Extensions.Caching.Distributed;
-using Microsoft.Extensions.Hosting;
-using Newtonsoft.Json;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using MediatR;
+using Microsoft.Extensions.Caching.Distributed;
+using Microsoft.Extensions.Hosting;
+using Newtonsoft.Json;
 
 namespace Application.User
 {
+    using Domain.Dto;
     public class GetCachedUsers
     {
         public class Query : IRequest<List<UserCacheDto>>

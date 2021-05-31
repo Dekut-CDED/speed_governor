@@ -1,6 +1,6 @@
 using System;
 
-namespace Application.User
+namespace Domain
 {
     public class User
     {

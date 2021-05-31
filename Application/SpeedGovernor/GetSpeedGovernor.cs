@@ -1,20 +1,19 @@
-using MediatR;
-using System.Threading.Tasks;
-using System.Threading;
-using Persistence;
-using AutoMapper;
-using Application.User;
-using Domain;
-using speedGovernor = Domain.SpeedGovernor;
-using Application.Interfaces;
-using Application.Errors;
 using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
+using Application.Interfaces;
+using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Identity;
+using Persistence;
 
 namespace Application.SpeedGovernor
 {
+    using Domain;
+    using Domain.Dto;
     public class GetSpeedGovernor
     {
+
 
         public class Query : IRequest<SpeedGovernorDto>
         {
@@ -47,7 +46,7 @@ namespace Application.SpeedGovernor
 
                 var speedgovernor = await _context.SpeedGovernors.FindAsync(request.Id);
 
-                return _mapper.Map<speedGovernor, SpeedGovernorDto>(speedgovernor);
+                return _mapper.Map<SpeedGovernor, SpeedGovernorDto>(speedgovernor);
             }
         }
     }

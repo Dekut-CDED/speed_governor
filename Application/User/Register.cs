@@ -1,33 +1,33 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Text.Encodings.Web;
-using Microsoft.AspNetCore.WebUtilities;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Errors;
 using Application.Interfaces;
+using AutoMapper;
 using Domain;
 using FluentValidation;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
-using Persistence;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Hosting;
-using StackExchange.Redis;
 using Newtonsoft.Json;
-using System.Collections.Generic;
-using AutoMapper;
+using Persistence;
+using StackExchange.Redis;
 
 namespace Application.User
 {
+    using Domain;
+    using Domain.Dto;
     public class Register
     {
-
         public class Command : IRequest<AuthenticationResult>
         {
             public string Lastname { get; set; }

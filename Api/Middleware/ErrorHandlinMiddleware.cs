@@ -1,9 +1,9 @@
-using System.Net;
 using System;
-using System.Threading.Tasks;
-using Application.Errors;
-using Microsoft.AspNetCore.Http;
+using System.Net;
 using System.Text.Json;
+using System.Threading.Tasks;
+using Domain;
+using Microsoft.AspNetCore.Http;
 using Serilog;
 
 namespace Api.Middleware

@@ -2,7 +2,6 @@ using System.Data.Common;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using Application.Errors;
 using Application.Interfaces;
 using Application.User;
 using AutoMapper;

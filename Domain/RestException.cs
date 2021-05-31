@@ -1,6 +1,6 @@
-using System.Net;
 using System;
-namespace Application.Errors
+using System.Net;
+namespace Domain
 {
     public class RestException : Exception
     {
