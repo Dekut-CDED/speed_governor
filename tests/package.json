@@ -1,0 +1,17 @@
+{
+  "name": "testudp",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cluster": "^0.7.7",
+    "dgram": "^1.0.1",
+    "faker": "^5.5.3",
+    "uuid": "^8.3.2"
+  }
+}
