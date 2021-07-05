@@ -93,6 +93,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.Location", b =>
                 {
                     b.Property<string>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Date")
@@ -177,6 +178,7 @@ namespace Persistence.Migrations
             modelBuilder.Entity("Domain.UserActivity", b =>
                 {
                     b.Property<string>("AppUserId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<int>("ActivityId")

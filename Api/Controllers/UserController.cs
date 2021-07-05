@@ -38,12 +38,7 @@ namespace Api.Controllers
         }
 
 
-        [HttpPost("register")]
-        [AllowAnonymous]
-        public async Task<ActionResult<AuthenticationResult>> Register(Register.Command command)
-        {
-            return await Mediator.Send(command);
-        }
+    
 
         [AllowAnonymous]
         [HttpGet("/confirmEmail/{id}/{token}")]

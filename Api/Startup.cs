@@ -21,7 +21,6 @@ using NSwag;
 using Persistence;
 using Infrastructure.Message;
 using System;
-//using Serilog;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
 using Api.Background;
@@ -32,6 +31,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Http;
 using Api.SignalRhub;
 using Infrastructure.EmailHelper;
+using System.Reflection;
+using Application.Auth;
 
 namespace Api
 {
@@ -73,23 +74,13 @@ namespace Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<DataContext>(opt =>
-            {
-                opt.UseLazyLoadingProxies();
-                opt.UseSqlite(Configuration.GetConnectionString("DefaultConnection"));
-            });
-
-            // We will have a lot of handlers but we need to tell mediator once
-            services.AddMediatR(typeof(Login.Handler).Assembly);
-            services.AddAutoMapper(typeof(Login.Handler));
+           
+            services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(Register.Handler).GetTypeInfo().Assembly);  
+            services.AddAutoMapper(typeof(Register.Handler));
 
             services.AddControllers(opt =>
            {
                var policy = new AuthorizationPolicyBuilder().RequireAuthenticatedUser().Build();
-               //TODO create user role policy
-               //options.AddPolicy("ElevatedRights", policy =>
-               //policy.RequireRole("Administrator", "PowerUser", "BackupAdministrator"));
-               //
                opt.Filters.Add(new AuthorizeFilter(policy));
 
            }).AddFluentValidation(
@@ -169,7 +160,7 @@ namespace Api
             services.AddCors();
             services.AddSignalR();
             //services.AddHostedService<SeedDataHostedService>();
-            services.AddHostedService<UdpServerBackground>();
+            //services.AddHostedService<UdpServerBackground>();
             services.AddScoped<IEmailSender, Infrastructure.EmailHelper.EmailSender>();
             services.AddScoped<IUnitofWork, UnitofWork>();
             services.PostConfigure<CookieAuthenticationOptions>(IdentityConstants.ApplicationScheme,
@@ -223,7 +214,7 @@ namespace Api
             // use routing
             // Using routing
             app.UseCors(options =>
-                      options.WithOrigins("http://localhost:3000").AllowAnyHeader().AllowCredentials()
+                      options.WithOrigins("http://localhost:5022").AllowAnyHeader().AllowCredentials()
                  );
             app.UseAuthentication();
             app.UseAuthorization();
