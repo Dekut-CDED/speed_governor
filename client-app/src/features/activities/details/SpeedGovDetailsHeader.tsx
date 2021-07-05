@@ -22,7 +22,7 @@ interface Props {
   activity: Activity;
 }
 
-export default observer(function ActivityDetailedHeader({ activity }: Props) {
+export default observer(function SpeedGovDetailsHeader({ activity }: Props) {
   return (
     <Segment.Group>
       <Segment basic attached="top" style={{ padding: '0' }}>

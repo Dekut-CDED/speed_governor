@@ -2,7 +2,7 @@ import React from 'react';
 import Calendar from 'react-calendar';
 import { Header, Menu } from 'semantic-ui-react';
 
-function ActivityFilters() {
+function SpeedGovFilters() {
   return (
     <>
       <Menu vertical size="large" style={{ width: '100%', marginTop: '25px' }}>
@@ -17,4 +17,4 @@ function ActivityFilters() {
   );
 }
 
-export default ActivityFilters;
+export default SpeedGovFilters;

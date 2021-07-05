@@ -13,17 +13,16 @@ export default observer(function HomePage() {
     <Segment inverted textAlign="center" vertical className="masthead">
       <Container text>
         <Header as="h1" inverted>
-          <Image
-            size="massive"
-            src="/assets/logo.png"
+          <img
+            src="/assets/cded.png"
             alt="logo"
-            style={{ marginBottom: 12 }}
+            style={{ height: 'auto', width: '40', marginBottom: 12 }}
           />
-          Activities
+          SpeedGovernor
         </Header>
         {userStore.isLoggedIn ? (
           <>
-            <Header as="h2" inverted content="Welcome to Reactivities"></Header>
+            <Header as="h2" inverted content="Welcome to SpeedGovenor"></Header>
             <Button as={Link} to="/login" size="huge" inverted>
               Go To Activities
             </Button>
@@ -47,7 +46,11 @@ export default observer(function HomePage() {
           </>
         )}
         <LoadingIndicatorBar />
-        <Header as="h2" inverted content="Welcome to Activities" />
+        <Header
+          as="h2"
+          inverted
+          content="Welcome to Speedgovernor admin portal"
+        />
       </Container>
     </Segment>
   );

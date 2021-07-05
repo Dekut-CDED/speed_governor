@@ -2,9 +2,9 @@ import { observer } from 'mobx-react-lite';
 import { Fragment } from 'react';
 import { Header } from 'semantic-ui-react';
 import { useStore } from '../../../app/store/store';
-import ActivityListItem from './ActivityListItem';
+import SpeedGovListItem from './SpeedGovListItem';
 
-function ActivityList() {
+function SpeedGovList() {
   const { activityStore } = useStore();
   const { groupedActivities } = activityStore;
 
@@ -16,7 +16,7 @@ function ActivityList() {
             {group}
           </Header>
           {activities.map((activity) => (
-            <ActivityListItem key={activity.id} activity={activity} />
+            <SpeedGovListItem key={activity.id} activity={activity} />
           ))}
         </Fragment>
       ))}
@@ -24,4 +24,4 @@ function ActivityList() {
   );
 }
 
-export default observer(ActivityList);
+export default observer(SpeedGovList);

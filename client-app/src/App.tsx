@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { Container } from 'semantic-ui-react';
 import './App.css';
+import '../src/css/index.css';
 import NavBar from './app/layout/NavBar';
-import ActivityDashboard from './features/activities/dashboard/ActivityDashboard';
+import SpeedGovDashbord from './features/activities/dashboard/SpeedGovDashbord';
 import { observer } from 'mobx-react-lite';
 import { Route, Switch, useLocation } from 'react-router';
 import HomePage from './app/layout/HomePage';
-import ActivityForm from './features/activities/form/ActivityForm';
-import ActivityDetails from './features/activities/details/ActivityDetails';
+import SpeedGovForm from './features/activities/form/SpeedGovForm';
+import SpeedGovDetailPage from './features/activities/details/SpeedGovDetails';
 import TestErrors from './app/models/TestError';
 import { ToastContainer } from 'react-toastify';
 import NotFound from './features/errors/NotFound';
@@ -44,12 +45,12 @@ function App() {
             <NavBar />
             <Container style={{ marginTop: '7em' }}>
               <Switch>
-                <Route exact path="/activities" component={ActivityDashboard} />
-                <Route path="/activities/:id" component={ActivityDetails} />
+                <Route exact path="/activities" component={SpeedGovDashbord} />
+                <Route path="/activities/:id" component={SpeedGovDetailPage} />
                 <Route
                   key={location.key}
                   path={['/createActivity', '/manage/:id']}
-                  component={ActivityForm}
+                  component={SpeedGovForm}
                 />
                 <Route path="/errors" component={TestErrors} />
                 <Route path="/server-error" component={ServerErrors} />

@@ -7,7 +7,7 @@ import { Activity } from '../../../app/activity';
 interface Props {
   activity: Activity;
 }
-function ActivityListItem({ activity }: Props) {
+function SpeedGovListItem({ activity }: Props) {
   return (
     <Segment.Group>
       <Segment>
@@ -47,4 +47,4 @@ function ActivityListItem({ activity }: Props) {
   );
 }
 
-export default ActivityListItem;
+export default SpeedGovListItem;

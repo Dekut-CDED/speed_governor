@@ -4,12 +4,12 @@ import { useParams } from 'react-router';
 import { Grid, GridColumn } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/store/store';
-import ActivityDetailedChat from './ActivityDetailedChat';
-import ActivityDetailsHeader from './ActivityDetailsHeader';
-import ActivityDetailsInfo from './ActivityDetailsInfo';
-import ActivityDetailsSidebar from './ActivityDetailsSidebar';
+import ActivityDetailedChat from './SpeedGovRealTimeLocation';
+import ActivityDetailsHeader from './SpeedGovDetailsHeader';
+import ActivityDetailsInfo from './SpeedGovDetailsInfo';
+import ActivityDetailsSidebar from './SpeedGovDetail';
 
-function ActivityDetails() {
+function SpeedGovDetailPage() {
   const { activityStore } = useStore();
   const { selectedActivity, loadActivity, loadingInitial } = activityStore;
 
@@ -35,4 +35,4 @@ function ActivityDetails() {
   );
 }
 
-export default observer(ActivityDetails);
+export default observer(SpeedGovDetailPage);

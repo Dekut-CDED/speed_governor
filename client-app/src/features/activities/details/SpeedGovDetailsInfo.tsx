@@ -8,7 +8,7 @@ interface Props {
   activity: Activity;
 }
 
-export default observer(function ActivityDetailedInfo({ activity }: Props) {
+export default observer(function SpeedGovDetailsInfo({ activity }: Props) {
   return (
     <Segment.Group>
       <Segment attached="top">

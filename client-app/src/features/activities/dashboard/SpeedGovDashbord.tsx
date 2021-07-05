@@ -3,10 +3,10 @@ import { useEffect } from 'react';
 import { Grid } from 'semantic-ui-react';
 import LoadingComponent from '../../../app/layout/LoadingComponent';
 import { useStore } from '../../../app/store/store';
-import ActivityFilters from './ActivityFilters';
-import ActivityList from './ActivityList';
+import SpeedGovFilters from './SpeedGovFilter';
+import SpeedGovList from './SpeedGovList';
 
-function ActivityDashboard() {
+function SpeedGovDashbord() {
   const { activityStore } = useStore();
   const { loadActivities, activityRegistry } = activityStore;
 
@@ -19,13 +19,13 @@ function ActivityDashboard() {
   return (
     <Grid stackable>
       <Grid.Column width="10">
-        <ActivityList />
+        <SpeedGovList />
       </Grid.Column>
       <Grid.Column width="6">
-        <ActivityFilters />
+        <SpeedGovFilters />
       </Grid.Column>
     </Grid>
   );
 }
 
-export default observer(ActivityDashboard);
+export default observer(SpeedGovDashbord);

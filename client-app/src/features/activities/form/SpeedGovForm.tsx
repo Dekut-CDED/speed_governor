@@ -14,7 +14,7 @@ import { categoryOptions } from '../../../app/common/options/categoryOptions';
 import MyDatePicker from '../../../app/common/form/MydateInput';
 import { Activity } from '../../../app/activity';
 
-function ActivityForm() {
+function SpeedGovForm() {
   const { activityStore } = useStore();
   const history = useHistory();
   const {
@@ -118,4 +118,4 @@ function ActivityForm() {
   );
 }
 
-export default observer(ActivityForm);
+export default observer(SpeedGovForm);
