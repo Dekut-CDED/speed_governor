@@ -1,27 +1,30 @@
+/*! @import */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 :root {
+    --theadColor: rgb(23, 102, 46);
 
-  --theadColor: rgb(23,102,46);
+    --theadTextColor: #fff;
 
-  --theadTextColor: #fff;
-
-  --darkColor:#f5f5f5;
-
+    --darkColor: #f5f5f5;
 }
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
+}
 
-  body {
+body {
     margin: 0;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-      'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-      sans-serif;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-  }
-  
+}
+
 section {
     position: relative;
     width: 100%;
@@ -30,13 +33,13 @@ section {
 }
 
 .imgBox {
-   position: relative;
-   width: 50%;
-   height: 100;
+    position: relative;
+    width: 50%;
+    height: 100;
 }
 
 section .imgBox:before {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -66,24 +69,24 @@ section .contentBx {
 }
 
 section .contentBx .formBx {
-   width: 50%;
+    width: 50%;
 }
 
-section .contentBx .formBx  h2 {
-   color: #607d8b;   
-   font-weight: 600;
-   font-size: 1.5em;
-   text-transform: uppercase;
-   margin-bottom: 20px;
-   border-bottom: 4px solid #ff4584;
-   display: inline-block;
-   letter-spacing: 1px;
+section .contentBx .formBx h2 {
+    color: #607d8b;
+    font-weight: 600;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    border-bottom: 4px solid #ff4584;
+    display: inline-block;
+    letter-spacing: 1px;
 }
 
-section .contentBx .formBx  .inputBx {
+section .contentBx .formBx .inputBx {
     margin-bottom: 5px;
-} 
-section .contentBx .formBx  .inputBx span {
+}
+section .contentBx .formBx .inputBx span {
     font-size: 16px;
     margin-bottom: 5px;
     display: inline-block;
@@ -92,11 +95,11 @@ section .contentBx .formBx  .inputBx span {
     letter-spacing: 1px;
 }
 
-section .contentBx .formBx  .inputBx input {
+section .contentBx .formBx .inputBx input {
     width: 100%;
     padding: 10px 20px;
     outline: none;
-    font-weight:400;
+    font-weight: 400;
     border: 1px solid #607d8d;
     font-size: 16px;
     letter-spacing: 1px;
@@ -105,8 +108,7 @@ section .contentBx .formBx  .inputBx input {
     border-radius: 30px;
 }
 
-
-section .contentBx .formBx  .inputBx input[type="submit"] {
+section .contentBx .formBx .inputBx input[type="submit"] {
     background: #ff4584;
     color: #fff;
     outline: none;
@@ -114,7 +116,7 @@ section .contentBx .formBx  .inputBx input[type="submit"] {
     cursor: pointer;
 }
 
- li .formBx  .inputBx input[type="submit"] {
+li .formBx .inputBx input[type="submit"] {
     background: #ff4584;
     color: #fff;
     outline: none;
@@ -130,27 +132,24 @@ li .formBx {
     height: 100px;
 }
 
-section .contentBx .formBx  .inputBx input[type="submit"]:hover {
+section .contentBx .formBx .inputBx input[type="submit"]:hover {
     background: #f53677;
 }
 
-
 section .contentBx .formBx .remember {
-  margin-bottom: 10px;
-  color: #607d8b;
-  font-weight: 400;
-  font-weight: 14px;
+    margin-bottom: 10px;
+    color: #607d8b;
+    font-weight: 400;
+    font-weight: 14px;
 }
 
-section .contentBx .formBx  .inputBx p {
-     color: #607d8b;
-
+section .contentBx .formBx .inputBx p {
+    color: #607d8b;
 }
 
-section .contentBx .formBx  .inputBx p a {
-     color: #ff4584;
+section .contentBx .formBx .inputBx p a {
+    color: #ff4584;
 }
-
 
 @media (max-width: 768px) {
     section .imgBox {
@@ -191,7 +190,7 @@ section .contentBx .formBx  .inputBx p a {
     background-color: #fff;
     line-height: 75px;
     padding: 0px 80px;
-    box-shadow: 0 2px 2px -2px rgba(0,0,0,.2);
+    box-shadow: 0 2px 2px -2px rgba(0, 0, 0, 0.2);
 }
 
 .nav .logo {
@@ -200,14 +199,14 @@ section .contentBx .formBx  .inputBx p a {
 
 .nav .logo #logo {
     display: flex;
-    justify-content:space-evenly
+    justify-content: space-evenly;
 }
 
 .nav .logo p {
     font-size: 20px;
     font-weight: bold;
     letter-spacing: 1.5px;
-    color:#000;
+    color: #000;
     text-transform: uppercase;
 }
 
@@ -224,7 +223,7 @@ section .contentBx .formBx  .inputBx p a {
     text-decoration: none;
     color: #000;
     font-size: 18px;
-    text-transform: uppercase ;
+    text-transform: uppercase;
     padding: 0px 20px;
 }
 
@@ -240,7 +239,7 @@ section .contentBx .formBx  .inputBx p a {
     float: right;
 }
 #check {
-    display: none
+    display: none;
 }
 
 .row {
@@ -248,16 +247,15 @@ section .contentBx .formBx  .inputBx p a {
 }
 
 @media (max-width: 768px) {
-    .nav{
+    .nav {
         padding: 0px 20px;
     }
 
-    .checkbtn{
+    .checkbtn {
         display: block;
     }
 
-    
-    .row{
+    .row {
         padding: 0px;
     }
 
@@ -265,13 +263,12 @@ section .contentBx .formBx  .inputBx p a {
         font-size: 18px;
     }
 
-
-   .nav  ul{
+    .nav ul {
         width: 100%;
         height: 100vh;
         top: 75px;
         background-color: #fff;
-        position:fixed;
+        position: fixed;
         left: -100%;
         z-index: 100;
         text-align: center;
@@ -282,17 +279,14 @@ section .contentBx .formBx  .inputBx p a {
         display: block;
         margin: 60px 0px;
         line-height: 20px;
-
     }
 
     #check:checked ~ ul {
         left: 0;
     }
-   
- 
 }
 
-.radio{
+.radio {
     margin-bottom: 10px;
 }
 
@@ -300,10 +294,7 @@ section .contentBx .formBx  .inputBx p a {
     margin-left: 30px;
     font-size: 25px;
     font-weight: 100;
-
-
 }
-
 
 .upper {
     height: 80%;
@@ -312,29 +303,28 @@ section .contentBx .formBx  .inputBx p a {
     justify-content: space-between;
     align-items: center;
 }
-.lower{
-  height: 20%;   
+.lower {
+    height: 20%;
 }
 footer {
     margin-top: 60px;
 }
 .div-upper {
-    flex:1;
+    flex: 1;
 }
 
 .div-upper p {
     position: relative;
-
 }
 
 .div-upper h2 {
-   font-weight: 600;
-   font-size: 1.5em;
-   text-transform: uppercase;
-   margin-bottom: 20px;
-   border-bottom: 4px solid #17662e;
-   display: inline-block;
-   letter-spacing: 1px;
+    font-weight: 600;
+    font-size: 1.5em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+    border-bottom: 4px solid #17662e;
+    display: inline-block;
+    letter-spacing: 1px;
 }
 
 @media (max-width: 768px) {
@@ -351,17 +341,16 @@ footer {
     min-height: 100vh;
 }
 
-
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 0px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 0px;
 }
-body{
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 #page-container {
@@ -369,13 +358,13 @@ body{
     min-height: 100vh;
 }
 
- .footer-banner {
+.footer-banner {
     background: rgba(104, 113, 128);
     display: flex;
     flex-direction: column;
     height: 350px;
     padding: 20px;
-}   
+}
 
 .register-list {
     display: flex;
@@ -384,169 +373,127 @@ body{
 
 .register-link {
     font-size: 22px;
-    background-color: rgb(23,102,46);
+    background-color: rgb(23, 102, 46);
     padding: 10px;
 }
 
 .register-link a {
-  color: #fff;
-  font-weight: 700;
-  text-decoration: none;
+    color: #fff;
+    font-weight: 700;
+    text-decoration: none;
 }
 
+table.dataTable {
+    border: 2px solid rgb(170, 11, 11);
+}
 
- table.dataTable {
+thead {
+    background-color: var(--theadColor);
+}
 
-       border:2px solid rgb(170, 11, 11);
+thead > tr,
+thead > tr > th {
+    background-color: transparent;
 
-      }
+    color: var(--theadTextColor) !important;
 
-      thead {
+    font-weight: 300;
 
-        background-color: var(--theadColor);
+    text-align: start;
+}
 
-        
+table.dataTable thead th,
+table.dataTable thead td {
+    border-bottom: 0px solid #111 !important;
+}
 
-      }
+.dataTables_wrapper > div {
+    margin: 5px;
+}
 
-      thead > tr,
+table.dataTable.display tbody tr.even > .sorting_1,
+table.dataTable.order-column.stripe
+    tbody
+    tr.even
+    > .sorting_1
+    table.dataTable.display
+    tbody
+    tr.even,
+table.dataTable.display tbody tr.odd > .sorting_1,
+table.dataTable.order-column.stripe tbody tr.odd > .sorting_1,
+table.dataTable.display tbody tr.odd {
+    background-color: #ffffff;
+}
 
-      thead > tr > th {
+table.dataTable thead th {
+    position: relative;
 
-        background-color: transparent;
+    background-image: none !important;
+}
 
-        color: var(--theadTextColor) !important;
+table.dataTable thead th.sorting:after,
+table.dataTable thead th.sorting_asc:after,
+table.dataTable thead th.sorting_desc:after {
+    position: absolute;
 
-        font-weight: 300;
-    
-          text-align: start;
+    top: 12px;
 
-      }
+    right: 8px;
 
-      table.dataTable thead th,
+    display: block;
 
-      table.dataTable thead td {
+    font-family: "Font Awesome\ 5 Free";
+}
 
-        border-bottom: 0px solid #111 !important;
+table.dataTable thead th.sorting:after {
+    content: "\f0dc";
 
-      }
+    color: #ddd;
 
-      .dataTables_wrapper > div {
+    font-size: 1em;
 
-        margin: 5px;
+    padding-top: 0.12em;
+}
 
-      }
+table.dataTable thead th.sorting_asc:after {
+    content: "\f0de";
+}
 
-      table.dataTable.display tbody tr.even > .sorting_1,
+table.dataTable thead th.sorting_desc:after {
+    content: "\f0dd";
+}
+tbody tr {
+    font-weight: 600;
+    font-size: 20px;
+}
+table.dataTable.display tbody tr:hover > .sorting_1,
+table.dataTable.order-column.hover tbody tr:hover > .sorting_1,
+tbody tr:hover {
+    background-color: var(--darkColor) !important;
 
-      table.dataTable.order-column.stripe tbody tr.even> .sorting_1 table.dataTable.display
+    color: #000;
+    font-weight: 600;
+}
 
-        tbody
+.dataTables_wrapper .dataTables_paginate .paginate_button.current,
+.dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+    background: none !important;
 
-        tr.even,
+    border-radius: 50px;
 
-      table.dataTable.display tbody tr.odd > .sorting_1,
+    background-color: var(--theadColor) !important;
 
-      table.dataTable.order-column.stripe tbody tr.odd > .sorting_1,
+    color: #000 !important;
+}
 
-      table.dataTable.display tbody tr.odd {
+.paginate_button.current:hover {
+    background: none !important;
 
-        background-color: #ffffff;
+    border-radius: 50px;
 
-      }
+    background-color: var(--darkColor) !important;
 
-      table.dataTable thead th {
-
-        position: relative;
-
-        background-image: none !important;
-
-      }
-
-      table.dataTable thead th.sorting:after,
-
-      table.dataTable thead th.sorting_asc:after,
-
-      table.dataTable thead th.sorting_desc:after {
-
-        position: absolute;
-
-        top: 12px;
-
-        right: 8px;
-
-        display: block;
-
-        font-family: "Font Awesome\ 5 Free";
-
-      }
-
-      table.dataTable thead th.sorting:after {
-
-        content: "\f0dc";
-
-        color: #ddd;
-
-        font-size: 1em;
-
-        padding-top: 0.12em;
-
-      }
-
-      table.dataTable thead th.sorting_asc:after {
-
-        content: "\f0de";
-
-      }
-
-      table.dataTable thead th.sorting_desc:after {
-
-        content: "\f0dd";
-
-      }
-      tbody tr {
-          font-weight: 600;
-          font-size:20px
-      }
-      table.dataTable.display tbody tr:hover > .sorting_1,
-
-      table.dataTable.order-column.hover tbody tr:hover > .sorting_1,
-
-      tbody tr:hover {
-
-        background-color: var(--darkColor) !important;
-
-        color: #000;
-        font-weight: 600;
-
-      }
-
-      .dataTables_wrapper .dataTables_paginate .paginate_button.current, 
-
-      .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
-
-             background: none !important;
-
-             border-radius: 50px;
-
-         background-color: var(--theadColor) !important;
-
-         color:#000 !important
-
-      }
-
-.paginate_button.current:hover
-
-{
-
-        background: none !important;
-
-             border-radius: 50px;
-
-             background-color: var(--darkColor) !important;
-
-         color:#fff !important
-
+    color: #fff !important;
 }
 
 .paging_simple_numbers {
@@ -554,28 +501,25 @@ body{
 }
 
 .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover,
-
 .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+    border: 1px solid #979797;
 
-  border: 1px solid #979797;
+    background: none !important;
 
-  background: none !important;
+    border-radius: 50px !important;
 
-  border-radius: 50px !important;
+    background-color: var(--darkColor) !important;
 
-   background-color: var(--darkColor) !important;
-
-   color: #fff !important;
-
+    color: #fff !important;
 }
 
-section[class="speedgove-create"]{
+section[class="speedgove-create"] {
     justify-content: center;
 }
-section[class="speedgove-create"] .contentBx{
+section[class="speedgove-create"] .contentBx {
     display: flex;
-    justify-content:flex-start ;
-    align-items:unset;
+    justify-content: flex-start;
+    align-items: unset;
     margin-top: 0px;
     min-width: 600px;
     height: 500px;
@@ -586,12 +530,9 @@ section[class="speedgove-create"] .contentBx .inputBx {
     margin: 20px;
 }
 
-.inputBx select{
+.inputBx select {
     padding: 5px;
     border-radius: 10px;
     margin: 10px;
     font-size: large;
-
 }
-
-
