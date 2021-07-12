@@ -70,7 +70,7 @@ namespace Api.Background
                         //     SpeedGovernor = speedGov
                         //     // TODO Add some more fields, gps on = 14, ignition = 15, overspeed = 16, odometer = 6, vibration, fuellevel
                         // };
-                        await locationhub.Clients.All.SendAsync("SpeedGovernorlocation", location);
+                        await locationhub.Clients.Group(speedGov.Imei).SendAsync("reciveLocation", location);
                         unitofwork.Location.Add(location);
                         unitofwork.Save();
                     }
