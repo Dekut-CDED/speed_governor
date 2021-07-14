@@ -46,30 +46,30 @@ namespace Api.Background
             {
                 var bytes = await listner.ReceiveAsync();
                 var data = Encoding.ASCII.GetString(bytes.Buffer, 0, bytes.Buffer.Length);
-                //var result = data.TrimStart(chartoTrim).Trim(chartoTrim).Split(",");
+                var result = data.TrimStart(chartoTrim).Trim(chartoTrim).Split(",");
 
                 if (data != null)
                 {
-                    var location = JsonConvert.DeserializeObject<Location>(data);
-                    var speedGov = _dataContext.SpeedGovernors.Where(s => s.Imei == location.SpeedGovId).FirstOrDefault();
-                    location.SpeedGovernor = speedGov;
+                    // var location = JsonConvert.DeserializeObject<Location>(result);
+                    var speedGov = _dataContext.SpeedGovernors.Where(s => s.Imei == result[2]).FirstOrDefault();
+                   // location.SpeedGovernor = speedGov;
 
                     if (speedGov != null)
                     {
 
-                        // var location = new Location()
-                        // {
-                        //     Latitude = Double.Parse(result[6]),
-                        //     Long = Double.Parse(result[9]),
-                        //     Date = result[7],
-                        //     EngineON = result[4],
-                        //     SpeedSignalStatus = result[5],
-                        //     Time = result[8],
-                        //     GpsCourse = result[3],
-                        //     Speed = result[5].ToString(),
-                        //     SpeedGovernor = speedGov
-                        //     // TODO Add some more fields, gps on = 14, ignition = 15, overspeed = 16, odometer = 6, vibration, fuellevel
-                        // };
+                        var location = new Location()
+                         {
+                             Latitude = Double.Parse(result[7]),
+                             Long = Double.Parse(result[10]),
+                             Date = result[8],
+                             EngineON = result[4],
+                             SpeedSignalStatus = result[5],
+                             Time = result[9],
+                             GpsCourse = result[3],
+                             Speed = result[5].ToString(),
+                             SpeedGovernor = speedGov
+                             // TODO Add some more fields, gps on = 14, ignition = 15, overspeed = 16, odometer = 6, vibration, fuellevel
+                         };
                         await locationhub.Clients.Group(speedGov.Imei).SendAsync("reciveLocation", location);
                         unitofwork.Location.Add(location);
                         unitofwork.Save();

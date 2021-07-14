@@ -26,7 +26,7 @@ namespace Api.SignalRhub
           var httpcontext = Context.GetHttpContext();
           var speedgovImei = httpcontext.Request.Query["speedgovImei"];
           await Groups.AddToGroupAsync(Context.ConnectionId, speedgovImei);
-
+        // send 10 latest
           var result = await _mediator.Send(new LatestLocation.Query{ Id = speedgovImei});
 
           await Clients.Caller.SendAsync("LoadLocations", result);

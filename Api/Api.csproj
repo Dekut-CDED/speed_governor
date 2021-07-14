@@ -47,7 +47,7 @@
 
     <Target Name="Tailwind" BeforeTargets="Build">
         <Exec Command="npm run css:build"/>
-    </Target>
+    </Target> 
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
